@@ -65,8 +65,8 @@
   .chartbox .clbl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);display:flex;gap:16px;flex-wrap:wrap}
   .chartbox .clbl .sw{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:5px}
   .bigverdict{border-radius:3px;padding:16px 20px;margin-top:12px;font-family:var(--serif);font-size:19px;font-weight:700;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-  .bigverdict.buy{background:var(--redbg);color:var(--oxblood);border:1px solid var(--oxblood)}
-  .bigverdict.wait{background:var(--greenbg);color:var(--green);border:1px solid var(--green)}
+  .bigverdict.buy{background:var(--greenbg);color:var(--green);border:1px solid var(--green)}
+  .bigverdict.wait{background:var(--redbg);color:var(--oxblood);border:1px solid var(--oxblood)}
   .bigverdict small{font-family:var(--sans);font-size:13px;font-weight:400;opacity:.85;flex-basis:100%}
   table{width:100%;border-collapse:collapse;margin-top:6px}
   th{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);text-align:right;padding:0 9px 9px;border-bottom:1.5px solid var(--ink);font-weight:400}
@@ -82,7 +82,7 @@
   .winsif{font-size:13px;color:var(--ink2)}
   .rowbtn{border:1px solid var(--rule);background:none;color:var(--faint);border-radius:3px;padding:4px 9px}
   .rowbtn:hover{color:var(--oxblood);border-color:var(--oxblood)}
-  .crb.on{color:var(--oxblood);border-color:var(--oxblood);font-weight:700}
+  .crb.on,.cmb.on{color:var(--oxblood);border-color:var(--oxblood);font-weight:700}
   .clbl .off{opacity:.35;text-decoration:line-through}
   .clbl span{cursor:pointer}
   .stops{display:flex;justify-content:space-between;gap:6px;margin:14px 0}
@@ -170,15 +170,10 @@
       </div>
       <div class="mtools">
         
-        <button class="icon" id="setBtn" title="Settings">⚙</button>
         <button class="icon" id="refreshBtn" title="Refresh prices">↻</button>
       </div>
     </div>
     <div id="errbar"></div>
-    <div class="drawer" id="drawer"><div class="grid">
-      <label>My bankroll ($)<input id="s_bank" type="number" step="1000"></label>
-      <label>Max % on this theme<input id="s_cap" type="number" step="1"></label>
-    </div></div>
     <div class="tabs" id="tabs">
       <button class="tab on" data-t="home">Home</button>
       <button class="tab" data-t="markets">Markets</button>
@@ -198,16 +193,17 @@
     <div class="picker" id="picker"></div>
     <div class="bar"><span>If I bet</span> $<input id="stake" class="num" type="number" value="100" step="50"></div>
     <div class="verdict" id="verdict"></div>
-    <div class="conc" id="conc"></div>
 
     <h2 class="dek">The last week, for real</h2>
     <p class="lead">Actual trading history from Polymarket — every 3 hours, straight from their books.</p>
     <div class="chartbox" id="chartbox" hidden>
       <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center">
         <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button>
+        <span style="width:14px"></span>
+        <button class="rowbtn cmb on" data-m="ossoff">OSSOFF</button><button class="rowbtn cmb" data-m="dem">DEM FIELD</button><button class="rowbtn cmb" data-m="gop">GOP FIELD</button><button class="rowbtn cmb" data-m="pres">PRESIDENT</button>
         <span style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:auto">hover for values · click a name below to hide it</span>
       </div>
-      <div class="clbl"><span><span class="sw" style="background:var(--oxblood)"></span>Nominee</span><span><span class="sw" style="background:#7d9fd4"></span>Presidency</span><span id="chartnote" style="margin-left:auto"></span></div>
+      <div class="clbl" id="clbl"></div>
       <svg id="chart" viewBox="0 0 720 190" style="width:100%;height:auto;display:block" aria-label="One week price history"></svg>
     </div>
   </section>
@@ -258,7 +254,6 @@
     <div class="invtest" style="margin:10px 0 18px">
       <div class="invitem"><b>Market order</b> — "buy it right now at whatever it costs." Instant, but you pay the trading fee.</div>
       <div class="invitem"><b>Limit order</b> — "I will pay 14¢ and not a penny more." Your offer waits in a queue until someone sells at your price. No fee and a better price, but it may never fill.</div>
-      <div class="invitem"><b>How fair is the queue?</b> Both venues run price-time priority: better prices trade first, and at the same price, whoever posted first fills first. Nobody can pay to cut in front of you. On Kalshi that is a regulatory obligation — it is a CFTC-designated exchange required to give impartial access. On Polymarket it is the operator's stated rule, matched off-chain by their engine, so you are trusting their software rather than a regulator's audit. Two honest caveats: professional traders with faster connections will beat you to a NEW price level (they arrive earlier — that is legal everywhere), and editing your resting order resets your place in line.</div>
     </div>
     <p class="lead" style="margin-bottom:18px">The two dials below are pre-answered from the last month of real prices. Override them only if you know something the tape does not.</p>
     <div class="vrow"><span class="vn">1 · How jumpy is this market today?</span>
@@ -349,7 +344,8 @@
       <p><b>4 · You can sell anytime.</b> No need to wait years — sell whenever the price has moved your way.</p>
       <p><b>5 · Two stores sell these.</b> Kalshi (US-regulated, your payout is guaranteed by a clearinghouse, cash held at big banks) and Polymarket (cheaper, but crypto-based — you trust code and your own wallet). Neither is FDIC insured.</p>
       <p><b>6 · Taxes exist.</b> Profits are taxable. There's no IRS rule for these yet; most defensible route is capital-gains treatment with clean records — use "download my bets" on the My bets tab and talk to a CPA. Not tax advice.</p>
-      <p><b>7 · The golden rule.</b> Every bet here rises and falls on one person's fortunes. Keep the whole theme under ~5% of your money (set yours in ⚙).</p>
+      <p><b>7 · The queue is protected.</b> Limit orders fill by price then arrival time on both venues — nobody can pay to jump you. Kalshi is bound to this by CFTC rules; Polymarket by its own engine. Faster pros can only beat you to brand-new price levels, and editing an order resets your spot.</p>
+      <p><b>8 · The golden rule.</b> Every bet here rises and falls on one person's fortunes. Keep the whole theme under ~5% of your money (set yours in ⚙).</p>
     </div>
     <h2 class="dek">Who guards your money</h2>
     <div class="rcards">
@@ -368,13 +364,14 @@
     <div class="diag" id="diag"></div>
   </section>
   <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
-      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0 0 8px">The library — papers and decks, updated with the site</p>
-      <p style="font-size:14px;color:var(--ink2);margin:0">
-        <a href="EliteFour_Polling_WhitePaper.docx" style="color:var(--oxblood)">Poll aggregation and pollster credibility (DOCX)</a> ·
-        <a href="EliteFour_Quant_WhitePaper.docx" style="color:var(--oxblood)">The quant white paper: wedge, venues, fees, arbitrage (DOCX)</a> ·
-        <a href="EliteFour_Tax_WhitePaper.docx" style="color:var(--oxblood)">The tax strategy (DOCX)</a> ·
-        <a href="deck.pptx" style="color:var(--oxblood)">The board deck (PPTX)</a>
-      </p>
+      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site</p>
+      <style>.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
+.libcard{display:block;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.libcard:hover{border-color:var(--oxblood)}
+.libcard .ft{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;background:var(--chipbg);color:var(--ink2);padding:2px 8px;border-radius:10px;text-transform:uppercase}
+.libcard h4{font-family:var(--serif);font-size:15.5px;margin:9px 0 4px;font-weight:700}
+.libcard p{font-size:12.5px;color:var(--faint);margin:0 0 10px;line-height:1.5}
+.libcard .dl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--oxblood);text-transform:uppercase}</style><div class="lib"><a class="libcard" href="EliteFour_Quant_WhitePaper.docx" download><span class="ft">DOCX · 11 KB</span><h4>The quant white paper</h4><p>The math behind this desk: the wedge, venue and fee models, arbitrage checks, and convergence timing.</p><span class="dl">Download ↓</span></a><a class="libcard" href="EliteFour_Tax_WhitePaper.docx" download><span class="ft">DOCX · 12 KB</span><h4>The tax strategy</h4><p>How prediction-market gains and losses are taxed, and the record-keeping that protects you.</p><span class="dl">Download ↓</span></a><a class="libcard" href="deck.pptx" download><span class="ft">PPTX · 220 KB</span><h4>The board deck</h4><p>The whole thesis in twelve plain-English slides.</p><span class="dl">Download ↓</span></a></div>
     </div>
 
 
@@ -488,42 +485,67 @@ function fetchHist(slug){var d=md[slug];if(!d||!d.tok)return Promise.resolve();
  return fetchTO("https://clob.polymarket.com/prices-history?market="+d.tok+"&interval="+pr[0]+"&fidelity="+pr[1]).then(function(r){return r.json()}).then(function(j){
   if(j&&j.history&&j.history.length>3){histC[rg]=histC[rg]||{};histC[rg][slug]=j.history;store.set("ef4_histC",histC);}
  }).catch(function(){});}
+var chartMode="ossoff",chartShow={},FSER={};
+var MODES={dem:"democratic-presidential-nominee-2028",gop:"republican-presidential-nominee-2028",pres:"presidential-election-winner-2028"};
+var SCOLORS=["var(--oxblood)","#7d9fd4","#4a9e7f","#d0a54e"];
+function fetchHistTok(tok){var rg=chartState.range,iv=RANGES[rg][0],fd=RANGES[rg][1];
+ return fetchTO("https://clob.polymarket.com/prices-history?market="+tok+"&interval="+iv+"&fidelity="+fd)
+ .then(function(r){return r.json()}).then(function(j){return (j&&j.history&&j.history.length>3)?j.history:null;}).catch(function(){return null;});}
+function fetchField(mode){var key=mode+"_"+chartState.range;
+ if(FSER[key])return Promise.resolve(FSER[key]);
+ return fetchTO("https://gamma-api.polymarket.com/events?slug="+MODES[mode]).then(function(r){return r.json()}).then(function(j){
+  var ev=j&&j[0];if(!ev||!ev.markets)throw 0;
+  var ms=ev.markets.map(function(m){var px=null;
+    try{var op=typeof m.outcomePrices==="string"?JSON.parse(m.outcomePrices):m.outcomePrices;if(op&&op.length)px=parseFloat(op[0]);}catch(e){}
+    var tok=null;try{var tk=typeof m.clobTokenIds==="string"?JSON.parse(m.clobTokenIds):m.clobTokenIds;if(tk&&tk.length)tok=tk[0];}catch(e){}
+    return {name:(m.groupItemTitle||m.question||"?").replace(/^Will /,"").replace(/ win.*$/,""),px:px||0,tok:tok};
+   }).filter(function(x){return x.tok}).sort(function(a,b){return b.px-a.px}).slice(0,4);
+  return Promise.all(ms.map(function(m){return fetchHistTok(m.tok)})).then(function(hists){
+   var out=[];ms.forEach(function(m,i){if(hists[i])out.push({name:m.name,pts:hists[i]});});
+   if(!out.length)throw 0;FSER[key]=out;return out;});});}
+function seriesFor(){var rg=chartState.range,hc=histC[rg]||{};
+ if(chartMode==="ossoff")return Promise.resolve([{name:"Nominee",pts:hc[NOM]||[]},{name:"Presidency",pts:hc[PRES]||[]}]);
+ return fetchField(chartMode);}
 function drawChart(){
- var rg=chartState.range,hc=histC[rg]||{};
- var a=chartState.showA?hc[NOM]:null,b=chartState.showB?hc[PRES]:null,box=$("#chartbox");if(!box)return;
- if((!a||a.length<4)&&(!b||b.length<4)){box.hidden=true;return;}
- box.hidden=false;
- var all=[];(a||[]).forEach(function(x){all.push(x.p)});(b||[]).forEach(function(x){all.push(x.p)});
- var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all);var pad=(mx-mn)*0.18||0.01;mn-=pad;mx+=pad;
- var t0=Math.min(a&&a.length?a[0].t:Infinity,b&&b.length?b[0].t:Infinity);
- var t1=Math.max(a&&a.length?a[a.length-1].t:0,b&&b.length?b[b.length-1].t:0);
- chartPts={a:a||[],b:b||[],t0:t0,t1:t1,mn:mn,mx:mx};
- var L=52,R=648,T=16,B=150;
- function X(t){return L+((t-t0)/((t1-t0)||1))*(R-L);}
- function Y(p){return T+(1-((p-mn)/((mx-mn)||1)))*(B-T);}
- function path(s){if(!s||s.length<2)return"";return s.map(function(x,i){return (i?"L":"M")+X(x.t).toFixed(1)+","+Y(x.p).toFixed(1)}).join(" ");}
- function endLbl(s,col,shift){if(!s||!s.length)return"";var x=s[s.length-1];var y=Y(x.p)+shift;
-  return '<circle cx="'+X(x.t).toFixed(1)+'" cy="'+Y(x.p).toFixed(1)+'" r="4" fill="'+col+'"/>'+
-   '<text x="656" y="'+(y+5).toFixed(1)+'" font-size="15" font-weight="bold" font-family="Georgia,serif" fill="'+col+'">'+(x.p*100).toFixed(1)+'¢</text>';}
- var sA=0,sB=0;
- if(a&&a.length&&b&&b.length){var ya=Y(a[a.length-1].p),yb=Y(b[b.length-1].p);
-  if(Math.abs(ya-yb)<20){if(ya<yb){sA=-10;sB=10;}else{sA=10;sB=-10;}}}
- var mid=(mn+mx)/2;
- $("#chart").innerHTML=
-  '<line x1="'+L+'" y1="'+B+'" x2="'+R+'" y2="'+B+'" stroke="var(--rule)" stroke-width="1.5"/>'+
-  '<line x1="'+L+'" y1="'+Y(mid).toFixed(1)+'" x2="'+R+'" y2="'+Y(mid).toFixed(1)+'" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 5"/>'+
-  '<text x="6" y="'+(T+6)+'" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+(mx*100).toFixed(0)+'¢</text>'+
-  '<text x="6" y="'+(Y(mid)+4).toFixed(1)+'" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+(mid*100).toFixed(0)+'¢</text>'+
-  '<text x="6" y="'+(B+4)+'" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+(mn*100).toFixed(0)+'¢</text>'+
-  '<text x="'+L+'" y="178" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+new Date(t0*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"})+'</text>'+
-  '<text x="'+(R-46)+'" y="178" font-size="13" font-family="Georgia,serif" fill="var(--faint)">today</text>'+
-  (a?'<path d="'+path(a)+'" fill="none" stroke="var(--oxblood)" stroke-width="2.5" stroke-linejoin="round"/>':"")+
-  (b?'<path d="'+path(b)+'" fill="none" stroke="#7d9fd4" stroke-width="2.5" stroke-linejoin="round"/>':"")+
-  (a?endLbl(a,"var(--oxblood)",sA):"")+(b?endLbl(b,"#7d9fd4",sB):"")+
-  '<g id="xh"></g><rect id="chotspot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
- var last=((a&&a.length)?a[a.length-1].t:t1);
- $("#chartnote").textContent="updated "+new Date(last*1000).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric"});
- wireHover();
+ seriesFor().then(function(raw){
+  var show=chartShow[chartMode]||(chartShow[chartMode]=raw.map(function(){return true}));
+  while(show.length<raw.length)show.push(true);
+  var box=$("#chartbox");if(!box)return;
+  var vis=raw.map(function(s,i){return {name:s.name,pts:show[i]?s.pts:[],color:SCOLORS[i%4],on:show[i]};});
+  var any=vis.some(function(s){return s.pts&&s.pts.length>3});
+  if(!any&&chartMode==="ossoff"){box.hidden=true;return;}
+  box.hidden=false;
+  var all=[];vis.forEach(function(s){(s.pts||[]).forEach(function(x){all.push(x.p)})});
+  if(!all.length)all=[0,0.1];
+  var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all);var pad=(mx-mn)*0.18||0.01;mn-=pad;mx+=pad;
+  var t0=Infinity,t1=0;vis.forEach(function(s){if(s.pts&&s.pts.length){t0=Math.min(t0,s.pts[0].t);t1=Math.max(t1,s.pts[s.pts.length-1].t);}});
+  if(!isFinite(t0)){t0=0;t1=1;}
+  chartPts={sers:vis,t0:t0,t1:t1,mn:mn,mx:mx};
+  var L=52,R=648,T=16,B=150;
+  function X(t){return L+((t-t0)/((t1-t0)||1))*(R-L);}
+  function Y(p){return T+(1-((p-mn)/((mx-mn)||1)))*(B-T);}
+  var mid=(mn+mx)/2,svg='';
+  svg+='<line x1="'+L+'" y1="'+B+'" x2="'+R+'" y2="'+B+'" stroke="var(--rule)" stroke-width="1.5"/>';
+  svg+='<line x1="'+L+'" y1="'+Y(mid).toFixed(1)+'" x2="'+R+'" y2="'+Y(mid).toFixed(1)+'" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 5"/>';
+  svg+='<text x="6" y="'+(T+6)+'" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+(mx*100).toFixed(0)+'¢</text>';
+  svg+='<text x="6" y="'+(Y(mid)+4).toFixed(1)+'" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+(mid*100).toFixed(0)+'¢</text>';
+  svg+='<text x="6" y="'+(B+4)+'" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+(mn*100).toFixed(0)+'¢</text>';
+  svg+='<text x="'+L+'" y="178" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+new Date(t0*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"})+'</text>';
+  svg+='<text x="'+(R-46)+'" y="178" font-size="13" font-family="Georgia,serif" fill="var(--faint)">today</text>';
+  var lastYs=[];
+  vis.forEach(function(s){if(!s.pts||s.pts.length<2)return;
+   svg+='<path d="'+s.pts.map(function(x,i){return (i?"L":"M")+X(x.t).toFixed(1)+","+Y(x.p).toFixed(1)}).join(" ")+'" fill="none" stroke="'+s.color+'" stroke-width="2.5" stroke-linejoin="round"/>';});
+  vis.forEach(function(s){if(!s.pts||!s.pts.length)return;var x=s.pts[s.pts.length-1];var y=Y(x.p);
+   var shift=0;lastYs.forEach(function(py){if(Math.abs(y+shift-py)<15)shift+=(y+shift>=py?15:-15);});lastYs.push(y+shift);
+   svg+='<circle cx="'+X(x.t).toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4" fill="'+s.color+'"/>';
+   svg+='<text x="656" y="'+(y+shift+5).toFixed(1)+'" font-size="14" font-weight="bold" font-family="Georgia,serif" fill="'+s.color+'">'+(x.p*100).toFixed(1)+'¢</text>';});
+  svg+='<g id="xh"></g><rect id="chotspot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
+  $("#chart").innerHTML=svg;
+  var lb=$("#clbl");if(lb){lb.innerHTML=raw.map(function(s,i){return '<span data-i="'+i+'" class="'+(show[i]?"":"off")+'"><span class="sw" style="background:'+SCOLORS[i%4]+'"></span>'+s.name+'</span>';}).join("")+'<span id="chartnote" style="margin-left:auto"></span>';
+   Array.prototype.forEach.call(lb.querySelectorAll("span[data-i]"),function(sp){sp.onclick=function(){var i=+sp.dataset.i;show[i]=!show[i];drawChart();};});}
+  var cn=$("#chartnote");if(cn)cn.textContent="updated "+new Date(t1*1000).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric"});
+  wireHover();
+ }).catch(function(){});
 }
 function wireHover(){
  var svg=$("#chart"),hs=$("#chotspot");if(!svg||!hs||hs._wired)return;hs._wired=true;
@@ -533,28 +555,27 @@ function wireHover(){
   var r=svg.getBoundingClientRect();var cx=(ev.touches?ev.touches[0].clientX:ev.clientX);
   var fx=(cx-r.left)/Math.max(1,r.width)*720;var L=52,R=648,T=16,B=150;
   if(fx<L||fx>R)return;
-  var cp=chartPts;var t=cp.t0+(fx-L)/(R-L)*((cp.t1-cp.t0)||1);
-  function X2(tt){return L+((tt-cp.t0)/((cp.t1-cp.t0)||1))*(R-L);}
+  var cp=chartPts;if(!cp||!cp.sers)return;var t=cp.t0+(fx-L)/(R-L)*((cp.t1-cp.t0)||1);
   function Y2(p){return T+(1-((p-cp.mn)/((cp.mx-cp.mn)||1)))*(B-T);}
-  var pa=chartState.showA?near(cp.a,t):null,pb=chartState.showB?near(cp.b,t):null;
-  var xx=X2((pa||pb)?(pa?pa.t:pb.t):t);
-  var lab=new Date(((pa||pb)?(pa?pa.t:pb.t):t)*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"});
-  var lines=[lab];if(pa)lines.push("Nominee "+(pa.p*100).toFixed(1)+"¢");if(pb)lines.push("Presidency "+(pb.p*100).toFixed(1)+"¢");
-  var bx=Math.min(Math.max(xx+10,L),R-150),by=T+6;
-  var tip='<rect x="'+bx+'" y="'+by+'" width="140" height="'+(16*lines.length+10)+'" rx="3" fill="var(--paper2)" stroke="var(--rule)"/>';
-  lines.forEach(function(ln,i){tip+='<text x="'+(bx+8)+'" y="'+(by+16+16*i)+'" font-size="12" font-family="Georgia,serif" fill="'+(i===0?"var(--faint)":(ln.indexOf("Nominee")===0?"var(--oxblood)":"#7d9fd4"))+'">'+ln+'</text>';});
-  $("#xh").innerHTML='<line x1="'+xx+'" y1="'+T+'" x2="'+xx+'" y2="'+B+'" stroke="var(--faint)" stroke-width="1" stroke-dasharray="3 4"/>'+
-   (pa?'<circle cx="'+xx+'" cy="'+Y2(pa.p)+'" r="4.5" fill="var(--oxblood)"/>':"")+
-   (pb?'<circle cx="'+xx+'" cy="'+Y2(pb.p)+'" r="4.5" fill="#7d9fd4"/>':"")+tip;
+  var xx=L+((t-cp.t0)/((cp.t1-cp.t0)||1))*(R-L);
+  var lines=[new Date(t*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"})],dots='';
+  cp.sers.forEach(function(s){if(!s.on||!s.pts||!s.pts.length)return;var p=near(s.pts,t);if(!p)return;
+   dots+='<circle cx="'+xx+'" cy="'+Y2(p.p)+'" r="4.5" fill="'+s.color+'"/>';
+   lines.push({t:s.name+" "+(p.p*100).toFixed(1)+"¢",c:s.color});});
+  var bx=Math.min(Math.max(xx+10,L),R-160),by=T+6;
+  var tip='<rect x="'+bx+'" y="'+by+'" width="150" height="'+(16*lines.length+10)+'" rx="3" fill="var(--paper2)" stroke="var(--rule)"/>';
+  lines.forEach(function(ln,i){var txt=typeof ln==="string"?ln:ln.t,col=typeof ln==="string"?"var(--faint)":ln.c;
+   tip+='<text x="'+(bx+8)+'" y="'+(by+16+16*i)+'" font-size="12" font-family="Georgia,serif" fill="'+col+'">'+txt+'</text>';});
+  $("#xh").innerHTML='<line x1="'+xx+'" y1="'+T+'" x2="'+xx+'" y2="'+B+'" stroke="var(--faint)" stroke-width="1" stroke-dasharray="3 4"/>'+dots+tip;
  }
  hs.addEventListener("mousemove",move);hs.addEventListener("touchmove",move);
  hs.addEventListener("mouseleave",function(){$("#xh").innerHTML="";});
 }
 var VIEWS=[
+ {k:"unsure",t:"No idea → show me",s:"We'll suggest the smart play"},
  {k:"win",t:"Ossoff wins it all",s:"Nominee, then President"},
  {k:"lose",t:"Nominated, then loses",s:"Wins the primary, loses November"},
- {k:"none",t:"Never nominated",s:"Someone else gets picked"},
- {k:"unsure",t:"No idea → show me",s:"We'll suggest the smart play"}];
+ {k:"none",t:"Never nominated",s:"Someone else gets picked"},];
 function trades(){
  var nY=nomYes()||0.14,pY=presYes()||0.075;
  var nA=(md[NOM]&&md[NOM].ask)||nY,pA=(md[PRES]&&md[PRES].ask)||pY;
@@ -608,9 +629,6 @@ function renderHome(){
   var loseAmt=rt.special?money(-profitFor(rt,stake,"win")):money(stake);
   if(view==="unsure")$("#verdict").innerHTML="Our lean: <b>"+rt.name+"</b>. Bet "+money(stake)+" → win about <b style=color:var(--green)>"+money(pr)+"</b> if he's nominated-but-loses. Worst case you're out about <span style=color:var(--oxblood)>"+loseAmt+"</span>.";
   else $("#verdict").innerHTML="Your bet: <b>"+rt.name+"</b>. Bet "+money(stake)+" → win about <b style=color:var(--green)>"+money(pr)+"</b> if you're right. Wrong costs <span style=color:var(--oxblood)>"+(rt.special?("about "+loseAmt):("your "+money(stake)))+"</span>.";}
- var pct=settings.bank?stake/settings.bank*100:0;
- $("#conc").className="conc"+(pct>settings.cap?" warn":"");
- $("#conc").textContent="Gut check: that's "+pct.toFixed(1)+"% of your money. Your own limit for this theme: "+settings.cap+"%."+(pct>settings.cap?" — OVER IT.":"");
  var sen=md[SEN]?md[SEN].yes:null;
  $("#cards").innerHTML=[
   ["Is Ossoff the 2028 Dem nominee?",nY,md[NOM]],
@@ -678,7 +696,7 @@ function renderOpt(){
  var pw=aP<aK;
  $("#vc_poly").classList.toggle("win",pw);$("#vc_kal").classList.toggle("win",!pw);
  $("#o_verdict").innerHTML=(pw?"Buy on <b>Polymarket</b> — cheaper true cost even after your risk discount.":"Buy on <b>Kalshi</b> — after fees, its interest on your "+months+"-month hold, and your risk discount, it wins right now.");
- var mn=$("#menunote");if(mn)mn.textContent=(md[NOM]&&md[PRES])?"Wedge line: the cost shown is your money at risk per $1 pair; total cash outlay is about $1.07 per pair — the calculator above uses outlay. The house pick is not fixed: it re-checks the live prices. The Wedge holds the badge while the market gives a nominated Ossoff at least a 42% shot at the White House; if that conditional ever drops under 30%, the cheap side flips and the badge moves to He wins the White House.":"Prices still loading — numbers in this table are placeholders until the live feed answers.";
+ var mn=$("#menunote");if(mn)mn.textContent=(md[NOM]&&md[PRES])?"About the Wedge row: you put down about $1.07 per pair, but only ~7¢ of that can actually be lost — the rest comes back whatever happens. The table shows the 7¢, because that is your real risk. And the HOUSE PICK badge is live, not fixed: if prices move enough, it jumps to a different row automatically.":"Prices still loading — numbers in this table are placeholders until the live feed answers.";
 }
 var monthHist=null;
 function fetchMonth(){var d=md[NOM];if(!d||!d.tok)return Promise.resolve();
@@ -822,22 +840,22 @@ wire("#addSlug","input",function(){
   }).catch(function(){box.style.display="none";});
  },350);});
 wire("#refreshBtn","click",function(){refresh().then(function(){toast("Prices updated.")});});
-wire("#setBtn","click",function(){$("#drawer").classList.toggle("on");});
 
-[["#s_bank","bank"],["#s_cap","cap"],["#o_pen","pen"]].forEach(function(pair){var el=$(pair[0]);if(!el)return;
+[["#o_pen","pen"]].forEach(function(pair){var el=$(pair[0]);if(!el)return;
  el.value=settings[pair[1]];
  el.addEventListener("input",function(){var v=parseFloat(el.value);if(!isNaN(v)){settings[pair[1]]=v;store.set("ef4_set",settings);renderHome();renderOpt();}});});
 document.documentElement.dataset.theme=settings.theme;
 setInterval(function(){countdown--;if(countdown<=0)refresh();},1000);
+Array.prototype.forEach.call(document.querySelectorAll(".cmb"),function(b){b.onclick=function(){
+ Array.prototype.forEach.call(document.querySelectorAll(".cmb"),function(x){x.classList.remove("on")});
+ b.classList.add("on");chartMode=b.dataset.m;var hs=$("#chotspot");if(hs)hs._wired=false;drawChart();};});
 Array.prototype.forEach.call(document.querySelectorAll(".crb"),function(b){b.onclick=function(){
  Array.prototype.forEach.call(document.querySelectorAll(".crb"),function(x){x.classList.remove("on")});b.classList.add("on");
  chartState.range=b.dataset.r;
  if(histC[chartState.range]&&histC[chartState.range][NOM]){drawChart();}
  else{Promise.allSettled([fetchHist(NOM),fetchHist(PRES)]).then(function(){try{drawChart()}catch(e){}});}
 };});
-(function(){var lbl=document.querySelector("#chartbox .clbl");if(!lbl)return;var sp=lbl.querySelectorAll("span");
- if(sp[0]){sp[0].style.cursor="pointer";sp[0].onclick=function(){chartState.showA=!chartState.showA;sp[0].classList.toggle("off",!chartState.showA);drawChart();};}
- if(sp[1]){sp[1].style.cursor="pointer";sp[1].onclick=function(){chartState.showB=!chartState.showB;sp[1].classList.toggle("off",!chartState.showB);drawChart();};}})();
+
 renderAll();try{drawChart()}catch(e){}
 refresh();
 </script>

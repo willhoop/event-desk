@@ -16,6 +16,10 @@
   .sub a{color:var(--ember);text-decoration:none}
   h2.dek{font-family:var(--serif);font-size:23px;font-weight:700;margin:34px 0 8px}
   .lead{color:var(--ink2);margin:0 0 14px;font-size:15px;line-height:1.6}
+  .sechead{display:flex;align-items:baseline;gap:14px;border-top:3px double var(--ink);padding-top:18px;margin:6px 0 16px}
+  .sechead .n{font-family:var(--mono);font-size:11px;color:var(--ember);letter-spacing:.28em}
+  .sechead .t{font-family:var(--serif);font-size:27px;font-weight:700}
+  .sechead .d{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-left:auto}
   .grid6{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 6px}
   .pc{background:var(--paper2);border:1px solid var(--rule);border-radius:6px;padding:14px 16px}
   .pc .nm{font-family:var(--serif);font-size:15.5px;font-weight:700}
@@ -61,27 +65,34 @@
   </div>
 
   <section>
-    <h2 class="dek">The average right now</h2>
-    <p class="lead">Every national 2028 Democratic primary poll from 2026, blended the way FiveThirtyEight does it: newer polls count more (3% less per day of age), bigger samples count more (square root of sample size), better pollsters count more (our own E4 score — see the scoreboard below), likely-voter polls beat registered-voter polls, and each pollster's habitual lean — its house effect — is measured and half-corrected before averaging.</p>
-    <div class="grid6" id="avgcards"></div>
-    <p class="note" id="avgnote"></p>
-    <h2 class="dek">The pollster scoreboard — scored by us, not borrowed</h2>
-    <p class="lead">538 is the inspiration, not the source. Every firm below is scored by our own engine, from the polls it gave us: how far its numbers habitually sit from the consensus of everyone else, how big its samples run, whether it polls likely voters or just adults, and a flag for documented partisan work. The final weight is what its polls count for in the average above.</p>
-    <table><thead><tr><th>Pollster</th><th class="r">Polls</th><th class="r">Avg sample</th><th class="r">Likely-voter share</th><th class="r">Distance from consensus</th><th class="r">Partisan flag</th><th class="r">E4 weight</th></tr></thead><tbody id="sboard"></tbody></table>
-    <p class="note">Distance from consensus = average gap, in points, between this firm's numbers and the field's weighted average (its house effect). Big distance is not proof of error — but with no elections to grade against until 2028, agreement with the crowd is the only accuracy proxy the data offers, so persistent outliers earn less weight, not zero.</p>
-  </section>
-
-  <section>
-    <h2 class="dek">The trend through 2026</h2>
+    <div class="sechead"><span class="n">01</span><span class="t">The race, live</span><span class="d">hover, click, explore</span></div>
+    <p class="lead">Hover for exact numbers; click a name to hide a line. This is the whole story in one picture: Harris wide but flat, the pack compressing beneath her.</p>
     <div class="chart">
-      <div class="legend" id="legend"></div>
       <svg id="trend" width="100%" viewBox="0 0 1000 320" preserveAspectRatio="none"></svg>
+      <div class="legend" id="legend" style="margin:10px 0 4px;justify-content:center"></div>
     </div>
     <p class="note">Weighted rolling average over a 90-day window, sampled monthly. Harris's lead is wide but shrinking; the pack behind her is compressing.</p>
   </section>
 
   <section>
-    <h2 class="dek">Polls are not probabilities</h2>
+    <div class="sechead"><span class="n">02</span><span class="t">Polls vs the market</span><span class="d">the money chart</span></div>
+    <p class="lead">This is the desk's product — and it does not cheat the units. A poll share is not a probability, so we never subtract one from a price. Instead we fitted a logistic model on 90 candidacies from 20 contested primaries, 1972–2024 — each candidate's early national poll share against whether they actually won the nomination. The model (win odds rise with the log of your share of the field; leaders convert ~55% historically; it beats the base-rate Brier score 0.150 to 0.173) turns today's shares into a <b>poll-implied price</b> in cents, scaled so the listed field sums to 95% — leaving 5% for a nominee nobody is polling yet, which is what Carter 1976 was. The edge column is market minus implied: cents against cents.</p>
+    <table id="edget">
+      <thead><tr><th>Candidate</th><th class="r">Poll average</th><th class="r">Poll-implied price</th><th class="r">Market price</th><th class="r">Edge</th><th>What the market is saying</th></tr></thead>
+      <tbody id="edgebody"></tbody>
+    </table>
+    <p class="note" id="mktnote">Market prices: Polymarket, refreshed live when your browser allows it; otherwise the last saved copy, marked ~.</p>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="n">03</span><span class="t">The average</span><span class="d">41 polls, one number</span></div>
+    <p class="lead">Every national 2028 Democratic primary poll from 2026, blended the way FiveThirtyEight does it: newer polls count more (3% less per day of age), bigger samples count more (square root of sample size), better pollsters count more (our own E4 score — see the scoreboard below), likely-voter polls beat registered-voter polls, and each pollster's habitual lean — its house effect — is measured and half-corrected before averaging.</p>
+    <div class="grid6" id="avgcards"></div>
+    <p class="note" id="avgnote"></p>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="n">04</span><span class="t">Polls are not probabilities</span><span class="d">history's warning</span></div>
     <p class="lead">A candidate polling 29% two years out does not have a 29% chance of winning. Early national primary polls mostly measure name recognition. History's early leaders, roughly two years before the primaries:</p>
     <div class="box">
       <div class="row"><b>Early leaders who lost the nomination:</b> Lieberman 2004, Clinton 2008, Giuliani 2008 (R), Jeb Bush 2016 (R). Big names, big early numbers, no nomination.</div>
@@ -91,21 +102,11 @@
   </section>
 
   <section>
-    <h2 class="dek">Polls vs the market — where the edge lives</h2>
-    <p class="lead">This is the desk's product — and it does not cheat the units. A poll share is not a probability, so we never subtract one from a price. Instead each candidate's share of the decided field is raised to a calibration power (α = 1.4, set so the early leader converts at roughly the historical ~45% rate) and normalized to the market's own total probability, producing a <b>poll-implied price</b> in cents. The edge column is market minus implied: cents against cents.</p>
-    <table id="edget">
-      <thead><tr><th>Candidate</th><th class="r">Poll average</th><th class="r">Poll-implied price</th><th class="r">Market price</th><th class="r">Edge</th><th>What the market is saying</th></tr></thead>
-      <tbody id="edgebody"></tbody>
-    </table>
-    <p class="note" id="mktnote">Market prices: Polymarket, refreshed live when your browser allows it; otherwise the last saved copy, marked ~.</p>
-  </section>
-
-  <section>
-    <h2 class="dek">The betting strategy</h2>
+    <div class="sechead"><span class="n">05</span><span class="t">The strategy</span><span class="d">two rules, four cases</span></div>
     <p class="lead">Two rules, then the four live cases they apply to.</p>
     <div class="box">
       <div class="row"><b>Rule 1 — a divergence is information, not automatically a trade.</b> The market knows polls exist. When price and polls disagree, the market is usually pricing something polls cannot see: an announcement, a scandal, momentum, or the historical fact that early poll leads melt. Bet only when you can name the thing the market has wrong.</div>
-      <div class="row"><b>Rule 2 — size it like a bet, not a belief.</b> Divergence trades are long shots by construction. Quarter-Kelly or less, and never more than your theme cap — the Ossoff desk enforces that cap automatically.</div>
+      <div class="row"><b>Rule 2 — bet small on purpose.</b> There is a formula (the Kelly criterion) that computes the biggest bet the math can justify given your edge. We never bet more than a quarter of what it says — because every number you feed it is a guess, and betting full Kelly on a wrong guess is how bankrolls die. In practice: if a bet feels big, halve it. Then halve it again.</div>
     </div>
     <h2 class="dek">The four cases on today's board</h2>
     <div class="box">
@@ -118,6 +119,14 @@
   </section>
 
   <section>
+    <div class="sechead"><span class="n">06</span><span class="t">The pollster scoreboard</span><span class="d">scored by our engine</span></div>
+    <p class="lead">538 is the inspiration, not the source. Every firm below is scored by our own engine, from the polls it gave us: how far its numbers habitually sit from the consensus of everyone else, how big its samples run, whether it polls likely voters or just adults, and a flag for documented partisan work. The final weight is what its polls count for in the average above.</p>
+    <table><thead><tr><th>Pollster</th><th class="r">Polls</th><th class="r">Avg sample</th><th class="r">Likely-voter share</th><th class="r">Distance from consensus</th><th class="r">Partisan flag</th><th class="r">E4 weight</th></tr></thead><tbody id="sboard"></tbody></table>
+    <p class="note">Distance from consensus = average gap, in points, between this firm's numbers and the field's weighted average (its house effect). Big distance is not proof of error — but with no elections to grade against until 2028, agreement with the crowd is the only accuracy proxy the data offers, so persistent outliers earn less weight, not zero.</p>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="n">07</span><span class="t">Methodology</span><span class="d">the 538 lineage, and sources</span></div>
     <h2 class="dek">How this average works — the 538 lineage</h2>
     <div class="box">
       <div class="row"><b>1 · Recency.</b> Each poll decays 3% per day of age (538 uses ~7%/day near election day; two years out, we decay gentler so the average is stable). A 30-day-old poll counts about 40% as much as a fresh one.</div>
@@ -139,13 +148,14 @@
     </p>
   </section>
     <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
-      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0 0 8px">The library — papers and decks, updated with the site</p>
-      <p style="font-size:14px;color:var(--ink2);margin:0">
-        <a href="EliteFour_Polling_WhitePaper.docx" style="color:var(--ember)">Poll aggregation and pollster credibility (DOCX)</a> ·
-        <a href="EliteFour_Quant_WhitePaper.docx" style="color:var(--ember)">The quant white paper: wedge, venues, fees, arbitrage (DOCX)</a> ·
-        <a href="EliteFour_Tax_WhitePaper.docx" style="color:var(--ember)">The tax strategy (DOCX)</a> ·
-        <a href="deck.pptx" style="color:var(--ember)">The board deck (PPTX)</a>
-      </p>
+      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site</p>
+      <style>.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
+.libcard{display:block;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.libcard:hover{border-color:var(--ember)}
+.libcard .ft{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;background:var(--chipbg);color:var(--ink2);padding:2px 8px;border-radius:10px;text-transform:uppercase}
+.libcard h4{font-family:var(--serif);font-size:15.5px;margin:9px 0 4px;font-weight:700}
+.libcard p{font-size:12.5px;color:var(--faint);margin:0 0 10px;line-height:1.5}
+.libcard .dl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ember);text-transform:uppercase}</style><div class="lib"><a class="libcard" href="EliteFour_Polling_WhitePaper.docx" download><span class="ft">DOCX · 14 KB</span><h4>Poll aggregation and pollster credibility</h4><p>Every weight in this page's engine — recency, samples, house effects, and how each pollster earns its score.</p><span class="dl">Download ↓</span></a></div>
     </div>
 </div>
 <script>
@@ -251,18 +261,24 @@ function renderTrend(){var months=[];for(var m=0;m<7;m++){months.push(new Date(D
  var top4=ORDER.slice(0,4),colors=["#e2572b","#4a9e7f","#7d9fd4","#d0a54e"];
  var series=top4.map(function(k){return months.map(function(t){var a=adjAvg(t);return a[k];});});
  var mx=0;series.forEach(function(s,i){if(!TSHOW[i])return;s.forEach(function(v){if(v!=null&&v>mx)mx=v;});});mx=Math.ceil(mx/5)*5+5||35;
- var L=50,R=980,T=16,B=280;
+ var L=50,R=830,T=16,B=280;
  window.TDATA={months:months,top4:top4,colors:colors,series:series,mx:mx,L:L,R:R,T:T,B:B};
  var g='';
  for(var yy=0;yy<=mx;yy+=10){var y=B-(yy/mx)*(B-T);
-  g+='<line x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'" stroke="var(--rule)" stroke-width="1"/>';
+  g+='<line x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'" stroke="var(--rule)" stroke-width="0.5" opacity="0.7"/>';
   g+='<text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="var(--faint)" font-family="monospace">'+yy+'</text>';}
  var ml=["JAN","FEB","MAR","APR","MAY","JUN","JUL"];
  months.forEach(function(t,i){var x=L+(i/(months.length-1))*(R-L);
   g+='<text x="'+x+'" y="'+(B+22)+'" text-anchor="middle" font-size="11" fill="var(--faint)" font-family="monospace">'+ml[i]+'</text>';});
  series.forEach(function(s,si){if(!TSHOW[si])return;var pts=[];s.forEach(function(v,i){if(v==null)return;
    var x=L+(i/(months.length-1))*(R-L),y=B-(v/mx)*(B-T);pts.push(x.toFixed(1)+","+y.toFixed(1));});
-  g+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="'+colors[si]+'" stroke-width="2.5"/>';});
+  g+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="'+colors[si]+'" stroke-width="2" stroke-linejoin="round"/>';});
+ var lastYs=[];
+ series.forEach(function(s,si){if(!TSHOW[si])return;var v=s[s.length-1];if(v==null)return;
+  var y=B-(v/mx)*(B-T),shift=0;
+  lastYs.forEach(function(py){if(Math.abs(y+shift-py)<18)shift+=(y+shift>=py?18:-18);});lastYs.push(y+shift);
+  g+='<circle cx="'+R+'" cy="'+y.toFixed(1)+'" r="4" fill="'+colors[si]+'"/>';
+  g+='<text x="'+(R+10)+'" y="'+(y+shift+4).toFixed(1)+'" font-size="13" font-family="Georgia,serif" fill="'+colors[si]+'">'+NAMES[top4[si]].split(" ").pop()+" "+v.toFixed(1)+'%</text>';});
  g+='<g id="tcross"></g><rect id="thot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
  $("#trend").innerHTML=g;
  $("#legend").innerHTML=top4.map(function(k,i){return '<span data-i="'+i+'" class="'+(TSHOW[i]?"":"off")+'"><i style="background:'+colors[i]+'"></i>'+NAMES[k]+'</span>';}).join("");
@@ -286,9 +302,12 @@ function wireTrendHover(){var hot=document.getElementById("thot"),svg=$("#trend"
    out+='<text x="'+(bx+10)+'" y="'+(by+18+18*li)+'" font-size="13" font-family="Georgia,serif" fill="'+col+'">'+txt+'</text>';});
   document.getElementById("tcross").innerHTML=out;};
  hot.onmouseleave=function(){document.getElementById("tcross").innerHTML="";};}
-var ALPHA=1.4;
-function impliedPrices(){var sumS=0,sumM=0;ORDER.forEach(function(k){if(AVG[k]!=null&&MKT[k]!=null){sumS+=Math.pow(AVG[k],ALPHA);sumM+=MKT[k];}});
- var out={};ORDER.forEach(function(k){if(AVG[k]!=null&&sumS>0)out[k]=Math.pow(AVG[k],ALPHA)/sumS*sumM;});return out;}
+var FIT_B0=0.1794,FIT_B1=0.8572;
+function impliedPrices(){var tot=0;ORDER.forEach(function(k){if(AVG[k]!=null)tot+=AVG[k];});
+ var raw={},S=0;ORDER.forEach(function(k){if(AVG[k]==null||tot<=0)return;
+  var z=FIT_B0+FIT_B1*Math.log(Math.max(AVG[k],0.5)/tot);raw[k]=1/(1+Math.exp(-z));S+=raw[k];});
+ var out={},scale=S>0?0.95/S:0;
+ for(var k in raw)out[k]=raw[k]*scale*100;return out;}
 function verdict(k,poll,mkt){if(poll==null||mkt==null)return"—";
  var gap=mkt-poll;
  if(k==="ossoff")return "He says he is not running — but so did Obama in 2006. The market prices the precedent, not the denial.";
@@ -301,8 +320,8 @@ function renderEdge(){var IMP=impliedPrices();
  $("#edgebody").innerHTML=ORDER.map(function(k){var pv=AVG[k],mv=MKT[k],iv=IMP[k];
  var gap=(iv!=null&&mv!=null)?(mv-iv):null;
  var cls=gap==null?"":(gap>0?"up":"dn");
- var tag=gap==null?"":(Math.abs(gap)>=8?' <span class="tag hot">big gap</span>':(Math.abs(gap)<3?' <span class="tag cool">fair</span>':""));
- return '<tr><td><b>'+NAMES[k]+'</b>'+tag+'</td><td class="r">'+(pv!=null?pv.toFixed(1)+"%":"—")+'</td><td class="r">'+(iv!=null?iv.toFixed(1)+"¢":"—")+'</td><td class="r">'+(mv!=null?mv.toFixed(1)+"¢"+(mktLive?"":"~"):"—")+'</td><td class="r '+cls+'">'+(gap!=null?((gap>0?"+":"")+gap.toFixed(1)+"¢"):"—")+'</td><td>'+verdict(k,pv,mv)+'</td></tr>';}).join("");}
+ var big=gap!=null&&Math.abs(gap)>=8;
+ return '<tr><td><b>'+NAMES[k]+'</b></td><td class="r">'+(pv!=null?pv.toFixed(1)+"%":"—")+'</td><td class="r">'+(iv!=null?iv.toFixed(1)+"¢":"—")+'</td><td class="r">'+(mv!=null?mv.toFixed(1)+"¢"+(mktLive?"":"~"):"—")+'</td><td class="r '+cls+'" style="'+(big?"font-weight:700;font-size:15px":"")+'">'+(gap!=null?((gap>0?"+":"")+gap.toFixed(1)+"¢"):"—")+'</td><td>'+verdict(k,pv,mv)+'</td></tr>';}).join("");}
 function fetchMkt(){var t=setTimeout(function(){},0);
  var to=new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"))},9000)});
  Promise.race([fetch("https://gamma-api.polymarket.com/events?slug=democratic-presidential-nominee-2028"),to])
