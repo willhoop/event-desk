@@ -50,6 +50,23 @@
   section{border-bottom:1px solid var(--rule);padding-bottom:30px}
   section:last-of-type{border-bottom:0}
   @media(max-width:640px){.grid6{grid-template-columns:1fr 1fr}}
+
+  /* MOBILE-PASS */
+  @media(max-width:720px){
+    .wrap{padding:0 14px 60px}
+    h1{font-size:26px}
+    .sechead .t{font-size:22px}
+    .sechead .d{display:none}
+    .lead{font-size:14px}
+    table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+    th{font-size:10.5px}
+    td{padding:8px 8px;font-size:12.5px}
+    .grid6{grid-template-columns:1fr}
+    .pc .v{font-size:24px}
+    .legend span{padding:8px 10px;font-size:10px}
+    .eav{width:38px!important;height:38px!important}
+    #avgcards .pc>div:first-child{width:56px!important;height:56px!important}
+  }
 </style>
 </head>
 <body>

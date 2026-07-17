@@ -43,6 +43,22 @@
   .note{font-family:var(--mono);font-size:11px;color:var(--faint);margin:6px 0 0}
   section{padding-bottom:8px}
   #tip{position:fixed;pointer-events:none;background:var(--paper2);border:1px solid var(--rule);border-radius:4px;padding:8px 12px;font-size:13px;display:none;z-index:9}
+
+  /* MOBILE-PASS */
+  @media(max-width:720px){
+    .wrap{padding:0 12px 60px}
+    h1{font-size:26px}
+    .sechead .t{font-size:22px}
+    .sechead .d{display:none}
+    .lead{font-size:14px}
+    .ctl{gap:14px}
+    .ctl label{width:100%}
+    .ctl input[type=range]{flex:1}
+    .stats{grid-template-columns:1fr 1fr}
+    .pc .v{font-size:23px}
+    .evbar{font-size:10px}
+    .legend{gap:10px;font-size:9.5px}
+  }
 </style>
 </head>
 <body>

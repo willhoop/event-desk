@@ -152,6 +152,35 @@
   footer{border-top:3px double var(--ink);margin-top:38px;padding:14px 0 44px;font-family:var(--mono);font-size:10.5px;color:var(--faint);text-transform:uppercase}
   a{color:var(--oxblood)}
   @media(max-width:720px){.cards{grid-template-columns:1fr}.rcards{grid-template-columns:1fr}h1{font-size:28px}.builder .row{font-size:14px}}
+
+  /* MOBILE-PASS */
+  @media(max-width:720px){
+    .wrap{padding:0 14px 60px}
+    h1{font-size:26px}
+    .mast{padding-top:6px}
+    #tabs{overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;display:flex;gap:2px}
+    #tabs::-webkit-scrollbar{display:none}
+    .tab{padding:10px 10px;font-size:11.5px;flex:none}
+    .ticker{font-size:10.5px}
+    .sechead .t{font-size:22px}
+    .sechead .d{display:none}
+    h2.dek{font-size:19px}
+    .lead{font-size:14px}
+    table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+    th{font-size:10.5px}
+    .chips{grid-template-columns:1fr 1fr}
+    .chip{padding:12px 10px}
+    .chartbox{padding:10px 8px}
+    .clbl span[data-i]{padding:8px 10px;font-size:10px}
+    .rowbtn{padding:9px 10px}
+    input,select{font-size:16px}
+    #cmode{font-size:16px;min-width:150px}
+    .vrow{flex-wrap:wrap}
+    .vrow select{max-width:100%!important;width:100%}
+    #ossface{width:64px;height:64px}
+    .invitem{font-size:13.5px}
+    section{scroll-margin-top:140px}
+  }
 </style>
 </head>
 <body>

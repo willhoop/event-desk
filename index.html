@@ -59,6 +59,18 @@
   .w h3{font-family:var(--serif);font-size:16px;margin:0 0 4px}
   .w p{margin:0;font-size:13px;color:var(--ink2)}
   footer{border-top:3px double var(--ink);margin-top:52px;padding:18px 0 54px;font-family:var(--mono);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;text-align:center}
+
+  /* MOBILE-PASS */
+  @media(max-width:760px){
+    .wrap{padding:0 14px 60px}
+    .leadstory{grid-template-columns:1fr;gap:18px}
+    .leadstory h2{font-size:29px}
+    .leadstory p{font-size:15px}
+    .secstory{border-right:none;border-bottom:1px solid var(--rule);padding:18px 0}
+    .secstory+.secstory{padding-left:0}
+    .tick{font-size:10.5px}
+    h1{font-size:40px}
+  }
 </style>
 </head>
 <body>
