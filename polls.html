@@ -90,7 +90,7 @@
     <p class="lead">Hover for exact numbers; click a name to hide a line. This is the whole story in one picture: Harris wide but flat, the pack compressing beneath her.</p>
     <div class="chart">
       <svg id="trend" width="100%" viewBox="0 0 1000 320" preserveAspectRatio="none"></svg>
-      <div class="legend" id="legend" style="margin:10px 0 4px;justify-content:center"></div>
+      <div class="legend" id="legend" style="margin:10px 0 4px;justify-content:flex-start"></div>
     </div>
     <p class="note">Weighted rolling average over a 90-day window, sampled monthly. Harris's lead is wide but shrinking; the pack behind her is compressing.</p>
   </section>
@@ -173,7 +173,9 @@
     <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
       <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site · PDFs here, raw DOCX/PPTX kept in the repo</p>
       <style>.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
-.libcard{display:block;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.libcard{display:flex;flex-direction:column;align-items:flex-start;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.libcard p{flex:1}
+.libcard .dl{margin-top:auto}
 .libcard:hover{border-color:var(--ember)}
 .libcard .ft{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;background:var(--chipbg);color:var(--ink2);padding:2px 8px;border-radius:10px;text-transform:uppercase}
 .libcard h4{font-family:var(--serif);font-size:15.5px;margin:9px 0 4px;font-weight:700}
@@ -324,7 +326,7 @@ function renderTrend(){var months=[];var t0=Date.UTC(2026,0,25),t1=Date.now();
   g+='<text x="'+(R+10)+'" y="'+(y+shift+4).toFixed(1)+'" font-size="13" font-family="Georgia,serif" fill="'+colors[si]+'">'+NAMES[top4[si]].split(" ").pop()+" "+v.toFixed(1)+'%</text>';});
  g+='<g id="tcross"></g><rect id="thot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
  $("#trend").innerHTML=g;
- $("#legend").innerHTML=top4.map(function(k,i){return '<span data-i="'+i+'" class="'+(TSHOW[i]?"":"off")+'" title="click to show/hide">'+(TSHOW[i]?"✓ ":"✕ ")+'<i style="background:'+colors[i]+'"></i>'+NAMES[k]+'</span>';}).join("");
+ $("#legend").innerHTML=top4.map(function(k,i){return '<span data-i="'+i+'" class="'+(TSHOW[i]?"":"off")+'" title="click to show/hide">'+(TSHOW[i]?"✓ ":"✕ ")+'<i style="background:'+colors[i]+'"></i>'+(k==="aoc"?"AOC":NAMES[k].split(" ").pop())+'</span>';}).join("");
  Array.prototype.forEach.call($("#legend").querySelectorAll("span"),function(sp){sp.onclick=function(){var i=+sp.dataset.i;TSHOW[i]=!TSHOW[i];renderTrend();};});
  wireTrendHover();}
 function wireTrendHover(){var hot=document.getElementById("thot"),svg=$("#trend");if(!hot)return;

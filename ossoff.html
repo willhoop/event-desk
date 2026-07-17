@@ -63,7 +63,7 @@
   .mk .t{font-size:12px;color:var(--ink2)}
   .chartbox{background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:14px 16px;margin-top:10px}
   .chartbox .clbl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);display:flex;gap:10px;flex-wrap:wrap}
-  .clbl span[data-i],.clbl>span:not(#chartnote){border:1px solid var(--faint);border-radius:4px;padding:6px 12px;cursor:pointer;user-select:none;transition:border-color .12s;background:var(--paper)}
+  .clbl span[data-i],.clbl>span:not(#chartnote){white-space:nowrap;border:1px solid var(--faint);border-radius:4px;padding:6px 12px;cursor:pointer;user-select:none;transition:border-color .12s;background:var(--paper)}
   .clbl span[data-i]:hover{border-color:var(--faint)}
   .clbl span.off{opacity:.45;border-style:dashed;text-decoration:line-through}
   .chartbox .clbl .sw{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:5px}
@@ -206,6 +206,7 @@
       </div>
     </div>
     <div id="errbar"></div>
+    <div class="ticker" id="ticker"></div>
     <div class="tabs" id="tabs">
       <button class="tab on" data-t="home">Home</button>
       <button class="tab" data-t="markets">Markets</button>
@@ -214,7 +215,6 @@
       <button class="tab" data-t="mybets">My bets</button>
       <button class="tab" data-t="help">Help</button>
     </div>
-    <div class="ticker" id="ticker"></div>
   </div>
 
   <!-- HOME -->
@@ -238,7 +238,7 @@
         <button id="cnext" style="background:none;border:1px solid var(--rule);color:var(--ink);border-radius:4px;width:34px;height:30px;font-size:16px;cursor:pointer" title="next market">›</button>
       </div>
 <svg id="chart" viewBox="0 0 720 190" style="width:100%;height:auto;display:block" aria-label="Price history"></svg>
-      <div class="clbl" id="clbl" style="margin-top:10px;justify-content:center"></div>
+      <div class="clbl" id="clbl" style="margin-top:10px;justify-content:flex-start"></div>
       <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
         <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button><button class="rowbtn crb" data-r="1y">1Y</button>
         <span style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:auto">hover for values · the names below are the menu: click to add or remove a candidate</span>
@@ -427,7 +427,9 @@
   <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
       <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site · PDFs here, raw DOCX/PPTX kept in the repo</p>
       <style>.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
-.libcard{display:block;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.libcard{display:flex;flex-direction:column;align-items:flex-start;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.libcard p{flex:1}
+.libcard .dl{margin-top:auto}
 .libcard:hover{border-color:var(--oxblood)}
 .libcard .ft{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;background:var(--chipbg);color:var(--ink2);padding:2px 8px;border-radius:10px;text-transform:uppercase}
 .libcard h4{font-family:var(--serif);font-size:15.5px;margin:9px 0 4px;font-weight:700}
@@ -610,7 +612,7 @@ function drawChart(){
    svg+='<text x="656" y="'+(y+shift+5).toFixed(1)+'" font-size="14" font-weight="bold" font-family="Georgia,serif" fill="'+s.color+'">'+(x.p*100).toFixed(1)+'¢</text>';});
   svg+='<g id="xh"></g><rect id="chotspot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
   $("#chart").innerHTML=svg;
-  var lb=$("#clbl");if(lb){lb.innerHTML=raw.map(function(s,i){return '<span data-i="'+i+'" class="'+(show[i]?"":"off")+'" title="click to show/hide">'+(show[i]?"✓ ":"✕ ")+'<span class="sw" style="background:'+candColor(s.name,i)+'"></span>'+s.name+'</span>';}).join("")+'<span id="chartnote" style="margin-left:auto"></span>';
+  var lb=$("#clbl");if(lb){lb.innerHTML=raw.map(function(s,i){return '<span data-i="'+i+'" class="'+(show[i]?"":"off")+'" title="click to show/hide">'+(show[i]?"✓ ":"✕ ")+'<span class="sw" style="background:'+candColor(s.name,i)+'"></span>'+(function(n){if(/ocasio/i.test(n))return "AOC";var p=n.trim().split(" ");return p.length>1?p[p.length-1]:n;})(s.name)+'</span>';}).join("")+'<span id="chartnote" style="margin-left:auto"></span>';
    Array.prototype.forEach.call(lb.querySelectorAll("span[data-i]"),function(sp){sp.onclick=function(){var i=+sp.dataset.i;show[i]=!show[i];drawChart();};});}
   var cn=$("#chartnote");if(cn)cn.textContent="updated "+new Date(t1*1000).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric"});
   wireHover();
