@@ -96,6 +96,10 @@
   .stop .p{font-family:var(--mono);font-size:12px;color:var(--green);margin-top:2px}
   .vrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule)}
   .vrow:last-child{border-bottom:0}.vrow .vn{font-family:var(--serif);font-size:15px;font-weight:700;flex:1}
+  .sechead{display:flex;align-items:baseline;gap:14px;border-top:3px double var(--ink);padding-top:18px;margin:6px 0 16px}
+  .sechead .n{font-family:var(--mono);font-size:11px;color:var(--oxblood);letter-spacing:.28em}
+  .sechead .t{font-family:var(--serif);font-size:27px;font-weight:700}
+  .sechead .d{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-left:auto}
   .invtest{display:grid;gap:0;border:1.5px solid var(--rule);border-radius:6px;background:var(--paper2);margin:10px 0 22px}
   .invitem{padding:12px 16px;font-size:14px;line-height:1.55;color:var(--ink2);border-bottom:1px solid var(--rule)}
   .invitem:last-child{border-bottom:none}
@@ -118,8 +122,10 @@
   .rcard .kv{display:flex;gap:10px;padding:7px 0;border-top:1px solid var(--rule);font-size:12.5px;line-height:1.4}
   .rcard .kv b{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;color:var(--faint);min-width:74px;flex:none;padding-top:2px}
   .lvl{font-weight:700}.lvl.lo{color:var(--green)}.lvl.mid{color:var(--gold)}
-  .plain{max-width:80ch;color:var(--ink2);margin:6px 0 0;font-size:14px}.plain b{color:var(--ink);font-family:var(--serif)}
-  #s-help .plain p{margin:0 0 16px}
+  .plain{color:var(--ink2);margin:6px 0 0;font-size:14px}.plain b{color:var(--ink);font-family:var(--serif)}
+  #s-help .plain{display:grid;gap:0;border:1.5px solid var(--rule);border-radius:6px;background:var(--paper2);margin:10px 0 22px}
+  #s-help .plain p{margin:0;padding:12px 16px;border-bottom:1px solid var(--rule);line-height:1.55}
+  #s-help .plain p:last-child{border-bottom:none}
   section{padding-top:10px}
   h2.dek{margin-top:30px}
   .builder{background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:16px 18px;margin-top:10px}
@@ -150,12 +156,12 @@
   <div class="mast">
     <div class="mrow">
       <div style="display:flex;align-items:center;gap:16px">
-        <svg width="52" height="52" viewBox="0 0 110 110" aria-hidden="true" style="flex:none">
+        <a href="index.html" title="Elite Four Capital — home" style="flex:none;line-height:0"><svg width="52" height="52" viewBox="0 0 110 110" aria-hidden="true">
           <rect x="42" y="14" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 55 27)"/>
           <rect x="14" y="42" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 27 55)"/>
           <rect x="70" y="42" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 83 55)"/>
           <rect x="42" y="70" width="26" height="26" fill="var(--oxblood)" transform="rotate(45 55 83)"/>
-        </svg>
+        </svg></a>
         <div>
         <div class="kicker">Elite Four Capital</div>
         <h1>Event Desk</h1>
@@ -186,6 +192,7 @@
 
   <!-- HOME -->
   <section id="s-home">
+    <div class="sechead"><span class="n">01</span><span class="t">Home</span><span class="d">today's call, one number</span></div>
     <div class="call"><div class="lab">Today's best idea</div><h3 id="callTitle">Loading prices…</h3><p id="callBody"></p></div>
     <h2 class="dek">What happens to Jon Ossoff in 2028? Pick your call.</h2>
     <div class="picker" id="picker"></div>
@@ -200,12 +207,13 @@
         <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button>
         <span style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:auto">hover for values · click a name below to hide it</span>
       </div>
-      <div class="clbl"><span><span class="sw" style="background:var(--oxblood)"></span>Nominee</span><span><span class="sw" style="background:var(--gold)"></span>Presidency</span><span id="chartnote" style="margin-left:auto"></span></div>
+      <div class="clbl"><span><span class="sw" style="background:var(--oxblood)"></span>Nominee</span><span><span class="sw" style="background:#7d9fd4"></span>Presidency</span><span id="chartnote" style="margin-left:auto"></span></div>
       <svg id="chart" viewBox="0 0 720 190" style="width:100%;height:auto;display:block" aria-label="One week price history"></svg>
     </div>
   </section>
 
   <section id="s-markets">
+    <div class="sechead"><span class="n">02</span><span class="t">Markets</span><span class="d">live prices and where to buy</span></div>
     <h2 class="dek">Your watchlist</h2>
     <p class="lead">Live prices for everything you follow. Type a name below — we search Polymarket for you.</p>
     <table id="watchT"><thead><tr><th>Market</th><th>Polymarket</th><th>Kalshi</th><th>Today</th><th>Month</th><th></th></tr></thead><tbody></tbody></table>
@@ -235,8 +243,8 @@
         <div class="vtot" style="padding-top:4px;color:var(--faint);font-size:13px"><span>pays if right</span><b id="vk_pay">—</b></div>
       </div>
     </div>
-    <div class="vrow"><span class="vn">Polymarket risk discount <span style="color:var(--faint);font-size:11.5px">— what its extra risks (crypto wallet, oracle disputes, messier taxes) are worth avoiding, per trade</span></span><select id="o_pen" style="max-width:340px">
-      <option value="0">0% — I fully trust Polymarket</option>
+    <div class="vrow"><span class="vn">Polymarket risk discount <span style="color:var(--faint);font-size:11.5px">— its extra risk versus Kalshi (crypto wallet, oracle disputes, messier taxes). Both venues carry base risk — see Arbitrage &amp; risk. This prices only the difference.</span></span><select id="o_pen" style="max-width:340px">
+      <option value="0">0% — treat both venues as equally safe</option>
       <option value="2">2% — crypto-savvy, short holds, hardware wallet</option>
       <option value="5" selected>5% — typical: self-custody + oracle-dispute risk (default)</option>
       <option value="10">10% — cautious, longer holds, bigger money</option>
@@ -250,6 +258,7 @@
     <div class="invtest" style="margin:10px 0 18px">
       <div class="invitem"><b>Market order</b> — "buy it right now at whatever it costs." Instant, but you pay the trading fee.</div>
       <div class="invitem"><b>Limit order</b> — "I will pay 14¢ and not a penny more." Your offer waits in a queue until someone sells at your price. No fee and a better price, but it may never fill.</div>
+      <div class="invitem"><b>How fair is the queue?</b> Both venues run price-time priority: better prices trade first, and at the same price, whoever posted first fills first. Nobody can pay to cut in front of you. On Kalshi that is a regulatory obligation — it is a CFTC-designated exchange required to give impartial access. On Polymarket it is the operator's stated rule, matched off-chain by their engine, so you are trusting their software rather than a regulator's audit. Two honest caveats: professional traders with faster connections will beat you to a NEW price level (they arrive earlier — that is legal everywhere), and editing your resting order resets your place in line.</div>
     </div>
     <p class="lead" style="margin-bottom:18px">The two dials below are pre-answered from the last month of real prices. Override them only if you know something the tape does not.</p>
     <div class="vrow"><span class="vn">1 · How jumpy is this market today?</span>
@@ -262,6 +271,7 @@
   </section>
 
   <section id="s-ideas">
+    <div class="sechead"><span class="n">03</span><span class="t">Bet ideas</span><span class="d">every way to play it</span></div>
         <h2 class="dek">The odds right now</h2>
     <p class="lead">Each number is the market's live probability. A 14% price costs 14¢ and pays $1 if it happens.</p>
     <div class="cards" id="cards"></div>
@@ -277,7 +287,7 @@
       <div class="invitem"><b>7. The venue itself will still be standing.</b> Regulation and counterparty risk — covered in the Arbitrage &amp; risk section below.</div>
     </div>
     <p class="lead" style="margin-top:10px">The Ossoff markets pass: certified election outcomes, named sources, fixed dates, deep volume. The tie/void fine print for each one is linked from its card.</p>
-    <p class="lead"><b>One more input before you bet:</b> national polls put Ossoff near 2% while the market prices him around 14¢ — and he has publicly said he is not running. That gap is either the market's foresight or its mistake. The <a href="polls.html" style="color:var(--oxblood)">Polling Desk</a> runs our FiveThirtyEight-style average against the market, row by row.</p>
+    <p class="lead"><b>One more input before you bet:</b> national polls put Ossoff near 2% while the market prices him around 14¢. He has said he is not running — but Obama said exactly that in January 2006 and announced thirteen months later, so the market prices the precedent, not the denial. The <a href="polls.html" style="color:var(--oxblood)">Polling Desk</a> runs our FiveThirtyEight-style average against the market, row by row.</p>
     <h2 class="dek">Every way to bet Jon Ossoff 2028</h2>
     <p class="lead">Cheapest first. "You win when" is the only column that matters — pick the row that matches what you believe.</p>
     <table id="menu"><thead><tr><th>The bet</th><th></th><th>Costs</th><th>Pays</th><th>You win when…</th></tr></thead><tbody></tbody></table>
@@ -295,6 +305,7 @@
   </section>
 
   <section id="s-free">
+    <div class="sechead"><span class="n">04</span><span class="t">Arbitrage</span><span class="d">locked profits and real risks</span></div>
     <h2 class="dek">The arbitrage scan</h2>
     <p class="lead">Sometimes prices disagree in ways that guarantee a profit. Rare, small, and gone fast — but this page checks live.</p>
     <h2 class="dek" style="font-size:17px">Check 1 — the impossible price</h2>
@@ -308,6 +319,7 @@
   </section>
 
   <section id="s-mybets">
+    <div class="sechead"><span class="n">05</span><span class="t">My bets</span><span class="d">your tracker, not a broker</span></div>
     <h2 class="dek">Log a bet <span id="bookpl" style="font-family:var(--mono);font-size:14px"></span></h2>
     <p class="lead">This is a tracker, not a broker — nothing is bought or sold here. Log what you did on Polymarket/Kalshi and watch it live.</p>
     <div class="builder">
@@ -328,6 +340,7 @@
   </section>
 
   <section id="s-help">
+    <div class="sechead"><span class="n">06</span><span class="t">Help</span><span class="d">how all of this works</span></div>
     <h2 class="dek">How this all works, in 60 seconds</h2>
     <div class="plain">
       <p><b>1 · Price = probability.</b> A "Yes" share costing 14¢ pays $1 if the thing happens. So the market thinks: 14% chance.</p>
@@ -354,6 +367,16 @@
     <p class="lead" style="font-size:12.5px">Green = live · amber = saved snapshot (normal for Kalshi — they block browsers) · red = actually broken.</p>
     <div class="diag" id="diag"></div>
   </section>
+  <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
+      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0 0 8px">The library — papers and decks, updated with the site</p>
+      <p style="font-size:14px;color:var(--ink2);margin:0">
+        <a href="EliteFour_Polling_WhitePaper.docx" style="color:var(--oxblood)">Poll aggregation and pollster credibility (DOCX)</a> ·
+        <a href="EliteFour_Quant_WhitePaper.docx" style="color:var(--oxblood)">The quant white paper: wedge, venues, fees, arbitrage (DOCX)</a> ·
+        <a href="EliteFour_Tax_WhitePaper.docx" style="color:var(--oxblood)">The tax strategy (DOCX)</a> ·
+        <a href="deck.pptx" style="color:var(--oxblood)">The board deck (PPTX)</a>
+      </p>
+    </div>
+
 
   <!-- IDEAS -->
 
@@ -495,8 +518,8 @@ function drawChart(){
   '<text x="'+L+'" y="178" font-size="13" font-family="Georgia,serif" fill="var(--faint)">'+new Date(t0*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"})+'</text>'+
   '<text x="'+(R-46)+'" y="178" font-size="13" font-family="Georgia,serif" fill="var(--faint)">today</text>'+
   (a?'<path d="'+path(a)+'" fill="none" stroke="var(--oxblood)" stroke-width="2.5" stroke-linejoin="round"/>':"")+
-  (b?'<path d="'+path(b)+'" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linejoin="round"/>':"")+
-  (a?endLbl(a,"var(--oxblood)",sA):"")+(b?endLbl(b,"var(--gold)",sB):"")+
+  (b?'<path d="'+path(b)+'" fill="none" stroke="#7d9fd4" stroke-width="2.5" stroke-linejoin="round"/>':"")+
+  (a?endLbl(a,"var(--oxblood)",sA):"")+(b?endLbl(b,"#7d9fd4",sB):"")+
   '<g id="xh"></g><rect id="chotspot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
  var last=((a&&a.length)?a[a.length-1].t:t1);
  $("#chartnote").textContent="updated "+new Date(last*1000).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric"});
@@ -519,10 +542,10 @@ function wireHover(){
   var lines=[lab];if(pa)lines.push("Nominee "+(pa.p*100).toFixed(1)+"¢");if(pb)lines.push("Presidency "+(pb.p*100).toFixed(1)+"¢");
   var bx=Math.min(Math.max(xx+10,L),R-150),by=T+6;
   var tip='<rect x="'+bx+'" y="'+by+'" width="140" height="'+(16*lines.length+10)+'" rx="3" fill="var(--paper2)" stroke="var(--rule)"/>';
-  lines.forEach(function(ln,i){tip+='<text x="'+(bx+8)+'" y="'+(by+16+16*i)+'" font-size="12" font-family="Georgia,serif" fill="'+(i===0?"var(--faint)":(ln.indexOf("Nominee")===0?"var(--oxblood)":"var(--gold)"))+'">'+ln+'</text>';});
+  lines.forEach(function(ln,i){tip+='<text x="'+(bx+8)+'" y="'+(by+16+16*i)+'" font-size="12" font-family="Georgia,serif" fill="'+(i===0?"var(--faint)":(ln.indexOf("Nominee")===0?"var(--oxblood)":"#7d9fd4"))+'">'+ln+'</text>';});
   $("#xh").innerHTML='<line x1="'+xx+'" y1="'+T+'" x2="'+xx+'" y2="'+B+'" stroke="var(--faint)" stroke-width="1" stroke-dasharray="3 4"/>'+
    (pa?'<circle cx="'+xx+'" cy="'+Y2(pa.p)+'" r="4.5" fill="var(--oxblood)"/>':"")+
-   (pb?'<circle cx="'+xx+'" cy="'+Y2(pb.p)+'" r="4.5" fill="var(--gold)"/>':"")+tip;
+   (pb?'<circle cx="'+xx+'" cy="'+Y2(pb.p)+'" r="4.5" fill="#7d9fd4"/>':"")+tip;
  }
  hs.addEventListener("mousemove",move);hs.addEventListener("touchmove",move);
  hs.addEventListener("mouseleave",function(){$("#xh").innerHTML="";});
@@ -535,10 +558,13 @@ var VIEWS=[
 function trades(){
  var nY=nomYes()||0.14,pY=presYes()||0.075;
  var nA=(md[NOM]&&md[NOM].ask)||nY,pA=(md[PRES]&&md[PRES].ask)||pY;
+ var c=pY/nY;
+ var wedgeB=c>=0.42?["b-pick","house pick"]:["b-value","value"];
+ var presB=c<=0.30?["b-pick","house pick"]:["b-long","longshot"];
  return [
- {id:"wedge",name:"The Wedge",badge:["b-pick","house pick"],cost:nA-pY,pays:"big",winsif:"he's nominated but loses in November",special:1,nA:nA,pA:pA},
+ {id:"wedge",name:"The Wedge",badge:wedgeB,cost:nA-pY,pays:"big",winsif:"he's nominated but loses in November",special:1,nA:nA,pA:pA},
  {id:"nomYes",name:"He gets nominated",badge:["b-value","simple"],cost:nA,pays:(1/nA).toFixed(1)+"×",winsif:"he's the Democratic nominee",wins:{win:1,lose:1}},
- {id:"presYes",name:"He wins the White House",badge:["b-long","longshot"],cost:pA,pays:(1/pA).toFixed(1)+"×",winsif:"he wins the presidency",wins:{win:1}},
+ {id:"presYes",name:"He wins the White House",badge:presB,cost:pA,pays:(1/pA).toFixed(1)+"×",winsif:"he wins the presidency",wins:{win:1}},
  {id:"presNo",name:"He does NOT win it all",badge:["b-low","safe"],cost:1-pY,pays:(1/(1-pY)).toFixed(2)+"×",winsif:"anyone else becomes president",wins:{lose:1,none:1}},
  {id:"nomNo",name:"He is NOT the nominee",badge:["b-low","contrarian"],cost:1-nY,pays:(1/(1-nY)).toFixed(2)+"×",winsif:"the Democrats pick someone else",wins:{none:1}}];}
 function profitFor(t,s,v){
@@ -652,7 +678,7 @@ function renderOpt(){
  var pw=aP<aK;
  $("#vc_poly").classList.toggle("win",pw);$("#vc_kal").classList.toggle("win",!pw);
  $("#o_verdict").innerHTML=(pw?"Buy on <b>Polymarket</b> — cheaper true cost even after your risk discount.":"Buy on <b>Kalshi</b> — after fees, its interest on your "+months+"-month hold, and your risk discount, it wins right now.");
- var mn=$("#menunote");if(mn)mn.textContent=(md[NOM]&&md[PRES])?"Wedge line: the cost shown is your money at risk per $1 pair; total cash outlay is about $1.07 per pair — the calculator above uses outlay.":"Prices still loading — numbers in this table are placeholders until the live feed answers.";
+ var mn=$("#menunote");if(mn)mn.textContent=(md[NOM]&&md[PRES])?"Wedge line: the cost shown is your money at risk per $1 pair; total cash outlay is about $1.07 per pair — the calculator above uses outlay. The house pick is not fixed: it re-checks the live prices. The Wedge holds the badge while the market gives a nominated Ossoff at least a 42% shot at the White House; if that conditional ever drops under 30%, the cheap side flips and the badge moves to He wins the White House.":"Prices still loading — numbers in this table are placeholders until the live feed answers.";
 }
 var monthHist=null;
 function fetchMonth(){var d=md[NOM];if(!d||!d.tok)return Promise.resolve();
@@ -684,7 +710,7 @@ function renderShop(){
   var mv=$("#cr_move"),rn=$("#cr_run");
   if(mv&&!mv.dataset.touched){mv.value=per>0.06?"10":(per>0.02?"3":"1");}
   if(rn&&!rn.dataset.touched){rn.value=per>0.06?"0.75":(per>0.02?"0.5":"0.25");}
-  var an=$("#cr_auto");if(an)an.textContent="Pre-filled from the last month of prices: this market moves ~"+(per*100).toFixed(1)+"%/day. Change the answers if you know something new.";
+  var an=$("#cr_auto");if(an){var nowP=nomYes()||0.145;an.textContent="Pre-filled from the last month of prices: this market moves ~"+(per*100).toFixed(1)+"%/day — that is a percent of the price, not percentage points. At "+(nowP*100).toFixed(1)+"\u00a2 that means roughly \u00b1"+(nowP*per*100).toFixed(1)+"\u00a2 on a typical day. Change the answers if you know something new.";}
   if(typeof crCalc==="function")crCalc();
  }catch(e){}
  $("#shopNote").textContent="Method: average absolute hourly move, bucketed into US-Eastern 3-hour windows, over ~30 days of this market ("+s.length+" hourly points). One market, one month — a lean, not a law.";
