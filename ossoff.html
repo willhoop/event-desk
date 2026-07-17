@@ -250,6 +250,26 @@
     
     <p class="verdict" id="o_verdict" style="font-size:15.5px"></p>
 
+    <h2 class="dek">The fee, at every price</h2>
+    <p class="lead">Both stores charge price times one-minus-price times a coefficient — Kalshi 0.07, Polymarket 0.04. As a share of your stake the fee is worst on cheap longshots. Resting limit orders pay zero on both.</p>
+    <table style="max-width:560px;margin-bottom:20px"><thead><tr><th style="text-align:left">Contract price</th><th>Kalshi fee</th><th>Polymarket fee</th></tr></thead><tbody>
+      <tr><td><b>3¢</b> — deep longshot</td><td class="r" style="text-align:right;color:var(--oxblood)">6.8%</td><td style="text-align:right;color:var(--green)">3.9%</td></tr>
+      <tr><td><b>14¢</b> — Ossoff today</td><td style="text-align:right;color:var(--oxblood)">6.0%</td><td style="text-align:right;color:var(--green)">3.4%</td></tr>
+      <tr><td><b>50¢</b> — toss-up</td><td style="text-align:right;color:var(--oxblood)">3.5%</td><td style="text-align:right;color:var(--green)">2.0%</td></tr>
+      <tr><td><b>90¢</b> — favorite</td><td style="text-align:right;color:var(--oxblood)">0.7%</td><td style="text-align:right;color:var(--green)">0.4%</td></tr>
+    </tbody></table>
+    <h2 class="dek">The tax math — what you actually keep</h2>
+    <p class="lead">Yes, losses offset — if you get the treatment right. The IRS has not ruled on event contracts, so the fight is between two frameworks, and the difference is the whole strategy. Say a year of trading produces $500 of wins and $300 of losses — $200 of real profit:</p>
+    <table style="max-width:640px;margin-bottom:14px"><thead><tr><th style="text-align:left">Treatment</th><th>Taxable</th><th>Tax (24% bracket)</th><th>You keep</th></tr></thead><tbody>
+      <tr><td><b>Capital gains</b> — losses offset fully</td><td style="text-align:right">$200</td><td style="text-align:right">$48</td><td style="text-align:right;color:var(--green)">$152</td></tr>
+      <tr><td><b>Gambling, itemizing</b> — only 90% of losses deduct</td><td style="text-align:right">$230</td><td style="text-align:right">$55</td><td style="text-align:right">$145</td></tr>
+      <tr><td><b>Gambling, standard deduction</b> — losses deduct $0</td><td style="text-align:right">$500</td><td style="text-align:right">$120</td><td style="text-align:right;color:var(--oxblood)">$80</td></tr>
+    </tbody></table>
+    <div class="invtest" style="margin:0 0 20px">
+      <div class="invitem"><b>The strategy in one line:</b> defend capital treatment. Losses then offset gains dollar-for-dollar, plus $3,000 a year against ordinary income, with unlimited carryforward.</div>
+      <div class="invitem"><b>What defends it:</b> complete records of every fill — that is what "download my bets" on the My bets tab is for — plus consistent treatment every year, and selling positions early (trading behavior) rather than always holding to resolution (wager behavior).</div>
+      <div class="invitem"><b>Year-end move:</b> losers on the books in December are offsets — realizing them shelters the year's winners. Full reasoning and citations are in the tax paper below. Not tax advice; bring the records to a CPA.</div>
+    </div>
     <h2 class="dek">Buy now, or wait for your price?</h2>
     <div class="invtest" style="margin:10px 0 18px">
       <div class="invitem"><b>Market order</b> — "buy it right now at whatever it costs." Instant, but you pay the trading fee.</div>
@@ -364,14 +384,14 @@
     <div class="diag" id="diag"></div>
   </section>
   <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
-      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site</p>
+      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site · PDFs here, raw DOCX/PPTX kept in the repo</p>
       <style>.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
 .libcard{display:block;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
 .libcard:hover{border-color:var(--oxblood)}
 .libcard .ft{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;background:var(--chipbg);color:var(--ink2);padding:2px 8px;border-radius:10px;text-transform:uppercase}
 .libcard h4{font-family:var(--serif);font-size:15.5px;margin:9px 0 4px;font-weight:700}
 .libcard p{font-size:12.5px;color:var(--faint);margin:0 0 10px;line-height:1.5}
-.libcard .dl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--oxblood);text-transform:uppercase}</style><div class="lib"><a class="libcard" href="EliteFour_Quant_WhitePaper.docx" download><span class="ft">DOCX · 11 KB</span><h4>The quant white paper</h4><p>The math behind this desk: the wedge, venue and fee models, arbitrage checks, and convergence timing.</p><span class="dl">Download ↓</span></a><a class="libcard" href="EliteFour_Tax_WhitePaper.docx" download><span class="ft">DOCX · 12 KB</span><h4>The tax strategy</h4><p>How prediction-market gains and losses are taxed, and the record-keeping that protects you.</p><span class="dl">Download ↓</span></a><a class="libcard" href="deck.pptx" download><span class="ft">PPTX · 220 KB</span><h4>The board deck</h4><p>The whole thesis in twelve plain-English slides.</p><span class="dl">Download ↓</span></a></div>
+.libcard .dl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--oxblood);text-transform:uppercase}</style><div class="lib"><a class="libcard" href="EliteFour_Quant_WhitePaper.pdf" download><span class="ft">PDF · 115 KB</span><h4>The quant white paper</h4><p>The math behind this desk: the wedge, venue and fee models, arbitrage checks, and convergence timing.</p><span class="dl">Download ↓</span></a><a class="libcard" href="EliteFour_Tax_WhitePaper.pdf" download><span class="ft">PDF · 115 KB</span><h4>The tax strategy</h4><p>How prediction-market gains and losses are taxed, and the record-keeping that protects you.</p><span class="dl">Download ↓</span></a><a class="libcard" href="deck.pdf" download><span class="ft">PDF · 152 KB</span><h4>The board deck</h4><p>The whole thesis in twelve plain-English slides.</p><span class="dl">Download ↓</span></a></div>
     </div>
 
 

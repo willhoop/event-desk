@@ -66,7 +66,11 @@
     <div class="mapbox">
       <div class="evbar" id="evbar"></div>
       <div class="evmark"><span>270 TO WIN</span></div>
-      <svg id="map" width="100%" viewBox="0 0 780 560"></svg>
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <button class="vmb on" data-v="tiles" style="background:none;border:1px solid var(--ember);color:var(--ember);border-radius:4px;padding:6px 14px;font-family:var(--mono);font-size:11px;cursor:pointer;font-weight:700">TILES</button>
+        <button class="vmb" data-v="geo" style="background:none;border:1px solid var(--rule);color:var(--ink2);border-radius:4px;padding:6px 14px;font-family:var(--mono);font-size:11px;cursor:pointer">REAL MAP</button>
+      </div>
+      <svg id="map" width="100%" viewBox="0 0 810 540"></svg>
       <div class="legend">
         <span><i style="background:#2e5da8"></i>Safe D</span><span><i style="background:#5b8fd6"></i>Lean D</span>
         <span><i style="background:#8a9099"></i>Tossup</span>
@@ -115,7 +119,7 @@
   </section>
 
   <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
-      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site</p>
+      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site · PDFs here, raw DOCX/PPTX kept in the repo</p>
       <style>.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
 .libcard{display:block;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
 .libcard:hover{border-color:var(--ember)}
@@ -123,7 +127,7 @@
 .libcard h4{font-family:var(--serif);font-size:15.5px;margin:9px 0 4px;font-weight:700}
 .libcard p{font-size:12.5px;color:var(--faint);margin:0 0 10px;line-height:1.5}
 .libcard .dl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ember);text-transform:uppercase}</style>
-      <div class="lib"><a class="libcard" href="EliteFour_Polling_WhitePaper.docx" download><span class="ft">DOCX · 14 KB</span><h4>Poll aggregation and pollster credibility</h4><p>The engine that feeds this map its sense of the race — weights, house effects, pollster scores.</p><span class="dl">Download ↓</span></a></div>
+      <div class="lib"><a class="libcard" href="EliteFour_Polling_WhitePaper.pdf" download><span class="ft">PDF · 94 KB</span><h4>Poll aggregation and pollster credibility</h4><p>The engine that feeds this map its sense of the race — weights, house effects, pollster scores.</p><span class="dl">Download ↓</span></a></div>
   </div>
 </div>
 <div id="tip"></div>
@@ -133,11 +137,11 @@ var ST=[
 ["AK",3,-13,0,0],["ME",4,7,11,0],
 ["VT",3,32,10,1],["NH",4,2.8,11,1],
 ["WA",12,18.5,1,2],["MT",4,-20,3,2],["ND",3,-36,4,2],["SD",3,-29.5,5,2],["MN",10,4.2,6,2],["WI",10,-0.9,7,2],["MI",15,-1.4,8,2],["NY",28,12.5,9,2],["MA",11,25,10,2],["RI",4,14,11,2],
-["OR",8,14,1,3],["ID",4,-36.5,2,3],["WY",3,-46,3,3],["NE",5,-20,4,3],["IA",6,-13,5,3],["IL",19,11,6,3],["IN",11,-19,7,3],["OH",17,-11.2,8,3],["PA",19,-1.7,9,3],["NJ",14,6,10,3],["CT",7,14.5,11,3],
+["OR",8,14,1,3],["ID",4,-36.5,2,2],["NV",6,-3.1,2,3],["WY",3,-46,3,3],["NE",5,-20,4,3],["IA",6,-13,5,3],["IL",19,11,6,3],["IN",11,-19,7,3],["OH",17,-11.2,8,3],["PA",19,-1.7,9,3],["NJ",14,6,10,3],["CT",7,14.5,11,3],
 ["CA",54,20,1,4],["UT",6,-22,2,4],["CO",10,11,3,4],["KS",6,-16,4,4],["MO",10,-18.5,5,4],["KY",8,-30.5,6,4],["WV",4,-42,7,4],["VA",13,5.8,8,4],["MD",10,29,9,4],["DE",3,15,10,4],
 ["AZ",11,-5.5,2,5],["NM",5,6,3,5],["OK",7,-34,4,5],["AR",6,-31,5,5],["TN",11,-29.5,6,5],["NC",16,-3.2,7,5],["SC",9,-18,8,5],["DC",3,81,9,5],
 ["TX",40,-13.7,4,6],["LA",8,-22,5,6],["MS",6,-22.5,6,6],["AL",9,-30.5,7,6],["GA",16,-2.2,8,6],
-["HI",4,23,0,7],["NV",6,-3.1,1,7],["FL",30,-13,8,7]
+["HI",4,23,0,7],["FL",30,-13,8,7]
 ];
 var NAMES={AK:"Alaska",ME:"Maine",VT:"Vermont",NH:"New Hampshire",WA:"Washington",MT:"Montana",ND:"North Dakota",SD:"South Dakota",MN:"Minnesota",WI:"Wisconsin",MI:"Michigan",NY:"New York",MA:"Massachusetts",RI:"Rhode Island",OR:"Oregon",ID:"Idaho",WY:"Wyoming",NE:"Nebraska",IA:"Iowa",IL:"Illinois",IN:"Indiana",OH:"Ohio",PA:"Pennsylvania",NJ:"New Jersey",CT:"Connecticut",CA:"California",UT:"Utah",CO:"Colorado",KS:"Kansas",MO:"Missouri",KY:"Kentucky",WV:"West Virginia",VA:"Virginia",MD:"Maryland",DE:"Delaware",AZ:"Arizona",NM:"New Mexico",OK:"Oklahoma",AR:"Arkansas",TN:"Tennessee",NC:"North Carolina",SC:"South Carolina",DC:"District of Columbia",TX:"Texas",LA:"Louisiana",MS:"Mississippi",AL:"Alabama",GA:"Georgia",HI:"Hawaii",NV:"Nevada",FL:"Florida"};
 var lock={};
@@ -147,8 +151,35 @@ function col(m,locked){
  if(m>=10)return "#2e5da8"; if(m>=2)return "#5b8fd6"; if(m>-2)return "#8a9099"; if(m>-10)return "#d0564a"; return "#a33227";}
 function swing(){return parseFloat($("#swing").value);}
 function sigma(){return parseFloat($("#sigma").value);}
-var CELL=60,GAP=4;
-function drawMap(){var sw=swing(),g='';
+var CELL=60,GAP=4,mapView="tiles",GEO=null,geoLoading=false;
+var FIPS={"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
+var BYAB={};ST.forEach(function(s,i){BYAB[s[0]]=i;});
+function loadScript(src){return new Promise(function(res,rej){var sc=document.createElement("script");sc.src=src;sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});}
+function ensureGeo(){if(GEO)return Promise.resolve(GEO);if(geoLoading)return Promise.reject();geoLoading=true;
+ return loadScript("https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js")
+ .then(function(){return loadScript("https://cdnjs.cloudflare.com/ajax/libs/topojson-client/3.1.0/topojson-client.min.js")})
+ .then(function(){return fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then(function(r){return r.json()})})
+ .then(function(topo){var feats=topojson.feature(topo,topo.objects.states).features;
+  var path=d3.geoPath();GEO=feats.map(function(f){var ab=FIPS[String(f.id).padStart(2,"0")];return ab?{ab:ab,d:path(f)}:null;}).filter(Boolean);
+  geoLoading=false;return GEO;});}
+function attachHandlers(){Array.prototype.forEach.call(document.querySelectorAll("#map [data-i]"),function(gg){
+  gg.onclick=function(){var s=ST[+gg.dataset.i],ab=s[0];
+   lock[ab]=lock[ab]==="D"?"R":(lock[ab]==="R"?"T":(lock[ab]==="T"?null:"D"));
+   if(!lock[ab])delete lock[ab];
+   render();};
+  gg.onmousemove=function(e){var s=ST[+gg.dataset.i],m=s[2]+swing(),t=$("#tip");
+   t.style.display="block";t.style.left=(e.clientX+14)+"px";t.style.top=(e.clientY+14)+"px";
+   t.innerHTML="<b>"+NAMES[s[0]]+"</b> · "+s[1]+" EV<br>"+(lock[s[0]]?("Locked: "+(lock[s[0]]==="T"?"tossup":lock[s[0]])):("Margin "+(m>0?"D+":"R+")+Math.abs(m).toFixed(1)));};
+  gg.onmouseleave=function(){$("#tip").style.display="none";};});}
+function drawGeo(){var sw=swing();
+ $("#map").setAttribute("viewBox","0 0 975 610");
+ ensureGeo().then(function(feats){var g="";
+  feats.forEach(function(f){var i=BYAB[f.ab];if(i==null)return;var s=ST[i];
+   g+='<path data-i="'+i+'" d="'+f.d+'" fill="'+col(s[2]+sw,lock[f.ab])+'" stroke="var(--paper)" stroke-width="1"'+(lock[f.ab]?' style="stroke:var(--ember);stroke-width:2.5"':'')+' cursor="pointer"/>';});
+  $("#map").innerHTML=g;attachHandlers();}).catch(function(){mapView="tiles";drawMap();});}
+function drawMap(){if(mapView==="geo"){drawGeo();return;}
+ $("#map").setAttribute("viewBox","0 0 810 540");
+ var sw=swing(),g='';
  ST.forEach(function(s,i){var ab=s[0],ev=s[1],m=s[2]+sw,x=s[3]*(CELL+GAP)+30,y=s[4]*(CELL+GAP)+18;
   var lc=lock[ab];
   g+='<g data-i="'+i+'" style="cursor:pointer">';
@@ -157,7 +188,7 @@ function drawMap(){var sw=swing(),g='';
   g+='<text x="'+(x+CELL/2)+'" y="'+(y+45)+'" text-anchor="middle" font-size="11" font-family="monospace" fill="#eef1f4" opacity="0.85">'+ev+'</text>';
   g+='</g>';});
  $("#map").innerHTML=g;
- Array.prototype.forEach.call($("#map").querySelectorAll("g"),function(gg){
+ attachHandlers();return;Array.prototype.forEach.call($("#map").querySelectorAll("g"),function(gg){
   gg.onclick=function(){var s=ST[+gg.dataset.i],ab=s[0];
    lock[ab]=lock[ab]==="D"?"R":(lock[ab]==="R"?"T":(lock[ab]==="T"?null:"D"));
    if(!lock[ab])delete lock[ab];
@@ -219,6 +250,10 @@ function render(){var sw=swing();
  drawMap();simulate();}
 $("#swing").addEventListener("input",render);
 $("#sigma").addEventListener("input",render);
+Array.prototype.forEach.call(document.querySelectorAll(".vmb"),function(b){b.onclick=function(){
+ Array.prototype.forEach.call(document.querySelectorAll(".vmb"),function(x){x.classList.remove("on");x.style.borderColor="var(--rule)";x.style.color="var(--ink2)";x.style.fontWeight="400";});
+ b.classList.add("on");b.style.borderColor="var(--ember)";b.style.color="var(--ember)";b.style.fontWeight="700";
+ mapView=b.dataset.v;drawMap();};});
 $("#reset").addEventListener("click",function(){lock={};$("#swing").value=0;$("#sigma").value=4;render();});
 render();
 </script>
