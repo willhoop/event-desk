@@ -361,8 +361,22 @@
 
   <section id="s-free">
     <div class="sechead"><span class="n">04</span><span class="t">Arbitrage</span><span class="d">locked profits and real risks</span></div>
-    <h2 class="dek">The arbitrage scan</h2>
-    <p class="lead">Sometimes prices disagree in ways that guarantee a profit. Rare, small, and gone fast — but this page checks live.</p>
+    <h2 class="dek">The lock calculator</h2>
+    <p class="lead">The desk's core question, answered for you: if you buy YES on one store and NO on the other, do you lock a guaranteed profit — and does it beat just parking the cash in T-bills? Pick a bet; prices fill live. Override anything.</p>
+    <div class="vscompare" style="grid-template-columns:1fr">
+      <div class="vcard">
+        <div class="vrow" style="margin-bottom:6px"><span class="vn">Which bet?</span><select id="lk_market" style="max-width:340px"></select></div>
+        <div class="vrow"><span class="vn">Polymarket YES price</span><span><input id="lk_poly" type="number" step="0.5" style="width:90px;text-align:right"> ¢</span></div>
+        <div class="vrow"><span class="vn">Kalshi YES price</span><span><input id="lk_kal" type="number" step="0.5" style="width:90px;text-align:right"> ¢</span></div>
+        <div class="vrow"><span class="vn">Your stake</span><span>$ <input id="lk_stake" type="number" step="50" value="1000" style="width:90px;text-align:right"></span></div>
+        <div class="vrow"><span class="vn">Months until it resolves</span><select id="lk_mo"><option value="6">6 months</option><option value="12">1 year</option><option value="18">18 months</option><option value="28" selected>~Nov 2028 (28mo)</option></select></div>
+        <div class="vrow"><span class="vn">Your tax rate on gains</span><select id="lk_tax"><option value="0">0% — tax-free / IRA</option><option value="15">15% — long-term capital</option><option value="24" selected>24% — typical bracket</option><option value="37">37% — top bracket</option></select></div>
+      </div>
+    </div>
+    <div id="lk_out" class="bigverdict" style="display:block"></div>
+    <div class="box" id="lk_detail" style="margin-top:6px"></div>
+    <h2 class="dek" style="margin-top:26px">The full board — every candidate, scanned</h2>
+    <p class="lead">Rare, small, and gone fast — but this checks all of them live.</p>
     <h2 class="dek" style="font-size:17px">Check 1 — the impossible price</h2>
     <p class="plain" id="arbnoarb"></p>
     <h2 class="dek" style="font-size:17px;margin-top:16px">Check 2 — same bet, different prices</h2>
@@ -513,6 +527,16 @@ function fetchMarket(slug){return fetchTO(GAMMA+encodeURIComponent(slug)).then(f
  var tok=null;try{tok=JSON.parse(m.clobTokenIds)[0]}catch(e){}
  return{ok:true,yes:yes,ask:parseFloat(m.bestAsk)||yes,c24:parseFloat(m.oneDayPriceChange)||0,c1mo:parseFloat(m.oneMonthPriceChange)||0,q:m.question,tok:tok};
 }).catch(function(){return{ok:false}});}
+var kalStamp=null;
+function fetchKalshiJSON(){return fetchTO("kalshi.json?t="+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){
+ if(j.nomination&&Object.keys(j.nomination).length){
+  kalC=j.nomination;var sum=0;for(var k in j.nomination)sum+=j.nomination[k];kalOver=sum;kalOK=true;
+ }
+ if(j.presidency&&j.presidency["Jon Ossoff"]!=null){kalPres=j.presidency["Jon Ossoff"];kal2OK=true;}
+ if(j.gopnom)kalGOP=j.gopnom;
+ kalStamp=j.updated||null;return true;
+}).catch(function(){return false;});}
+var kalGOP={};
 function kalshiGET(url){return fetchTO(url).then(function(r){if(!r.ok)throw 0;return r.json();}).catch(function(){
  return fetchTO("https://api.allorigins.win/raw?url="+encodeURIComponent(url)).then(function(r){if(!r.ok)throw 0;return r.json();});});}
 function fetchKalshiPres(){return kalshiGET(KAL2).then(function(j){
@@ -527,15 +551,17 @@ function refresh(){
  $("#live").textContent="updating…";countdown=60;
  var slugs=[];watch.forEach(function(w){if(slugs.indexOf(w.slug)<0)slugs.push(w.slug);});
  [NOM,PRES,SEN].concat(CAND.map(function(x){return x.slug})).forEach(function(s){if(slugs.indexOf(s)<0)slugs.push(s);});
- var jobs=slugs.map(fetchMarket);jobs.push(fetchKalshi());jobs.push(fetchKalshiPres());
- return Promise.allSettled(jobs).then(function(res){
+ var jobs=slugs.map(fetchMarket);
+ var kJob=fetchKalshiJSON().then(function(got){if(!got)return Promise.allSettled([fetchKalshi(),fetchKalshiPres()]);});
+ return Promise.allSettled(jobs.concat([kJob])).then(function(res){
   var ok=0;slugs.forEach(function(s,i){var r=res[i];if(r.status==="fulfilled"&&r.value&&r.value.ok){md[s]=r.value;ok++;}});
   if(ok>0){mdStale=false;store.set("ef4_md",md);store.set("ef4_md_t",Date.now());}
   renderAll();
   Promise.allSettled([fetchHist(NOM),fetchHist(PRES),fetchMonth()]).then(function(){try{drawChart();renderShop()}catch(e){}});
   var when=store.get("ef4_md_t",null);
   $("#live").innerHTML=ok>0?'<span class="pill ok">LIVE</span> '+new Date().toLocaleTimeString():('<span class="pill bad">OFFLINE</span> '+(when?("showing prices from "+new Date(when).toLocaleString()):"no prices yet — check connection"));
-  $("#ksrc").textContent=kalOK?"live":"snapshot";
+  var mins=kalStamp?Math.round((Date.now()-new Date(kalStamp).getTime())/60000):null;
+  $("#ksrc").textContent=kalOK?(kalStamp?("live · "+(mins<=1?"just now":mins+" min ago")):"live"):"snapshot";
   $("#stamp").textContent=new Date().toLocaleString();
  });}
 
@@ -682,7 +708,8 @@ function renderTicker(){
  [["NEWSOM NOMINATION","Gavin Newsom"],["AOC NOMINATION","Alexandria Ocasio-Cortez"],["HARRIS NOMINATION","Kamala Harris"]].forEach(function(x){var v=kv(x[1]);if(v!=null)seg.push(x[0]+" · KALSHI <b>"+c(v)+"</b>");});
  [["BUTTIGIEG NOMINATION",CAND[1]],["BESHEAR NOMINATION",CAND[2]]].forEach(function(x){var pd=md[x[1].slug],kk=kv(x[1].kal);
   if(pd||kk!=null)seg.push(x[0]+(pd?(" · POLYMARKET <b>"+c(pd.yes)+"</b>"):"")+(kk!=null?(" KALSHI <b>"+c(kk)+"</b>"):""));});
- var flag=(kalOK&&kal2OK)?"":' <span class="pill snap" title="Kalshi blocks browser data requests, so we show their last saved prices. Everything marked K updates when our server checks - not live in your browser. Normal, not an error.">KALSHI PRICES = SAVED COPY, NOT LIVE</span>';
+ var mins=kalStamp?Math.round((Date.now()-new Date(kalStamp).getTime())/60000):null;
+ var flag=(kalOK&&kal2OK)?(kalStamp?' <span class="pill ok" title="Kalshi prices refreshed server-side every 10 minutes and read here directly.">KALSHI LIVE · '+(mins<=1?"JUST NOW":mins+" MIN AGO")+'</span>':""):' <span class="pill snap" title="Live Kalshi feed unreachable; showing last saved prices.">KALSHI PRICES = SAVED COPY</span>';
  var content="<span>"+seg.join("</span><span>")+"</span>"+flag;
  $("#ticker").innerHTML='<div class="tickwrap">'+content+'<span aria-hidden="true"></span>'+content+"</div>";
 }
@@ -827,6 +854,53 @@ function crCalc(){
  else{el.className="bigverdict wait";
   el.innerHTML="WAIT — place a limit order at today's price.<small>Patience earns ~"+sT+"% (no fee + a better fill) vs an expected ~"+cT+"% cost of missing the move. Post your price; let them come to you.</small>";}
 }
+var TBILL=0.043;
+function lockCalc(){
+ var lm=$("#lk_market");
+ if(lm&&!lm.options.length){lm.innerHTML=watch.map(function(w){return '<option value="'+esc(w.slug)+'">'+esc(w.label)+'</option>'}).join("");lm.onchange=function(){lockCalc();};}
+ var sel=(lm&&lm.value)||NOM,dm=md[sel];
+ function kalForSlug(s){if(s===NOM)return kalOK?kalC["Jon Ossoff"]:SNAPK["Jon Ossoff"];if(s===PRES)return kal2OK?kalPres:SNAPP["Jon Ossoff"];
+  for(var ci=0;ci<CAND.length;ci++)if(CAND[ci].slug===s)return kalOK?kalC[CAND[ci].kal]:SNAPK[CAND[ci].kal];return null;}
+ var pv=dm?dm.yes:null,kv=kalForSlug(sel);
+ if(document.activeElement!==$("#lk_poly")&&pv!=null)$("#lk_poly").value=(pv*100).toFixed(1);
+ if(document.activeElement!==$("#lk_kal")){if(kv!=null)$("#lk_kal").value=(kv*100).toFixed(1);}
+ var pA=parseFloat($("#lk_poly").value),pK=parseFloat($("#lk_kal").value);
+ var stake=parseFloat($("#lk_stake").value)||0,months=parseFloat($("#lk_mo").value)||28;
+ if(isNaN(pA)||isNaN(pK)||pA<=0||pK<=0||pA>=100||pK>=100){$("#lk_out").innerHTML="Enter both prices to see the lock.";$("#lk_out").className="bigverdict wait";$("#lk_detail").innerHTML="";return;}
+ var buyYesOn=pA<=pK?"Polymarket":"Kalshi", yesPx=Math.min(pA,pK), yesFee=pA<=pK?0.04:0.07;
+ var buyNoOn=pA<=pK?"Kalshi":"Polymarket", noYes=Math.max(pA,pK), noPx=100-noYes, noFee=pA<=pK?0.07:0.04;
+ var yesFeeC=yesFee*(yesPx/100)*(1-yesPx/100)*100;
+ var noFeeC=noFee*(noPx/100)*(1-noPx/100)*100;
+ var costPerPair=yesPx+noPx+yesFeeC+noFeeC;
+ var lockCents=100-costPerPair;
+ var pairs=stake/(costPerPair/100);
+ var profit=pairs*(lockCents/100);
+ var tax=(parseFloat($("#lk_tax").value)||0)/100;
+ var totRet=lockCents/costPerPair;
+ var afterTaxProfit=profit*(1-tax);
+ var annual=Math.pow(1+totRet,12/months)-1;
+ var atTotRet=(afterTaxProfit/stake);
+ var atAnnual=stake>0?Math.pow(1+atTotRet,12/months)-1:0;
+ var tbillAT=TBILL*(1-tax);
+ var win=lockCents>0;
+ var beatsTbill=atAnnual>tbillAT;
+ var o=$("#lk_out");
+ if(!win){
+  o.className="bigverdict wait";
+  o.innerHTML="No lock here. Buying both sides costs <b>"+costPerPair.toFixed(2)+"¢</b> to get back only 100¢ — you'd <b>lose "+(-lockCents).toFixed(2)+"¢</b> per pair. The two stores agree too closely.";
+ }else if(beatsTbill){
+  o.className="bigverdict buy";
+  o.innerHTML="Locked profit that beats T-bills. <b>+"+money(afterTaxProfit)+"</b> after tax, guaranteed on "+money(stake)+" — about <b>"+(atAnnual*100).toFixed(1)+"%/yr</b> after tax vs the ~"+(tbillAT*100).toFixed(1)+"% a T-bill nets you.";
+ }else{
+  o.className="bigverdict wait";
+  o.innerHTML="A real lock, but cash wins. <b>+"+money(afterTaxProfit)+"</b> after tax — only <b>"+(atAnnual*100).toFixed(1)+"%/yr</b> over "+months+" months, under the ~"+(tbillAT*100).toFixed(1)+"% a T-bill nets after the same tax. Skip it.";
+ }
+ $("#lk_detail").innerHTML=
+  '<div class="row"><b>The trade:</b> buy YES on '+buyYesOn+' at '+yesPx.toFixed(1)+'¢, buy NO on '+buyNoOn+' at '+noPx.toFixed(1)+'¢. One leg always pays $1.</div>'+
+  '<div class="row"><b>Per $1 pair:</b> '+yesPx.toFixed(1)+'¢ + '+noPx.toFixed(1)+'¢ + fees '+(yesFeeC+noFeeC).toFixed(2)+'¢ = <b>'+costPerPair.toFixed(2)+'¢</b> in, 100¢ out → '+(win?'lock ':'lose ')+'<b>'+lockCents.toFixed(2)+'¢</b>.</div>'+
+  '<div class="row"><b>On '+money(stake)+':</b> '+Math.round(pairs).toLocaleString()+' pairs → '+(win?'guaranteed ':'')+'<b>'+(profit>=0?'+':'')+money(profit)+'</b> before tax ('+(totRet*100).toFixed(2)+'% total, '+(annual*100).toFixed(1)+'%/yr).</div>'+  '<div class="row"><b>After '+(tax*100).toFixed(0)+'% tax:</b> you keep <b>'+money(afterTaxProfit)+'</b> = <b>'+(atAnnual*100).toFixed(1)+'%/yr</b>. A T-bill nets ~'+(tbillAT*100).toFixed(1)+'%/yr after the same tax. '+(beatsTbill?'The lock wins.':'Cash wins — skip it.')+'</div>'+
+  '<div class="row"><b>Reality check:</b> needs funded accounts on both venues, both legs filling before prices move, and your cash frozen '+months+' months. Kalshi prices here may be a saved snapshot — verify their live book first.</div>';
+}
 function renderArb(){
  var nY=nomYes(),pY=presYes();
  if(nY==null||pY==null){$("#arbnoarb").textContent="Waiting for prices…";return;}
@@ -846,7 +920,7 @@ function renderArb(){
   :'Prices agree too closely right now — after fees, nothing is free.'+(kalOK?'':' (Kalshi prices from an older snapshot.)');
  var sum=(kalOK&&kalOver!=null)?kalOver:1.05;
  $("#dutch").innerHTML='Add up every candidate’s price on Kalshi and you get <b>'+(sum*100).toFixed(0)+'%</b>'+(kalOK?' (live)':' (typical)')+' — more than 100%, which is the house’s margin. Betting “no” on <em>everyone</em> would lock in roughly the excess, minus fees — in practice hard to fill and fee-eaten. Polymarket’s prices add to ~100%, so no trick there.';}
-function renderAll(){renderTicker();renderHome();renderMenu();renderPos();renderWatch();renderOpt();crCalc();renderShop();renderArb();renderDiag();}
+function renderAll(){renderTicker();renderHome();renderMenu();renderPos();renderWatch();renderOpt();crCalc();renderShop();lockCalc();renderArb();renderDiag();}
 function renderDiag(){
  var el=$("#diag");if(!el)return;
  var stOK=(function(){try{localStorage.setItem("_t","1");localStorage.removeItem("_t");return true}catch(e){return false}})();
@@ -926,6 +1000,8 @@ wire("#addSlug","input",function(){
  },350);});
 wire("#refreshBtn","click",function(){refresh().then(function(){toast("Prices updated.")});});
 
+[["#lk_poly"],["#lk_kal"],["#lk_stake"]].forEach(function(p){var el=$(p[0]);if(el)el.addEventListener("input",lockCalc);});
+(function(){["#lk_mo","#lk_tax"].forEach(function(id){var m=$(id);if(m)m.addEventListener("change",lockCalc);});})();
 [["#o_pen","pen"]].forEach(function(pair){var el=$(pair[0]);if(!el)return;
  el.value=settings[pair[1]];
  el.addEventListener("input",function(){var v=parseFloat(el.value);if(!isNaN(v)){settings[pair[1]]=v;store.set("ef4_set",settings);renderHome();renderOpt();}});});
