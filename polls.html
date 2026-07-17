@@ -261,7 +261,7 @@ var ORDER=KEYS.slice().sort(function(a,b){return (AVG[b]||0)-(AVG[a]||0)});
 function renderCards(){var top=ORDER.slice(0,6);
  $("#avgcards").innerHTML=top.map(function(k){
   var init=NAMES[k].split(" ").map(function(w){return w[0]}).join("").slice(0,2);
-  return '<div class="pc" style="display:flex;gap:14px;align-items:center"><div id="av_'+k+'" style="width:54px;height:54px;border-radius:50%;background:var(--chipbg);flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;overflow:hidden">'+init+'</div><div><div class="nm">'+NAMES[k]+'</div><div class="v" style="font-size:26px;margin:2px 0">'+(AVG[k]!=null?AVG[k].toFixed(1)+"%":"—")+'</div><div class="d">weighted average</div></div></div>';}).join("");
+  return '<div class="pc" style="display:flex;gap:14px;align-items:center"><div id="av_'+k+'" style="width:76px;height:76px;border-radius:50%;background:var(--chipbg);flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;overflow:hidden">'+init+'</div><div><div class="nm">'+NAMES[k]+'</div><div class="v" style="font-size:26px;margin:2px 0">'+(AVG[k]!=null?AVG[k].toFixed(1)+"%":"—")+'</div><div class="d">weighted average</div></div></div>';}).join("");
  top.forEach(function(k){var title=NAMES[k].replace(/ /g,"_");
   fetch("https://en.wikipedia.org/api/rest_v1/page/summary/"+title).then(function(r){return r.json()}).then(function(j){
    if(j&&j.thumbnail&&j.thumbnail.source){var el=document.getElementById("av_"+k);
@@ -347,7 +347,7 @@ function renderEdge(){var IMP=impliedPrices();
  var gap=(iv!=null&&mv!=null)?(mv-iv):null;
  var cls=gap==null?"":(gap>0?"up":"dn");
  var big=gap!=null&&Math.abs(gap)>=8;
- return '<tr><td style="display:flex;align-items:center;gap:10px"><span class="eav" data-k="'+k+'" style="width:30px;height:30px;border-radius:50%;background:var(--chipbg);flex:none;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-family:var(--serif)">'+NAMES[k].split(" ").map(function(w){return w[0]}).join("").slice(0,2)+'</span><b>'+NAMES[k]+'</b></td><td class="r">'+(pv!=null?pv.toFixed(1)+"%":"—")+'</td><td class="r">'+(iv!=null?iv.toFixed(1)+"¢":"—")+'</td><td class="r">'+(mv!=null?mv.toFixed(1)+"¢"+(mktLive?"":"~"):"—")+'</td><td class="r '+cls+'" style="'+(big?"font-weight:700;font-size:15px":"")+'">'+(gap!=null?((gap>0?"+":"")+gap.toFixed(1)+"¢"):"—")+'</td><td>'+verdict(k,pv,mv)+'</td></tr>';}).join("");}
+ return '<tr><td style="display:flex;align-items:center;gap:10px"><span class="eav" data-k="'+k+'" style="width:52px;height:52px;border-radius:50%;background:var(--chipbg);flex:none;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-family:var(--serif)">'+NAMES[k].split(" ").map(function(w){return w[0]}).join("").slice(0,2)+'</span><b>'+NAMES[k]+'</b></td><td class="r">'+(pv!=null?pv.toFixed(1)+"%":"—")+'</td><td class="r">'+(iv!=null?iv.toFixed(1)+"¢":"—")+'</td><td class="r">'+(mv!=null?mv.toFixed(1)+"¢"+(mktLive?"":"~"):"—")+'</td><td class="r '+cls+'" style="'+(big?"font-weight:700;font-size:15px":"")+'">'+(gap!=null?((gap>0?"+":"")+gap.toFixed(1)+"¢"):"—")+'</td><td>'+verdict(k,pv,mv)+'</td></tr>';}).join("");}
 function fetchMkt(){var t=setTimeout(function(){},0);
  var to=new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"))},9000)});
  Promise.race([fetch("https://gamma-api.polymarket.com/events?slug=democratic-presidential-nominee-2028"),to])
