@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Polling Desk — Elite Four Capital</title>
+<style>
+  :root{--paper:#16181c;--paper2:#1f2226;--ink:#eef1f4;--ink2:#c9cdd4;--faint:#8a9099;--rule:#343941;--ember:#e2572b;--green:#4a9e7f;--greenbg:#1d2b26;--chipbg:#2a2e34;--mono:'SFMono-Regular',ui-monospace,'Roboto Mono',Menlo,Consolas,monospace;--serif:Georgia,'Times New Roman',serif;--sans:'Helvetica Neue',Arial,system-ui,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px 80px}
+  .mast{border-bottom:3px double var(--ink);padding:26px 0 18px;display:flex;align-items:center;gap:18px}
+  .kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--ember)}
+  h1{font-family:var(--serif);font-size:34px;margin:2px 0 4px}
+  .sub{font-family:var(--mono);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
+  .sub a{color:var(--ember);text-decoration:none}
+  h2.dek{font-family:var(--serif);font-size:23px;font-weight:700;margin:34px 0 8px}
+  .lead{color:var(--ink2);margin:0 0 14px;font-size:15px;line-height:1.6}
+  .grid6{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 6px}
+  .pc{background:var(--paper2);border:1px solid var(--rule);border-radius:6px;padding:14px 16px}
+  .pc .nm{font-family:var(--serif);font-size:15.5px;font-weight:700}
+  .pc .v{font-family:var(--serif);font-size:30px;margin:4px 0 2px}
+  .pc .d{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-transform:uppercase}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0 4px}
+  th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule)}
+  td{padding:9px 10px;border-bottom:1px solid var(--rule);color:var(--ink2)}
+  td b{color:var(--ink);font-family:var(--serif)}
+  td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+  .up{color:var(--green)}.dn{color:var(--ember)}
+  .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;background:var(--chipbg);color:var(--ink2)}
+  .tag.hot{background:var(--ember);color:#16181c}
+  .tag.cool{background:var(--greenbg);color:var(--green)}
+  .box{background:var(--paper2);border:1px solid var(--rule);border-radius:6px;padding:4px 0;margin:12px 0 20px}
+  .row{padding:12px 16px;font-size:14px;line-height:1.55;color:var(--ink2);border-bottom:1px solid var(--rule)}
+  .row:last-child{border-bottom:none}
+  .row b{color:var(--ink);font-family:var(--serif)}
+  .chart{background:var(--paper2);border:1px solid var(--rule);border-radius:6px;padding:16px 14px 8px;margin:12px 0}
+  .legend{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:0 0 6px;display:flex;gap:18px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:6px}
+  .note{font-family:var(--mono);font-size:11px;color:var(--faint);margin:6px 0 0}
+  .src{font-size:13.5px;color:var(--ink2)} .src a{color:var(--ember)}
+  section{border-bottom:1px solid var(--rule);padding-bottom:30px}
+  section:last-of-type{border-bottom:0}
+  @media(max-width:640px){.grid6{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <svg width="52" height="52" viewBox="0 0 110 110" aria-hidden="true" style="flex:none">
+      <rect x="42" y="14" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 55 27)"/>
+      <rect x="14" y="42" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 27 55)"/>
+      <rect x="70" y="42" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 83 55)"/>
+      <rect x="42" y="70" width="26" height="26" fill="var(--ember)" transform="rotate(45 55 83)"/>
+    </svg>
+    <div>
+      <div class="kicker">Elite Four Capital</div>
+      <h1>Polling Desk</h1>
+      <div class="sub">2028 Democratic nomination · a FiveThirtyEight-style average, wired to the betting desk · <a href="index.html">home</a> · <a href="ossoff.html">Ossoff desk</a> · <span id="stamp">—</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="dek">The average right now</h2>
+    <p class="lead">Every national 2028 Democratic primary poll from 2026, blended the way FiveThirtyEight does it: newer polls count more (3% less per day of age), bigger samples count more (square root of sample size), better pollsters count more (approximate 538 star ratings), likely-voter polls beat registered-voter polls, and each pollster's habitual lean — its house effect — is measured and half-corrected before averaging.</p>
+    <div class="grid6" id="avgcards"></div>
+    <p class="note" id="avgnote"></p>
+  </section>
+
+  <section>
+    <h2 class="dek">The trend through 2026</h2>
+    <div class="chart">
+      <div class="legend" id="legend"></div>
+      <svg id="trend" width="100%" viewBox="0 0 1000 320" preserveAspectRatio="none"></svg>
+    </div>
+    <p class="note">Weighted 45-day rolling average, sampled monthly. Harris's lead is wide but shrinking; the pack behind her is compressing.</p>
+  </section>
+
+  <section>
+    <h2 class="dek">Polls are not probabilities</h2>
+    <p class="lead">A candidate polling 29% two years out does not have a 29% chance of winning. Early national primary polls mostly measure name recognition. History's early leaders, roughly two years before the primaries:</p>
+    <div class="box">
+      <div class="row"><b>Early leaders who lost the nomination:</b> Lieberman 2004, Clinton 2008, Giuliani 2008 (R), Jeb Bush 2016 (R). Big names, big early numbers, no nomination.</div>
+      <div class="row"><b>Early leaders who won it:</b> Romney 2012 (R), Clinton 2016, Biden 2020, Trump 2024 (R).</div>
+      <div class="row"><b>The base rate:</b> the early national leader has won roughly half the time in the modern era. A 29-point poll share is worth much less than 29% probability — and a 2-point share can be worth more than 2%, if the candidate has a real path the public hasn't seen yet.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="dek">Polls vs the market — where the edge lives</h2>
+    <p class="lead">This is the desk's product: the gap between what polls measure and what the market believes. When they disagree, one of them is wrong, and that is the only thing worth betting on.</p>
+    <table id="edget">
+      <thead><tr><th>Candidate</th><th class="r">Poll average</th><th class="r">Market price</th><th class="r">Gap</th><th>What the market is saying</th></tr></thead>
+      <tbody id="edgebody"></tbody>
+    </table>
+    <p class="note" id="mktnote">Market prices: Polymarket, refreshed live when your browser allows it; otherwise the last saved copy, marked ~.</p>
+  </section>
+
+  <section>
+    <h2 class="dek">The betting strategy</h2>
+    <div class="box">
+      <div class="row"><b>Rule 1 — a divergence is information, not automatically a trade.</b> The market knows polls exist. When price and polls disagree, the market is usually pricing something polls cannot see: an announcement, a scandal, momentum, or the historical fact that early poll leads melt. Bet only when you can name the thing the market has wrong.</div>
+      <div class="row"><b>Harris — polls 29%, market ~8¢.</b> The market says her poll lead is a name-recognition ghost: she is the most famous Democrat alive, and famous names top early polls then fade (Lieberman, Giuliani). If you think the party would actually renominate her, the market is paying 11-to-1 against the polling leader. That is the boldest fade on the board.</div>
+      <div class="row"><b>Ossoff — polls ~2%, market ~14¢.</b> The reverse case. The market is pricing an announcement that polling cannot measure yet. But Ossoff told CNN directly: "I am not running for president in 2028." A 14¢ price on a candidate polling at 2% who says he is not running is the market pricing a change of heart. Our desk's wedge trade — nominated but loses — inherits this risk.</div>
+      <div class="row"><b>AOC — polls ~10%, market ~15¢.</b> Market slightly ahead of polls, consistent with her momentum in surveys since February. The cheapest disagreement on the board — and the one Nate Silver flagged early.</div>
+      <div class="row"><b>Buttigieg — polls ~13%, market ~5¢.</b> Second-biggest gap in the polls' favor. He leads several likely-voter polls outright (Emerson had him first). If the market is right, it thinks his support is broad but shallow. If polls are right, 5¢ is the value bet on this page.</div>
+      <div class="row"><b>Newsom — polls ~17%, market ~18¢.</b> Polls and money agree. No edge; the market has him fairly priced. This row is the control group that makes the other rows meaningful.</div>
+      <div class="row"><b>Rule 2 — size it like a bet, not a belief.</b> Divergence trades are long shots by construction. Quarter-Kelly or less, and never more than your theme cap. The Ossoff desk's calculator applies this automatically.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="dek">How this average works — the 538 lineage</h2>
+    <div class="box">
+      <div class="row"><b>1 · Recency.</b> Each poll decays 3% per day of age (538 uses ~7%/day near election day; two years out, we decay gentler so the average is stable). A 30-day-old poll counts about 40% as much as a fresh one.</div>
+      <div class="row"><b>2 · Sample size.</b> Weight scales with the square root of sample size, capped at 5,000 — same cap 538 uses — so one mega-poll cannot swamp the average.</div>
+      <div class="row"><b>3 · Pollster quality.</b> Each firm gets a weight from its approximate 538 star rating (accuracy plus transparency). Emerson, Echelon, YouGov and AtlasIntel count near full weight; low-transparency or partisan shops count much less.</div>
+      <div class="row"><b>4 · Population.</b> Likely-voter polls get full weight, registered-voter polls 90%, all-adult polls 75% — 538's "narrowest population" preference, expressed as weights.</div>
+      <div class="row"><b>5 · House effects.</b> For every pollster we measure how far its numbers habitually sit from the rest of the field, per candidate, and subtract half of that lean before averaging — the same half-correction logic 538 describes. AtlasIntel's huge Buttigieg numbers and Harvard-Harris's huge Harris numbers get pulled toward the field.</div>
+      <div class="row"><b>6 · What we do not do.</b> No herding penalty, no bootstrap, no imputation — those need 538's full historical database. The skeleton is theirs; the muscle is what fits in one page.</div>
+    </div>
+    <h2 class="dek">What I read to build this</h2>
+    <p class="src">
+      • G. Elliott Morris, <a href="https://abcnews.com/538/538s-pollster-ratings-work/story?id=105398138">"How 538's pollster ratings work"</a> — the full ratings pipeline: excess error and bias, race-difficulty adjustment, POLLSCORE, transparency scoring, herding penalties, bootstrapping.<br>
+      • 538, <a href="https://abcnews.com/538/polling-averages-work/story?id=104546697">"How our polling averages work"</a> — the ~7%-per-day exponential decay, sample-size weighting, house-effect half-correction.<br>
+      • FiveThirtyEight, <a href="https://fivethirtyeight.com/features/polls-policy-and-faqs/">"Polls policy and FAQs"</a> — which polls qualify, population preference (LV over RV over A), tracking-poll overlap rules.<br>
+      • FiveThirtyEight, <a href="https://fivethirtyeight.com/features/how-we-are-forecasting-the-2016-presidential-primary-election/">"How we're forecasting the primaries"</a> — polls-only vs polls-plus, why endorsements and fundamentals matter in primaries.<br>
+      • Nate Silver, <a href="https://www.natesilver.net/p/so-how-did-the-polls-do-in-2024-its">"How did the polls do in 2024?"</a> — primary polls were among the most accurate categories; general-election polls carry ~4-point average bias.<br>
+      • Wikipedia, <a href="https://en.wikipedia.org/wiki/Nationwide_opinion_polling_for_the_2028_Democratic_Party_presidential_primaries">Nationwide opinion polling for the 2028 Democratic primaries</a> — the poll database on this page, including the 270toWin, RealClearPolling, Race to the WH and VoteHub aggregates used as cross-checks.<br>
+      • The Hill, <a href="https://thehill.com/homenews/campaign/5898010-pete-buttigieg-democratic-presidential-primary-poll/">Emerson: Buttigieg tops 2028 primary poll</a> · Newsweek, <a href="https://www.newsweek.com/aoc-jon-ossoff-surge-against-gavin-newsom-2028-prediction-markets-12168688">AOC and Ossoff surge in prediction markets</a> — including Ossoff's on-record CNN statement that he is not running.
+    </p>
+  </section>
+</div>
+<script>
+"use strict";
+var POLLS=[
+ {p:"Zogby",d:"2026-07-04",n:391,pop:"LV",q:0.5,s:{harris:38,newsom:19,aoc:12,buttigieg:9,shapiro:7,kelly:6,pritzker:5,ossoff:null,beshear:null,booker:null}},
+ {p:"Quantus Insights",d:"2026-07-07",n:1140,pop:"LV",q:1.5,s:{harris:35.3,newsom:17.7,buttigieg:12.9,aoc:11.1,shapiro:7.1,ossoff:null,kelly:null,beshear:null,booker:null,pritzker:null}},
+ {p:"Daily Mail/JL Partners",d:"2026-06-26",n:1040,pop:"RV",q:2.0,s:{harris:29,newsom:15,buttigieg:11,aoc:6,kelly:5,booker:4,shapiro:3,pritzker:3,beshear:3,ossoff:2}},
+ {p:"McLaughlin",d:"2026-06-23",n:464,pop:"LV",q:0.5,s:{harris:26,newsom:16,aoc:9,buttigieg:8,booker:5,pritzker:5,shapiro:5,kelly:3,ossoff:null,beshear:null}},
+ {p:"Echelon Insights",d:"2026-06-14",n:515,pop:"LV",q:2.8,s:{harris:20,newsom:14,buttigieg:14,aoc:12,shapiro:6,kelly:4,booker:3,pritzker:3,beshear:2,ossoff:2}},
+ {p:"Public Sentiment Inst.",d:"2026-06-15",n:366,pop:"RV",q:1.0,s:{harris:29.2,newsom:15.2,buttigieg:11.3,aoc:7.2,kelly:6.1,beshear:3.2,ossoff:3.5,booker:null,shapiro:null,pritzker:null}},
+ {p:"Noble Predictive",d:"2026-06-04",n:1013,pop:"RV",q:2.0,s:{harris:27,newsom:14,buttigieg:11,aoc:8,pritzker:2,beshear:2,ossoff:null,booker:null,shapiro:null,kelly:null}},
+ {p:"Focaldata",d:"2026-06-01",n:685,pop:"RV",q:2.0,s:{harris:37,newsom:17,buttigieg:8,aoc:7,kelly:5,shapiro:3,beshear:3,pritzker:2,ossoff:1,booker:null}},
+ {p:"Harvard Harris",d:"2026-05-31",n:1725,pop:"RV",q:1.5,s:{harris:44,newsom:26,aoc:8,pritzker:7,shapiro:10,ossoff:null,buttigieg:null,kelly:null,beshear:null,booker:null}},
+ {p:"I&I/TIPP",d:"2026-05-28",n:593,pop:"RV",q:1.8,s:{harris:31,newsom:14,buttigieg:6,aoc:5,shapiro:6,booker:4,kelly:4,pritzker:3,beshear:2,ossoff:2}},
+ {p:"Big Data Poll",d:"2026-05-27",n:1378,pop:"LV",q:1.5,s:{harris:28,newsom:17,buttigieg:11,aoc:9,shapiro:6,kelly:6,beshear:3,ossoff:null,booker:null,pritzker:null}},
+ {p:"Emerson College",d:"2026-05-25",n:432,pop:"LV",q:2.9,s:{buttigieg:17.9,newsom:15.9,aoc:11.1,shapiro:10.0,harris:9.9,beshear:8.5,pritzker:4.4,ossoff:1,kelly:null,booker:null}},
+ {p:"Rasmussen",d:"2026-05-20",n:433,pop:"LV",q:1.5,s:{harris:34,newsom:12,aoc:11,buttigieg:10,shapiro:9,kelly:9,beshear:4,pritzker:2,ossoff:null,booker:null}},
+ {p:"Overton Insights",d:"2026-05-20",n:661,pop:"LV",q:1.5,s:{buttigieg:16,newsom:13,aoc:12,harris:9,shapiro:8,booker:7,kelly:4,beshear:3,pritzker:1,ossoff:null}},
+ {p:"Echelon Insights",d:"2026-05-18",n:501,pop:"LV",q:2.8,s:{harris:23,newsom:17,aoc:11,buttigieg:10,kelly:6,shapiro:5,pritzker:4,booker:3,beshear:2,ossoff:2}},
+ {p:"McLaughlin",d:"2026-05-18",n:459,pop:"LV",q:0.5,s:{harris:28,newsom:16,buttigieg:9,aoc:7,shapiro:6,booker:5,pritzker:2,ossoff:null,beshear:null,kelly:null}},
+ {p:"Lake Research",d:"2026-05-11",n:800,pop:"LV",q:1.5,s:{harris:26,newsom:17,buttigieg:16,aoc:10,kelly:8,shapiro:7,booker:5,pritzker:4,beshear:2,ossoff:null}},
+ {p:"AtlasIntel",d:"2026-05-07",n:2069,pop:"A",q:2.7,s:{aoc:26,buttigieg:22.4,newsom:21.2,harris:12.9,beshear:4.1,booker:3.9,shapiro:2.4,ossoff:null,kelly:null,pritzker:null}},
+ {p:"Focaldata",d:"2026-05-05",n:1339,pop:"LV",q:2.0,s:{harris:38,newsom:16,aoc:9,buttigieg:9,shapiro:5,kelly:5,pritzker:3,beshear:2,ossoff:null,booker:null}},
+ {p:"Harvard Harris",d:"2026-04-26",n:2745,pop:"RV",q:1.5,s:{harris:50,newsom:22,aoc:8,shapiro:9,pritzker:6,ossoff:null,buttigieg:null,kelly:null,beshear:null,booker:null}},
+ {p:"Verasight",d:"2026-04-23",n:864,pop:"A",q:2.0,s:{harris:22,newsom:15,aoc:13,buttigieg:12,kelly:6,booker:4,shapiro:4,pritzker:2,ossoff:null,beshear:null}},
+ {p:"Echelon Insights",d:"2026-04-20",n:525,pop:"RV",q:2.8,s:{harris:22,newsom:21,buttigieg:12,aoc:10,shapiro:5,booker:4,kelly:3,pritzker:3,beshear:2,ossoff:2}},
+ {p:"McLaughlin",d:"2026-04-15",n:457,pop:"RV",q:0.5,s:{harris:29,newsom:15,buttigieg:10,shapiro:4,aoc:4,booker:4,pritzker:3,ossoff:null,beshear:null,kelly:null}},
+ {p:"YouGov",d:"2026-04-13",n:968,pop:"RV",q:2.9,s:{harris:24,newsom:12,buttigieg:9,aoc:9,shapiro:5,pritzker:3,booker:2,ossoff:null,beshear:null,kelly:null}},
+ {p:"Harvard Harris",d:"2026-03-26",n:2009,pop:"RV",q:1.5,s:{harris:41,newsom:26,aoc:8,pritzker:7,shapiro:10,ossoff:null,buttigieg:null,kelly:null,beshear:null,booker:null}},
+ {p:"Echelon Insights",d:"2026-03-16",n:1033,pop:"LV",q:2.8,s:{harris:21,newsom:19,aoc:11,buttigieg:9,shapiro:5,booker:4,beshear:4,kelly:4,pritzker:2,ossoff:null}},
+ {p:"Focaldata",d:"2026-03-10",n:1782,pop:"RV",q:2.0,s:{harris:39,newsom:22,aoc:11,buttigieg:8,shapiro:6,pritzker:4,kelly:4,beshear:2,ossoff:null,booker:null}},
+ {p:"Yale Youth Poll",d:"2026-03-09",n:1557,pop:"RV",q:1.5,s:{harris:19.7,newsom:19.2,buttigieg:13.9,aoc:12.7,kelly:6.7,shapiro:3.5,pritzker:3.5,beshear:2.4,booker:2.2,ossoff:null}},
+ {p:"Noble Predictive",d:"2026-03-05",n:1152,pop:"RV",q:2.0,s:{harris:31,newsom:16,buttigieg:7,aoc:6,shapiro:5,booker:3,pritzker:2,ossoff:null,beshear:null,kelly:null}},
+ {p:"JL Partners",d:"2026-02-27",n:1095,pop:"RV",q:2.0,s:{harris:23,newsom:19,buttigieg:10,aoc:9,booker:5,shapiro:5,pritzker:4,ossoff:null,beshear:null,kelly:null}},
+ {p:"Harvard Harris",d:"2026-02-26",n:1999,pop:"RV",q:1.5,s:{harris:39,newsom:24,aoc:14,pritzker:6,shapiro:10,ossoff:null,buttigieg:null,kelly:null,beshear:null,booker:null}},
+ {p:"Emerson College",d:"2026-02-22",n:438,pop:"LV",q:2.9,s:{newsom:20,buttigieg:16,harris:13,aoc:9,shapiro:7,beshear:5,pritzker:3,ossoff:null,kelly:null,booker:null}},
+ {p:"Echelon Insights",d:"2026-02-23",n:1002,pop:"LV",q:2.8,s:{newsom:24,harris:18,aoc:9,buttigieg:8,shapiro:4,pritzker:4,booker:3,kelly:4,beshear:2,ossoff:null}},
+ {p:"YouGov/BGSU",d:"2026-02-18",n:556,pop:"RV",q:2.9,s:{newsom:21,harris:18,aoc:11,buttigieg:11,kelly:7,pritzker:6,shapiro:3,beshear:3,booker:2,ossoff:null}},
+ {p:"YouGov/Yahoo",d:"2026-02-12",n:1704,pop:"RV",q:2.9,s:{newsom:19,harris:18,buttigieg:13,aoc:12,kelly:9,pritzker:6,booker:3,ossoff:null,beshear:null,shapiro:null}},
+ {p:"Harvard Harris",d:"2026-01-29",n:2000,pop:"RV",q:1.5,s:{harris:39,newsom:30,aoc:12,pritzker:7,shapiro:9,ossoff:null,buttigieg:null,kelly:null,beshear:null,booker:null}},
+ {p:"Rasmussen",d:"2026-01-27",n:1115,pop:"LV",q:1.5,s:{harris:34,newsom:20,buttigieg:10,aoc:7,shapiro:10,booker:6,ossoff:null,beshear:null,kelly:null,pritzker:null}},
+ {p:"Echelon Insights",d:"2026-01-26",n:1029,pop:"LV",q:2.8,s:{newsom:27,harris:21,aoc:9,buttigieg:8,booker:3,shapiro:3,pritzker:3,kelly:4,beshear:2,ossoff:null}},
+ {p:"Big Data Poll",d:"2026-01-24",n:1346,pop:"LV",q:1.5,s:{harris:31.4,newsom:22.2,buttigieg:11.7,aoc:6.4,shapiro:6.1,beshear:2.5,ossoff:null,booker:null,kelly:null,pritzker:null}},
+ {p:"YouGov",d:"2026-01-14",n:2250,pop:"LV",q:2.9,s:{harris:20,newsom:17,aoc:9,buttigieg:8,kelly:7,booker:3,pritzker:3,beshear:2,shapiro:2,ossoff:null}},
+ {p:"Zogby Analytics",d:"2026-01-07",n:374,pop:"LV",q:0.5,s:{harris:30,newsom:21,aoc:11,buttigieg:8,kelly:7,shapiro:6,pritzker:5,ossoff:null,beshear:null,booker:null}}
+];
+var NAMES={harris:"Kamala Harris",newsom:"Gavin Newsom",buttigieg:"Pete Buttigieg",aoc:"Alexandria Ocasio-Cortez",shapiro:"Josh Shapiro",kelly:"Mark Kelly",booker:"Cory Booker",beshear:"Andy Beshear",pritzker:"JB Pritzker",ossoff:"Jon Ossoff"};
+var KEYS=Object.keys(NAMES);
+var SNAPMKT={harris:8,newsom:18,buttigieg:5.1,aoc:15,ossoff:14.5,beshear:2.3,shapiro:3,kelly:1.5,pritzker:1.2,booker:0.6};
+var mktLive=false,MKT={};for(var k in SNAPMKT)MKT[k]=SNAPMKT[k];
+function $(s){return document.querySelector(s);}
+function days(d){return (Date.now()-new Date(d+"T12:00:00Z").getTime())/864e5;}
+function wgt(pl){var rec=Math.pow(0.97,Math.max(0,days(pl.d)));
+ var sz=Math.sqrt(Math.min(pl.n,5000)/600);
+ var pop=pl.pop==="LV"?1:(pl.pop==="RV"?0.9:0.75);
+ var q=Math.max(0.3,Math.min(1,pl.q/3));
+ return rec*sz*pop*q;}
+function rawAvg(exclude){var out={};KEYS.forEach(function(k){var num=0,den=0;
+ POLLS.forEach(function(pl){if(pl===exclude)return;var v=pl.s[k];if(v==null)return;var w=wgt(pl);num+=w*v;den+=w;});
+ out[k]=den>0?num/den:null;});return out;}
+function houseEffects(){var base=rawAvg(null),he={};
+ var byP={};POLLS.forEach(function(pl){(byP[pl.p]=byP[pl.p]||[]).push(pl);});
+ for(var p in byP){if(byP[p].length<2)continue;var eff={};
+  KEYS.forEach(function(k){var ds=[];byP[p].forEach(function(pl){if(pl.s[k]!=null&&base[k]!=null)ds.push(pl.s[k]-base[k]);});
+   if(ds.length)eff[k]=ds.reduce(function(a,b){return a+b},0)/ds.length;});
+  he[p]=eff;}
+ return he;}
+var HE=houseEffects();
+function adjAvg(asOf){var out={};KEYS.forEach(function(k){var num=0,den=0;
+ POLLS.forEach(function(pl){var v=pl.s[k];if(v==null)return;
+  var age=asOf?((asOf-new Date(pl.d+"T12:00:00Z").getTime())/864e5):days(pl.d);
+  if(asOf&&(age<0||age>90))return;
+  var rec=Math.pow(0.97,Math.max(0,age)),sz=Math.sqrt(Math.min(pl.n,5000)/600);
+  var pop=pl.pop==="LV"?1:(pl.pop==="RV"?0.9:0.75),q=Math.max(0.3,Math.min(1,pl.q/3));
+  var w=rec*sz*pop*q;
+  var adj=v-((HE[pl.p]&&HE[pl.p][k])||0)*0.5;
+  num+=w*adj;den+=w;});
+ out[k]=den>0?num/den:null;});return out;}
+var AVG=adjAvg(null);
+var ORDER=KEYS.slice().sort(function(a,b){return (AVG[b]||0)-(AVG[a]||0)});
+function renderCards(){var top=ORDER.slice(0,6);
+ $("#avgcards").innerHTML=top.map(function(k){
+  return '<div class="pc"><div class="nm">'+NAMES[k]+'</div><div class="v">'+(AVG[k]!=null?AVG[k].toFixed(1)+"%":"—")+'</div><div class="d">weighted average</div></div>';}).join("");
+ var used=POLLS.length;
+ $("#avgnote").textContent=used+" national polls, Jan–Jul 2026 · house-effect corrected · aggregator cross-check (RCP / 270toWin / Race to the WH, July 2026): Harris ~29, Newsom ~17, Buttigieg ~12.6, AOC ~10.";}
+function renderTrend(){var months=[];for(var m=0;m<7;m++){months.push(new Date(Date.UTC(2026,m,25)).getTime());}
+ var top4=ORDER.slice(0,4),colors=["#e2572b","#4a9e7f","#7d9fd4","#d0a54e"];
+ var series=top4.map(function(k){return months.map(function(t){var a=adjAvg(t);return a[k];});});
+ var mx=0;series.forEach(function(s){s.forEach(function(v){if(v!=null&&v>mx)mx=v;});});mx=Math.ceil(mx/5)*5+5;
+ var L=50,R=980,T=16,B=280;
+ var g='';
+ for(var yy=0;yy<=mx;yy+=10){var y=B-(yy/mx)*(B-T);
+  g+='<line x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'" stroke="var(--rule)" stroke-width="1"/>';
+  g+='<text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="var(--faint)" font-family="monospace">'+yy+'</text>';}
+ var ml=["JAN","FEB","MAR","APR","MAY","JUN","JUL"];
+ months.forEach(function(t,i){var x=L+(i/(months.length-1))*(R-L);
+  g+='<text x="'+x+'" y="'+(B+22)+'" text-anchor="middle" font-size="11" fill="var(--faint)" font-family="monospace">'+ml[i]+'</text>';});
+ series.forEach(function(s,si){var pts=[];s.forEach(function(v,i){if(v==null)return;
+   var x=L+(i/(months.length-1))*(R-L),y=B-(v/mx)*(B-T);pts.push(x.toFixed(1)+","+y.toFixed(1));});
+  g+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="'+colors[si]+'" stroke-width="2.5"/>';});
+ $("#trend").innerHTML=g;
+ $("#legend").innerHTML=top4.map(function(k,i){return '<span><i style="background:'+colors[i]+'"></i>'+NAMES[k]+'</span>';}).join("");}
+function verdict(k,poll,mkt){if(poll==null||mkt==null)return"—";
+ var gap=mkt-poll;
+ if(k==="ossoff")return "Pricing an announcement he has publicly ruled out — the market bets he changes his mind.";
+ if(k==="harris")return "Polls lead is treated as pure name recognition. Market pays ~11-to-1 against the poll leader.";
+ if(k==="buttigieg")return "Market thinks his support is shallow. If polls are right, this is the value row.";
+ if(k==="aoc")return "Market runs slightly ahead of her polling momentum. Smallest mispricing of the big gaps.";
+ if(Math.abs(gap)<3)return "Polls and money agree — fairly priced.";
+ return gap>0?"Market above polls — pricing upside polls can't see yet.":"Market below polls — fading the poll number.";}
+function renderEdge(){$("#edgebody").innerHTML=ORDER.map(function(k){var pv=AVG[k],mv=MKT[k];
+ var gap=(pv!=null&&mv!=null)?(mv-pv):null;
+ var cls=gap==null?"":(gap>0?"up":"dn");
+ var tag=gap==null?"":(Math.abs(gap)>=8?' <span class="tag hot">big gap</span>':(Math.abs(gap)<3?' <span class="tag cool">fair</span>':""));
+ return '<tr><td><b>'+NAMES[k]+'</b>'+tag+'</td><td class="r">'+(pv!=null?pv.toFixed(1)+"%":"—")+'</td><td class="r">'+(mv!=null?mv.toFixed(1)+"¢"+(mktLive?"":"~"):"—")+'</td><td class="r '+cls+'">'+(gap!=null?((gap>0?"+":"")+gap.toFixed(1)):"—")+'</td><td>'+verdict(k,pv,mv)+'</td></tr>';}).join("");}
+function fetchMkt(){var t=setTimeout(function(){},0);
+ var to=new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"))},9000)});
+ Promise.race([fetch("https://gamma-api.polymarket.com/events?slug=democratic-presidential-nominee-2028"),to])
+ .then(function(r){return r.json()}).then(function(j){var ev=j&&j[0];if(!ev||!ev.markets)throw 0;
+  var found=0;
+  ev.markets.forEach(function(m){var q=(m.question||m.groupItemTitle||"").toLowerCase();
+   var px=null;
+   try{var op=typeof m.outcomePrices==="string"?JSON.parse(m.outcomePrices):m.outcomePrices;if(op&&op.length)px=parseFloat(op[0])*100;}catch(e){}
+   if(px==null&&m.lastTradePrice!=null)px=parseFloat(m.lastTradePrice)*100;
+   if(px==null||isNaN(px))return;
+   KEYS.forEach(function(k){var last=NAMES[k].split(" ").pop().toLowerCase();
+    if(q.indexOf(last)>=0){MKT[k]=px;found++;}});});
+  if(found>=4)mktLive=true;
+  $("#mktnote").textContent="Market prices: Polymarket, "+(mktLive?"LIVE — refreshed just now.":"last saved copy (live fetch unavailable), marked ~.");
+  renderEdge();}).catch(function(){renderEdge();});}
+renderCards();renderTrend();renderEdge();fetchMkt();
+$("#stamp").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+setInterval(fetchMkt,60000);
+</script>
+</body>
+</html>
