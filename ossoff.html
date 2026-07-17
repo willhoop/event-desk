@@ -7,7 +7,7 @@
 <title>Event Desk — Elite Four Capital</title>
 <style>
   :root{--paper:#f4efe4;--paper2:#fbf8f1;--ink:#1c1a17;--ink2:#4a453d;--faint:#8a8172;--rule:#d9d0bd;--oxblood:#8f2d2d;--gold:#b8863b;--green:#2f6b4f;--greenbg:#e4efe6;--redbg:#f6e4e0;--chipbg:#eee5d2;--mono:'SFMono-Regular',ui-monospace,'Roboto Mono',Menlo,Consolas,monospace;--serif:Georgia,'Times New Roman',serif;--sans:'Helvetica Neue',Arial,system-ui,sans-serif}
-  [data-theme="ink"]{--paper:#14110d;--paper2:#1d1914;--ink:#efe9dc;--ink2:#c5bca9;--faint:#7d7566;--rule:#332e26;--oxblood:#d05c5c;--gold:#d0a54e;--green:#5cbb8a;--greenbg:#1b2b22;--redbg:#301b18;--chipbg:#2a251d}
+  [data-theme="ink"]{--paper:#16181c;--paper2:#1f2226;--ink:#eef1f4;--ink2:#c9cdd4;--faint:#8a9099;--rule:#343941;--oxblood:#e2572b;--gold:#e2572b;--green:#4a9e7f;--greenbg:#1d2b26;--redbg:#332119;--chipbg:#2a2e34}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.55}
   .wrap{max-width:980px;margin:0 auto;padding:0 26px}
@@ -28,25 +28,25 @@
   .tickwrap{display:inline-flex;animation:crawl 45s linear infinite}
   .ticker:hover .tickwrap{animation-play-state:paused}
   .tickwrap span{margin-right:38px}
-  .tickwrap .up,.tickwrap .dn{display:inline-block;margin:0 6px 0 3px}
+  .tickwrap .up,.tickwrap .dn{display:inline-block;margin:0 12px 0 9px}
   @keyframes crawl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media(prefers-reduced-motion:reduce){.ticker{white-space:normal}.tickwrap{animation:none;flex-wrap:wrap;gap:12px}}
   .ticker b{color:var(--ink)} .up{color:var(--green)} .dn{color:var(--oxblood)}
   .pill{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px}
   .pill.ok{background:var(--greenbg);color:var(--green)} .pill.bad{background:var(--redbg);color:var(--oxblood)} .pill.snap{background:var(--chipbg);color:var(--gold)}
   section{display:block;padding-top:14px;scroll-margin-top:175px;border-bottom:1px solid var(--rule);padding-bottom:26px} section:last-of-type{border-bottom:0}
-  h2.dek{font-family:var(--serif);font-size:22px;font-weight:700;margin:22px 0 3px}
-  .lead{color:var(--ink2);max-width:76ch;margin:0 0 10px;font-size:14px}
+  h2.dek{font-family:var(--serif);font-size:22px;font-weight:700;margin:26px 0 8px}
+  .lead{color:var(--ink2);margin:0 0 14px;font-size:15px;line-height:1.6}
   .call{background:var(--ink);color:var(--paper);border-radius:3px;padding:26px 30px 28px;margin:16px 0 8px}
-  [data-theme="ink"] .call{background:#000;border:1px solid var(--rule);color:#efe9dc}
+  [data-theme="ink"] .call{background:#111317;border:1px solid var(--rule);color:#eef1f4}
   .call .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
   .call h3{font-family:var(--serif);font-size:25px;margin:12px 0 12px;color:#fff;line-height:1.15}
   .call p{margin:0;font-size:15px;opacity:.92;max-width:66ch;line-height:1.7}
-  [data-theme="ink"] .call p{color:#d8d2c4}
+  [data-theme="ink"] .call p{color:#c9cdd4}
   .picker{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 6px}
   .chip{flex:1;min-width:150px;background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:12px 14px;text-align:left;color:var(--ink)}
   .chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-  [data-theme="ink"] .chip.on{background:#efe9dc;color:#14110d}
+  [data-theme="ink"] .chip.on{background:#eef1f4;color:#16181c}
   .chip .ct{font-family:var(--serif);font-size:15px;font-weight:700}
   .chip .cs{font-size:11.5px;opacity:.65;margin-top:2px}
   .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0;font-family:var(--mono);font-size:12px;color:var(--ink2);text-transform:uppercase}
@@ -78,7 +78,7 @@
   .price,.mult,.pl{font-family:var(--mono);font-size:13.5px}.mult{font-weight:600}
   .pl.g{color:var(--green)}.pl.r{color:var(--oxblood)}
   .badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
-  .b-pick{background:var(--gold);color:#1c1a17}.b-value{background:var(--chipbg);color:var(--ink2)}.b-long{background:var(--chipbg);color:var(--ink2)}.b-low{background:var(--chipbg);color:var(--ink2)}
+  .b-pick{background:var(--gold);color:#16181c}.b-value{background:var(--chipbg);color:var(--ink2)}.b-long{background:var(--chipbg);color:var(--ink2)}.b-low{background:var(--chipbg);color:var(--ink2)}
   .winsif{font-size:13px;color:var(--ink2)}
   .rowbtn{border:1px solid var(--rule);background:none;color:var(--faint);border-radius:3px;padding:4px 9px}
   .rowbtn:hover{color:var(--oxblood);border-color:var(--oxblood)}
@@ -128,9 +128,10 @@
   .btn{font-family:var(--mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;border:0;color:#fff;background:var(--oxblood);border-radius:3px;padding:11px 18px}
   .btn.ghost{background:none;color:var(--oxblood);border:1px solid var(--oxblood)}
   #bookpl.g{color:var(--green)} #bookpl.r{color:var(--oxblood)}
-  .drawer{display:none;background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:16px 18px;margin-top:12px}
+  .drawer{display:none;background:var(--paper2);border:1px solid var(--rule);border-radius:6px;padding:12px 16px;margin-top:10px;max-width:520px}
   .drawer.on{display:block}
-  .drawer .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+  .drawer .grid{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap}
+  .drawer input{width:130px;padding:6px 10px;font-size:14px}
   .drawer label{display:flex;flex-direction:column;gap:5px;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;color:var(--faint)}
   #toast{position:fixed;bottom:22px;right:22px;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12.5px;padding:12px 16px;border-radius:3px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:50;max-width:340px}
   [data-theme="ink"] #toast{background:#efe9dc;color:#14110d}
@@ -148,10 +149,18 @@
 <div class="wrap">
   <div class="mast">
     <div class="mrow">
-      <div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <svg width="52" height="52" viewBox="0 0 110 110" aria-hidden="true" style="flex:none">
+          <rect x="42" y="14" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 55 27)"/>
+          <rect x="14" y="42" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 27 55)"/>
+          <rect x="70" y="42" width="26" height="26" fill="var(--chipbg)" transform="rotate(45 83 55)"/>
+          <rect x="42" y="70" width="26" height="26" fill="var(--oxblood)" transform="rotate(45 55 83)"/>
+        </svg>
+        <div>
         <div class="kicker">Elite Four Capital</div>
         <h1>Event Desk</h1>
         <div class="sub">The Jon Ossoff 2028 desk · betting markets in plain English · <span id="live">connecting…</span></div>
+        </div>
       </div>
       <div class="mtools">
         
@@ -238,7 +247,11 @@
     <p class="verdict" id="o_verdict" style="font-size:15.5px"></p>
 
     <h2 class="dek">Buy now, or wait for your price?</h2>
-    <p class="lead"><b>Market order</b> = "buy it right now at whatever it costs" — instant, pays the fee. <b>Limit order</b> = "I will pay 14¢ and not a penny more" — your offer waits in a queue until someone sells at your price. No fee, better price, but it may never fill. We pre-answer both questions from the last month of real prices — override only if you know something the tape does not:</p>
+    <div class="invtest" style="margin:10px 0 18px">
+      <div class="invitem"><b>Market order</b> — "buy it right now at whatever it costs." Instant, but you pay the trading fee.</div>
+      <div class="invitem"><b>Limit order</b> — "I will pay 14¢ and not a penny more." Your offer waits in a queue until someone sells at your price. No fee and a better price, but it may never fill.</div>
+    </div>
+    <p class="lead" style="margin-bottom:18px">The two dials below are pre-answered from the last month of real prices. Override them only if you know something the tape does not.</p>
     <div class="vrow"><span class="vn">1 · How jumpy is this market today?</span>
       <select id="cr_move"><option value="1">Quiet (~1%/day)</option><option value="3" selected>Normal (~3%/day)</option><option value="10">Hot — news day (~10%/day)</option></select></div>
     <div class="vrow"><span class="vn">2 · Chance it runs off before your limit fills?</span>
@@ -415,10 +428,12 @@ function fetchMarket(slug){return fetchTO(GAMMA+encodeURIComponent(slug)).then(f
  var tok=null;try{tok=JSON.parse(m.clobTokenIds)[0]}catch(e){}
  return{ok:true,yes:yes,ask:parseFloat(m.bestAsk)||yes,c24:parseFloat(m.oneDayPriceChange)||0,c1mo:parseFloat(m.oneMonthPriceChange)||0,q:m.question,tok:tok};
 }).catch(function(){return{ok:false}});}
-function fetchKalshiPres(){return fetchTO(KAL2).then(function(r){return r.json()}).then(function(j){
+function kalshiGET(url){return fetchTO(url).then(function(r){if(!r.ok)throw 0;return r.json();}).catch(function(){
+ return fetchTO("https://api.allorigins.win/raw?url="+encodeURIComponent(url)).then(function(r){if(!r.ok)throw 0;return r.json();});});}
+function fetchKalshiPres(){return kalshiGET(KAL2).then(function(j){
  (j.markets||[]).forEach(function(m){if(m.yes_sub_title==="Jon Ossoff"){var v=parseFloat(m.yes_ask_dollars);if(isNaN(v))v=parseFloat(m.last_price_dollars);if(!isNaN(v)){kalPres=v;kal2OK=true;}}});
 }).catch(function(){kal2OK=false;});}
-function fetchKalshi(){return fetchTO(KAL).then(function(r){return r.json()}).then(function(j){
+function fetchKalshi(){return kalshiGET(KAL).then(function(j){
  var mk=j.markets||[];if(!mk.length)throw 0;var sum=0;kalC={};
  mk.forEach(function(m){var n=m.yes_sub_title,lp=parseFloat(m.last_price_dollars),ya=parseFloat(m.yes_ask_dollars);
   if(!isNaN(lp))sum+=lp;if(n)kalC[n]=!isNaN(ya)?ya:lp;});
@@ -530,21 +545,23 @@ function profitFor(t,s,v){
 function recFor(v){return v==="win"?"presYes":(v==="none"?"nomNo":"wedge");}
 
 function spark(now,c24,c1mo){if(now==null)return"";
- var pts=[now-(c1mo||0),now-(c24||0),now],mn=Math.min.apply(null,pts),mx=Math.max.apply(null,pts),rg=(mx-mn)||0.001;
- var xy=pts.map(function(p,i){return (i*30)+","+(16-((p-mn)/rg)*14)}).join(" ");
- return '<svg width="64" height="18" style="margin-top:8px"><polyline points="'+xy+'" fill="none" stroke="'+(pts[2]>=pts[0]?"var(--green)":"var(--oxblood)")+'" stroke-width="1.5"/></svg>';}
+ function chip(lbl,d){if(d==null)return"";var v=(d*100);var col=v>0?"var(--green)":(v<0?"var(--oxblood)":"var(--faint)");
+  var sign=v>0?"+":"";return '<span style="margin-right:14px">'+lbl+' <b style="color:'+col+'">'+sign+v.toFixed(1)+'¢</b></span>';}
+ return '<div class="t" style="margin-top:10px">'+chip("24h",c24)+chip("month",c1mo)+'</div>';}
 function renderTicker(){
  var nY=nomYes(),pY=presYes(),n=md[NOM]||{},p=md[PRES]||{};
- function ar(x){return x>0?'<span class="up">▲'+(x*100).toFixed(1)+'</span>':(x<0?'<span class="dn">▼'+(Math.abs(x)*100).toFixed(1)+'</span>':"");}
+ function ar(x){return x>0?'<span class="up">▲ '+(x*100).toFixed(1)+'</span>':(x<0?'<span class="dn">▼ '+(Math.abs(x)*100).toFixed(1)+'</span>':"");}
  function kv(name){return kalOK?kalC[name]:SNAPK[name];}
  var kN=kv("Jon Ossoff"),kP=kal2OK?kalPres:SNAPP["Jon Ossoff"];
  var seg=[];
- seg.push("OSSOFF NOM · P <b>"+c(nY)+"</b>"+ar(n.c24||0)+" K <b>"+c(kN)+"</b>");
- seg.push("OSSOFF PRES · P <b>"+c(pY)+"</b>"+ar(p.c24||0)+" K <b>"+c(kP)+"</b>");
- if(nY!=null&&kN!=null)seg.push("NOM GAP <b class='"+((kN-nY)>0?"up":"dn")+"'>"+((kN-nY)*100).toFixed(1)+"¢</b>");
- [["NEWSOM","Gavin Newsom"],["AOC","Alexandria Ocasio-Cortez"],["HARRIS","Kamala Harris"]].forEach(function(x){var v=kv(x[1]);if(v!=null)seg.push(x[0]+" K <b>"+c(v)+"</b>");});
- [["BUTTIGIEG",CAND[1]],["BESHEAR",CAND[2]]].forEach(function(x){var pd=md[x[1].slug],kk=kv(x[1].kal);
-  if(pd||kk!=null)seg.push(x[0]+(pd?(" P <b>"+c(pd.yes)+"</b>"):"")+(kk!=null?(" K <b>"+c(kk)+"</b>"):""));});
+ function duo(label,poly,delta,kal){var s=label+" · POLYMARKET <b>"+(poly!=null?c(poly):"—")+"</b>"+(delta?ar(delta):"");
+  if(kal!=null)s+=" KALSHI <b>"+c(kal)+"</b>";return s;}
+ seg.push(duo("OSSOFF WINS NOMINATION",nY,n.c24||0,kN));
+ seg.push(duo("OSSOFF WINS PRESIDENCY",pY,p.c24||0,kP));
+ if(nY!=null&&kN!=null)seg.push("NOM · KALSHI MINUS POLY <b class='"+((kN-nY)>0?"up":"dn")+"'>"+((kN-nY)*100).toFixed(1)+"¢</b>");
+ [["NEWSOM NOMINATION","Gavin Newsom"],["AOC NOMINATION","Alexandria Ocasio-Cortez"],["HARRIS NOMINATION","Kamala Harris"]].forEach(function(x){var v=kv(x[1]);if(v!=null)seg.push(x[0]+" · KALSHI <b>"+c(v)+"</b>");});
+ [["BUTTIGIEG NOMINATION",CAND[1]],["BESHEAR NOMINATION",CAND[2]]].forEach(function(x){var pd=md[x[1].slug],kk=kv(x[1].kal);
+  if(pd||kk!=null)seg.push(x[0]+(pd?(" · POLYMARKET <b>"+c(pd.yes)+"</b>"):"")+(kk!=null?(" KALSHI <b>"+c(kk)+"</b>"):""));});
  var flag=(kalOK&&kal2OK)?"":' <span class="pill snap" title="Kalshi blocks browser data requests, so we show their last saved prices. Everything marked K updates when our server checks - not live in your browser. Normal, not an error.">KALSHI PRICES = SAVED COPY, NOT LIVE</span>';
  var content="<span>"+seg.join("</span><span>")+"</span>"+flag;
  $("#ticker").innerHTML='<div class="tickwrap">'+content+'<span aria-hidden="true"></span>'+content+"</div>";
@@ -728,7 +745,10 @@ function exportCSV(){
 /* wiring — each handler guarded so one failure can't kill the rest */
 function wire(id,ev,fn){var el=$(id);if(el)el.addEventListener(ev,function(e){try{fn(e)}catch(err){window.onerror(err.message,"",0)}});}
 Array.prototype.forEach.call(document.querySelectorAll('#tabs .tab'),function(b){b.onclick=function(){
- var sec=$("#s-"+b.dataset.t);if(sec)sec.scrollIntoView({behavior:"smooth",block:"start"});};});
+ var sec=$("#s-"+b.dataset.t);if(!sec)return;
+ var mast=document.querySelector(".mast"),off=(mast?mast.offsetHeight:170)+12;
+ var y=sec.getBoundingClientRect().top+window.pageYOffset-off;
+ window.scrollTo({top:y,behavior:"smooth"});};});
 (function(){try{
  var map={};Array.prototype.forEach.call(document.querySelectorAll('#tabs .tab'),function(b){map["s-"+b.dataset.t]=b;});
  var io=new IntersectionObserver(function(es){es.forEach(function(e){
