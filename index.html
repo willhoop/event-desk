@@ -18,6 +18,22 @@
   .intro{max-width:64ch;margin:26px auto 8px;text-align:center;color:var(--ink2);font-size:16.5px}
   .sh{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);margin:44px 0 14px;display:flex;align-items:center;gap:14px}
   .sh:after{content:"";flex:1;height:1px;background:var(--rule)}
+    .leadstory{display:block;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--rule);padding:30px 0 26px}
+  .leadstory .lk{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
+  .leadstory h2{font-family:var(--serif);font-size:44px;line-height:1.12;margin:10px 0 12px;font-weight:700}
+  .leadstory p{font-size:17px;color:var(--ink2);max-width:70ch;margin:0 0 12px;line-height:1.55}
+  .leadstory .px{font-family:var(--mono);font-size:13px;color:var(--ink2);display:flex;gap:22px;flex-wrap:wrap}
+  .leadstory .px b{color:var(--ink)}
+  .leadstory:hover h2{color:var(--oxblood)}
+  .secrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border-bottom:1px solid var(--rule)}
+  .secstory{display:block;text-decoration:none;color:var(--ink);padding:22px 22px 22px 0;border-right:1px solid var(--rule)}
+  .secstory:last-child{border-right:none}
+  .secstory+.secstory{padding-left:22px}
+  .secstory .lk{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+  .secstory .lk.live{color:var(--green)} .secstory .lk.soon{color:var(--faint)}
+  .secstory h3{font-family:var(--serif);font-size:21px;line-height:1.25;margin:8px 0 8px}
+  .secstory:hover h3{color:var(--oxblood)}
+  .secstory p{font-size:13.5px;color:var(--ink2);margin:0;line-height:1.5}
   .desks{display:grid;grid-template-columns:1fr;gap:18px}
   .desk{display:block;background:var(--paper2);border:1px solid var(--rule);border-radius:4px;padding:26px 28px;text-decoration:none;color:var(--ink);transition:border-color .15s}
   a.desk:hover{border-color:var(--oxblood)}
@@ -51,33 +67,35 @@
     <h1>Event Desks</h1>
     <div class="sub">Prediction markets, priced and explained — one desk per trade</div>
   </div>
-  <p class="intro">Each desk takes one market complex and gives it the full treatment: live prices from Polymarket and Kalshi, every possible bet in plain English, an arbitrage scan, order-type math, and the tax angle. No hype, no jargon, sources on everything.</p>
 
   <div class="sh">Open desks</div>
-  <div class="desks">
-    <a class="desk" href="ossoff.html">
-      <span class="tag live">LIVE</span>
-      <h2>The Ossoff Desk — Jon Ossoff 2028</h2>
-      <p>Can a first-term Georgia senator win it all? The market says maybe — and prices the "if nominated, wins" leg generously. Our house call is the hedged wedge; the desk shows every alternative, both venues, and when to press which button.</p>
-      <div class="px" id="ossoffPx">loading live prices…</div>
-      <span class="open">Open the desk →</span>
+  <a class="leadstory" href="ossoff.html">
+    <span class="lk">LIVE · THE HOUSE CALL</span>
+    <h2>The market gives a nominated Ossoff a 55% shot at the White House. History says take the other side.</h2>
+    <p>A first-term Georgia senator who says he isn't running trades at 14¢ for the nomination — and the "if nominated, wins it all" leg is priced like a coin flip. The Ossoff Desk prices every way to bet it, on both venues, after fees, interest and taxes.</p>
+    <div class="px" id="ossoffPx">loading live prices…</div>
+  </a>
+  <div class="secrow">
+    <a class="secstory" href="polls.html">
+      <span class="lk live">LIVE · POLLING DESK</span>
+      <h3>Harris leads every poll and the market pays 11-to-1 against her</h3>
+      <p>A FiveThirtyEight-style average with our own pollster scores, a model fitted on fifty years of primaries, and the gaps between polls and money.</p>
     </a>
-    <a class="desk" href="polls.html">
-      <span class="tag live">LIVE</span>
-      <h2>The Polling Desk — 2028 Democratic nomination</h2>
-      <p>A FiveThirtyEight-style national polling average — recency decay, sample-size weights, pollster credibility, house-effect correction — set against live market prices. The gaps between what polls measure and what money believes are the desk's raw material.</p>
-      <span class="open">Open the desk →</span>
+    <a class="secstory" href="map.html">
+      <span class="lk live">LIVE · ELECTORAL DESK</span>
+      <h3>Click the map, drag the mood, watch 270 move</h3>
+      <p>Every state from its 2024 result, 20,000 simulated elections per adjustment, and the tipping-point state that decides the close ones.</p>
     </a>
-    <div class="desk dim">
-      <span class="tag soon">IN RESEARCH</span>
-      <h2>The GOP Field — Republican nominee 2028</h2>
-      <p>The other half of the 2028 board: a crowded field, a bigger Kalshi overround, and — if early pricing holds — juicier cross-venue gaps than the Democratic side.</p>
-    </div>
-    <div class="desk dim">
-      <span class="tag soon">IN RESEARCH</span>
-      <h2>The Fed Desk — rate decisions</h2>
-      <p>The most liquid event contracts in the world, repricing eight times a year. A different animal: short horizons, real convergence trades, institutional flow.</p>
-    </div>
+    <a class="secstory" href="#" onclick="return false" style="cursor:default">
+      <span class="lk soon">IN RESEARCH · MIDTERMS DESK</span>
+      <h3>The 2026 midterms — the next resolving markets</h3>
+      <p>House and Senate control resolve in four months, not two years. Shorter clocks, real convergence trades, and the first live test of the desk's machinery.</p>
+    </a>
+    <a class="secstory" href="styleguide.html">
+      <span class="lk soon">THE DESK ITSELF</span>
+      <h3>How these pages are built</h3>
+      <p>The template and style guide behind every article — chart rules, color discipline, and the honesty rules about live versus saved data.</p>
+    </a>
   </div>
 
   <div class="sh">What every desk includes</div>

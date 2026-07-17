@@ -34,12 +34,16 @@
   .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;background:var(--chipbg);color:var(--ink2)}
   .tag.hot{background:var(--ember);color:#16181c}
   .tag.cool{background:var(--greenbg);color:var(--green)}
-  .box{background:var(--paper2);border:1px solid var(--rule);border-radius:6px;padding:4px 0;margin:12px 0 20px}
-  .row{padding:12px 16px;font-size:14px;line-height:1.55;color:var(--ink2);border-bottom:1px solid var(--rule)}
-  .row:last-child{border-bottom:none}
-  .row b{color:var(--ink);font-family:var(--serif)}
-  .chart{background:var(--paper2);border:1px solid var(--rule);border-radius:6px;padding:16px 14px 8px;margin:12px 0}
+  .box{background:none;border:none;border-radius:0;padding:2px 0;margin:8px 0 22px}
+  .row{border-bottom:none;padding:9px 0 9px 30px;position:relative;font-size:14.5px}
+  .row:before{content:"";position:absolute;left:4px;top:17px;width:9px;height:9px;background:var(--ember);transform:rotate(45deg)}
+
+    .row b{color:var(--ink);font-family:var(--serif)}
+  .chart{padding:8px 0 0;margin:12px 0}
   .legend{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:0 0 6px;display:flex;gap:18px;flex-wrap:wrap}
+  .legend span{cursor:pointer;border:1px solid var(--rule);border-radius:14px;padding:5px 12px;user-select:none;color:var(--ink2)}
+  .legend span:hover{border-color:var(--faint)}
+  .legend span.off{opacity:.45;border-style:dashed;text-decoration:line-through}
   .legend i{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:6px}
   .note{font-family:var(--mono);font-size:11px;color:var(--faint);margin:6px 0 0}
   .src{font-size:13.5px;color:var(--ink2)} .src a{color:var(--ember)}
@@ -121,7 +125,9 @@
   <section>
     <div class="sechead"><span class="n">06</span><span class="t">The pollster scoreboard</span><span class="d">scored by our engine</span></div>
     <p class="lead">538 is the inspiration, not the source. Every firm below is scored by our own engine, from the polls it gave us: how far its numbers habitually sit from the consensus of everyone else, how big its samples run, whether it polls likely voters or just adults, and a flag for documented partisan work. The final weight is what its polls count for in the average above.</p>
+    <p class="note" style="margin-bottom:8px">Reading the columns — <b>Polls</b>: surveys of this race in our database. <b>Avg sample</b>: people interviewed per poll; bigger is steadier. <b>Likely-voter share</b>: how often the firm polls likely voters, the gold-standard population, instead of all adults. <b>Distance from consensus</b>: how far its numbers habitually sit from everyone else's average, in points — its house effect. <b>Partisan flag</b>: documented party clientele. <b>E4 weight</b>: what all of that earns its polls in our average, from 0.20 to 1.00.</p>
     <table><thead><tr><th>Pollster</th><th class="r">Polls</th><th class="r">Avg sample</th><th class="r">Likely-voter share</th><th class="r">Distance from consensus</th><th class="r">Partisan flag</th><th class="r">E4 weight</th></tr></thead><tbody id="sboard"></tbody></table>
+    <button id="sbmore" onclick="toggleSb()" style="display:none;background:none;border:1px solid var(--rule);color:var(--ink2);border-radius:4px;padding:7px 16px;font-family:var(--mono);font-size:11px;cursor:pointer;margin-top:10px">SHOW ALL</button>
     <p class="note">Distance from consensus = average gap, in points, between this firm's numbers and the field's weighted average (its house effect). Big distance is not proof of error — but with no elections to grade against until 2028, agreement with the crowd is the only accuracy proxy the data offers, so persistent outliers earn less weight, not zero.</p>
   </section>
 
@@ -253,31 +259,48 @@ var AVG=adjAvg(null);
 var ORDER=KEYS.slice().sort(function(a,b){return (AVG[b]||0)-(AVG[a]||0)});
 function renderCards(){var top=ORDER.slice(0,6);
  $("#avgcards").innerHTML=top.map(function(k){
-  return '<div class="pc"><div class="nm">'+NAMES[k]+'</div><div class="v">'+(AVG[k]!=null?AVG[k].toFixed(1)+"%":"—")+'</div><div class="d">weighted average</div></div>';}).join("");
+  var init=NAMES[k].split(" ").map(function(w){return w[0]}).join("").slice(0,2);
+  return '<div class="pc" style="display:flex;gap:14px;align-items:center"><div id="av_'+k+'" style="width:54px;height:54px;border-radius:50%;background:var(--chipbg);flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;overflow:hidden">'+init+'</div><div><div class="nm">'+NAMES[k]+'</div><div class="v" style="font-size:26px;margin:2px 0">'+(AVG[k]!=null?AVG[k].toFixed(1)+"%":"—")+'</div><div class="d">weighted average</div></div></div>';}).join("");
+ top.forEach(function(k){var title=NAMES[k].replace(/ /g,"_");
+  fetch("https://en.wikipedia.org/api/rest_v1/page/summary/"+title).then(function(r){return r.json()}).then(function(j){
+   if(j&&j.thumbnail&&j.thumbnail.source){var el=document.getElementById("av_"+k);
+    if(el)el.innerHTML='<img src="'+j.thumbnail.source+'" alt="'+NAMES[k]+'" style="width:100%;height:100%;object-fit:cover">';}}).catch(function(){});});
  var used=POLLS.length;
  $("#avgnote").textContent=used+" national polls, Jan–Jul 2026 · house-effect corrected · aggregator cross-check (RCP / 270toWin / Race to the WH, July 2026): Harris ~29, Newsom ~17, Buttigieg ~12.6, AOC ~10.";}
 var TSHOW=[true,true,true,true];
-function renderTrend(){var months=[];for(var m=0;m<7;m++){months.push(new Date(Date.UTC(2026,m,25)).getTime());}
+function smoothPath(P){if(P.length<3)return P.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)}).join(" ");
+ var d="M"+P[0][0].toFixed(1)+","+P[0][1].toFixed(1);
+ for(var i=0;i<P.length-1;i++){var p0=P[Math.max(0,i-1)],p1=P[i],p2=P[i+1],p3=P[Math.min(P.length-1,i+2)];
+  var c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6;
+  var c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6;
+  d+="C"+c1x.toFixed(1)+","+c1y.toFixed(1)+" "+c2x.toFixed(1)+","+c2y.toFixed(1)+" "+p2[0].toFixed(1)+","+p2[1].toFixed(1);}
+ return d;}
+function renderTrend(){var months=[];var t0=Date.UTC(2026,0,25),t1=Date.now();
+ for(var t=t0;t<=t1;t+=7*864e5)months.push(t);
+ if(months[months.length-1]<t1-2*864e5)months.push(t1);
  var top4=ORDER.slice(0,4);
  var CMAP={harris:"#e2572b",newsom:"#4a9e7f",buttigieg:"#7d9fd4",aoc:"#d0a54e",shapiro:"#c9cdd4",kelly:"#9aa79e"};
  var colors=top4.map(function(k,i){return CMAP[k]||["#e2572b","#4a9e7f","#7d9fd4","#d0a54e"][i];});
  var series=top4.map(function(k){return months.map(function(t){var a=adjAvg(t);return a[k];});});
- var mx=0;series.forEach(function(s,i){if(!TSHOW[i])return;s.forEach(function(v){if(v!=null&&v>mx)mx=v;});});mx=Math.ceil(mx/5)*5+5||35;
+ var mx=0,mnv=Infinity;series.forEach(function(s,i){if(!TSHOW[i])return;s.forEach(function(v){if(v==null)return;if(v>mx)mx=v;if(v<mnv)mnv=v;});});
+ mx=Math.ceil(mx/5)*5+3||35;var lo=Math.max(0,Math.floor(mnv/5)*5-3);if(!isFinite(lo))lo=0;
  var L=50,R=830,T=16,B=280;
- window.TDATA={months:months,top4:top4,colors:colors,series:series,mx:mx,L:L,R:R,T:T,B:B};
+ window.TDATA={months:months,top4:top4,colors:colors,series:series,mx:mx,lo:lo,L:L,R:R,T:T,B:B};
  var g='';
- for(var yy=0;yy<=mx;yy+=10){var y=B-(yy/mx)*(B-T);
-  g+='<line x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'" stroke="var(--rule)" stroke-width="0.5" opacity="0.7"/>';
-  g+='<text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="var(--faint)" font-family="monospace">'+yy+'</text>';}
- var ml=["JAN","FEB","MAR","APR","MAY","JUN","JUL"];
- months.forEach(function(t,i){var x=L+(i/(months.length-1))*(R-L);
-  g+='<text x="'+x+'" y="'+(B+22)+'" text-anchor="middle" font-size="11" fill="var(--faint)" font-family="monospace">'+ml[i]+'</text>';});
+ function YY(v){return B-((v-lo)/((mx-lo)||1))*(B-T);}
+ var step=Math.ceil((mx-lo)/3/5)*5||5;
+ for(var yy=Math.ceil(lo/step)*step;yy<=mx;yy+=step){var y=YY(yy);
+  g+='<line x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'" stroke="var(--rule)" stroke-width="0.5" opacity="0.55"/>';
+  g+='<text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="var(--faint)" font-family="monospace">'+yy+'%</text>';}
+ var seen={};months.forEach(function(t,i){var d=new Date(t),mo=d.getUTCMonth();
+  if(seen[mo])return;seen[mo]=1;var x=L+(i/(months.length-1))*(R-L);
+  g+='<text x="'+x+'" y="'+(B+22)+'" text-anchor="middle" font-size="11" fill="var(--faint)" font-family="monospace">'+["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"][mo]+'</text>';});
  series.forEach(function(s,si){if(!TSHOW[si])return;var pts=[];s.forEach(function(v,i){if(v==null)return;
-   var x=L+(i/(months.length-1))*(R-L),y=B-(v/mx)*(B-T);pts.push(x.toFixed(1)+","+y.toFixed(1));});
-  g+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="'+colors[si]+'" stroke-width="2" stroke-linejoin="round"/>';});
+   pts.push([L+(i/(months.length-1))*(R-L),YY(v)]);});
+  if(pts.length>1)g+='<path d="'+smoothPath(pts)+'" fill="none" stroke="'+colors[si]+'" stroke-width="2.25" stroke-linecap="round"/>';});
  var lastYs=[];
  series.forEach(function(s,si){if(!TSHOW[si])return;var v=s[s.length-1];if(v==null)return;
-  var y=B-(v/mx)*(B-T),shift=0;
+  var y=YY(v),shift=0;
   lastYs.forEach(function(py){if(Math.abs(y+shift-py)<18)shift+=(y+shift>=py?18:-18);});lastYs.push(y+shift);
   g+='<circle cx="'+R+'" cy="'+y.toFixed(1)+'" r="4" fill="'+colors[si]+'"/>';
   g+='<text x="'+(R+10)+'" y="'+(y+shift+4).toFixed(1)+'" font-size="13" font-family="Georgia,serif" fill="'+colors[si]+'">'+NAMES[top4[si]].split(" ").pop()+" "+v.toFixed(1)+'%</text>';});
@@ -295,7 +318,7 @@ function wireTrendHover(){var hot=document.getElementById("thot"),svg=$("#trend"
   var out='<line x1="'+x+'" y1="'+d.T+'" x2="'+x+'" y2="'+d.B+'" stroke="var(--faint)" stroke-width="1" stroke-dasharray="3 4"/>';
   var lines=[ml[i]+" 2026"];
   d.series.forEach(function(s,si){if(!TSHOW[si]||s[i]==null)return;
-   var y=d.B-(s[i]/d.mx)*(d.B-d.T);
+   var y=d.B-((s[i]-(d.lo||0))/((d.mx-(d.lo||0))||1))*(d.B-d.T);
    out+='<circle cx="'+x+'" cy="'+y+'" r="4.5" fill="'+d.colors[si]+'"/>';
    lines.push({t:NAMES[d.top4[si]].split(" ").pop()+" "+s[i].toFixed(1)+"%",c:d.colors[si]});});
   var bx=x>700?x-190:x+14,by=d.T+6;
@@ -339,9 +362,14 @@ function fetchMkt(){var t=setTimeout(function(){},0);
   if(found>=4)mktLive=true;
   $("#mktnote").textContent="Market prices: Polymarket, "+(mktLive?"LIVE — refreshed just now.":"last saved copy (live fetch unavailable), marked ~.");
   renderEdge();}).catch(function(){renderEdge();});}
+var sbAll=false;
 function renderSboard(){var tb=$("#sboard");if(!tb)return;var rows=Object.keys(E4).sort(function(a,b){return E4[b].score-E4[a].score});
- tb.innerHTML=rows.map(function(p){var e=E4[p];
+ var shown=sbAll?rows:rows.slice(0,8);
+ var btn=document.getElementById("sbmore");
+ if(btn){btn.textContent=sbAll?"SHOW FEWER":"SHOW ALL "+rows.length+" POLLSTERS";btn.style.display="inline-block";}
+ tb.innerHTML=shown.map(function(p){var e=E4[p];
   return '<tr><td><b>'+p+'</b></td><td class="r">'+e.count+'</td><td class="r">'+e.nAvg.toLocaleString()+'</td><td class="r">'+Math.round(e.lv*100)+'%</td><td class="r">'+e.dev.toFixed(1)+' pts</td><td class="r">'+(e.part?(e.part>=1?"yes":"lean"):"—")+'</td><td class="r"><b>'+e.score.toFixed(2)+'</b></td></tr>';}).join("");}
+window.toggleSb=function(){sbAll=!sbAll;renderSboard();};
 renderCards();renderTrend();renderEdge();renderSboard();fetchMkt();
 $("#stamp").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
 setInterval(fetchMkt,60000);

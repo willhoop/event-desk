@@ -62,7 +62,10 @@
   .mk .big{font-family:var(--serif);font-size:38px;font-weight:800;margin:5px 0 3px}
   .mk .t{font-size:12px;color:var(--ink2)}
   .chartbox{background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:14px 16px;margin-top:10px}
-  .chartbox .clbl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);display:flex;gap:16px;flex-wrap:wrap}
+  .chartbox .clbl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);display:flex;gap:10px;flex-wrap:wrap}
+  .clbl span[data-i],.clbl>span:not(#chartnote){border:1px solid var(--rule);border-radius:14px;padding:5px 12px;cursor:pointer;user-select:none;transition:border-color .12s}
+  .clbl span[data-i]:hover{border-color:var(--faint)}
+  .clbl span.off{opacity:.45;border-style:dashed;text-decoration:line-through}
   .chartbox .clbl .sw{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:5px}
   .bigverdict{border-radius:3px;padding:16px 20px;margin-top:12px;font-family:var(--serif);font-size:19px;font-weight:700;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
   .bigverdict.buy{background:var(--greenbg);color:var(--green);border:1px solid var(--green)}
@@ -100,9 +103,9 @@
   .sechead .n{font-family:var(--mono);font-size:11px;color:var(--oxblood);letter-spacing:.28em}
   .sechead .t{font-family:var(--serif);font-size:27px;font-weight:700}
   .sechead .d{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-left:auto}
-  .invtest{display:grid;gap:0;border:1.5px solid var(--rule);border-radius:6px;background:var(--paper2);margin:10px 0 22px}
-  .invitem{padding:12px 16px;font-size:14px;line-height:1.55;color:var(--ink2);border-bottom:1px solid var(--rule)}
-  .invitem:last-child{border-bottom:none}
+  .invtest{display:grid;gap:0;margin:8px 0 22px}
+  .invitem{padding:9px 0 9px 30px;font-size:14.5px;line-height:1.55;color:var(--ink2);position:relative}
+  .invitem:before{content:"";position:absolute;left:4px;top:17px;width:9px;height:9px;background:var(--oxblood);transform:rotate(45deg)}
   .invitem b{color:var(--ink);font-family:Georgia,serif}
   .vscompare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
   .vcard{background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:16px 18px}
@@ -123,9 +126,9 @@
   .rcard .kv b{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;color:var(--faint);min-width:74px;flex:none;padding-top:2px}
   .lvl{font-weight:700}.lvl.lo{color:var(--green)}.lvl.mid{color:var(--gold)}
   .plain{color:var(--ink2);margin:6px 0 0;font-size:14px}.plain b{color:var(--ink);font-family:var(--serif)}
-  #s-help .plain{display:grid;gap:0;border:1.5px solid var(--rule);border-radius:6px;background:var(--paper2);margin:10px 0 22px}
-  #s-help .plain p{margin:0;padding:12px 16px;border-bottom:1px solid var(--rule);line-height:1.55}
-  #s-help .plain p:last-child{border-bottom:none}
+  #s-help .plain{display:grid;gap:0;margin:8px 0 22px}
+  #s-help .plain p{margin:0;padding:9px 0 9px 30px;line-height:1.55;position:relative}
+  #s-help .plain p:before{content:"";position:absolute;left:4px;top:17px;width:9px;height:9px;background:var(--oxblood);transform:rotate(45deg)}
   section{padding-top:10px}
   h2.dek{margin-top:30px}
   .builder{background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:16px 18px;margin-top:10px}
@@ -220,6 +223,7 @@
     </div>
     <div class="lead" style="font-size:12px;margin-top:6px">Try: <span id="quickadds"></span></div>
     <h2 class="dek">Same bet, two stores — who's cheaper?</h2>
+    <div class="vrow" style="margin-bottom:4px"><span class="vn">Which bet are we pricing?</span><select id="o_market" style="max-width:340px"></select></div>
     <p class="lead">Kalshi and Polymarket sell the same contracts at slightly different prices. After fees, the cheaper one wins — unless you'd pay extra for Kalshi's safety — set that premium right below.</p>
     <div class="vscompare">
       <div class="vcard" id="vc_poly">
@@ -270,6 +274,7 @@
       <div class="invitem"><b>What defends it:</b> complete records of every fill — that is what "download my bets" on the My bets tab is for — plus consistent treatment every year, and selling positions early (trading behavior) rather than always holding to resolution (wager behavior).</div>
       <div class="invitem"><b>Year-end move:</b> losers on the books in December are offsets — realizing them shelters the year's winners. Full reasoning and citations are in the tax paper below. Not tax advice; bring the records to a CPA.</div>
     </div>
+    <p class="lead"><b>When do fees kill the bet?</b> A crossed trade is worth it only if you think the market is wrong by more than the fee — with margin. House rule: your estimated edge must be at least twice the fee. At 14¢ on Kalshi the fee is 6% of stake, so you need to believe the true odds are 12%+ better than the price. On 3¢ longshots that bar is ~14% — which is why longshots get resting limit orders (fee: zero) or no bet at all.</p>
     <h2 class="dek">Buy now, or wait for your price?</h2>
     <div class="invtest" style="margin:10px 0 18px">
       <div class="invitem"><b>Market order</b> — "buy it right now at whatever it costs." Instant, but you pay the trading fee.</div>
@@ -704,9 +709,15 @@ function addMarket(raw){
   renderWatch();renderPos();toast("Added ✓");});}
 function renderOpt(){
  function A(p,co){return p*(1+co*(1-p));}
- var nY=nomYes(),kvv=kalOK?kalC["Jon Ossoff"]:SNAPK["Jon Ossoff"];
+ var om=$("#o_market");
+ if(om&&!om.options.length){om.innerHTML=watch.map(function(w){return '<option value="'+esc(w.slug)+'">'+esc(w.label)+'</option>'}).join("");om.onchange=function(){renderOpt();};}
+ var sel=(om&&om.value)||NOM,dm=md[sel];
+ var nY=dm?dm.yes:nomYes();
+ var kname=null;for(var ci=0;ci<CAND.length;ci++)if(CAND[ci].slug===sel)kname=CAND[ci].kal;
+ if(sel===NOM)kname="Jon Ossoff";
+ var kvv=kname?(kalOK?kalC[kname]:SNAPK[kname]):null;
  if(document.activeElement!==$("#o_poly")&&nY!=null)$("#o_poly").value=(nY*100).toFixed(1);
- if(document.activeElement!==$("#o_kal")&&kvv!=null)$("#o_kal").value=(kvv*100).toFixed(1);
+ if(document.activeElement!==$("#o_kal")){if(kvv!=null)$("#o_kal").value=(kvv*100).toFixed(1);}
  var pP=parseFloat($("#o_poly").value)/100,pK=parseFloat($("#o_kal").value)/100,pen=settings.pen/100;
  var months=parseFloat(($("#o_hold")&&$("#o_hold").value)||"3");
  if(isNaN(pP)||isNaN(pK))return;
@@ -834,9 +845,12 @@ wire("#addpos","click",function(){var e=+($("#p_entry").value),z=+($("#p_size").
  if(!e||e<=0||e>=100){toast("Price must be between 0 and 100 cents.");return;}
  positions.push({slug:$("#p_slug").value,side:$("#p_side").value,entry:e/100,size:z,at:Date.now()});
  store.set("ef4_pos",positions);$("#p_entry").value="";$("#p_size").value="";renderPos();toast("Saved ✓ — scroll down to see it live.");});
-wire("#fillpx","click",function(){var d=md[$("#p_slug").value];
- if(!d||d.yes==null){toast("No live price for that market yet — hit ↻ first.");return;}
- $("#p_entry").value=(($("#p_side").value==="Yes"?d.yes:1-d.yes)*100).toFixed(1);toast("Filled with today's price.");});
+wire("#fillpx","click",function(){var slug=$("#p_slug").value;
+ function fill(d){$("#p_entry").value=(($("#p_side").value==="Yes"?d.yes:1-d.yes)*100).toFixed(1);toast("Filled with today's "+($("#p_side").value==="Yes"?"YES":"NO")+" price for this market.");}
+ var d=md[slug];
+ if(d&&d.yes!=null){fill(d);return;}
+ toast("Fetching that market's price…");
+ fetchMarket(slug).then(function(r){if(r&&r.ok){md[slug]=r;fill(r);}else toast("Couldn't fetch a live price for that market.");});});
 wire("#csvBtn","click",exportCSV);
 wire("#p_entry","keydown",function(e){if(e.key==="Enter")$("#addpos").click();});
 wire("#p_size","keydown",function(e){if(e.key==="Enter")$("#addpos").click();});
