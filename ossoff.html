@@ -209,8 +209,6 @@
       <div class="clbl" id="clbl" style="margin-top:10px;justify-content:center"></div>
       <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
         <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button><button class="rowbtn crb" data-r="1y">1Y</button>
-        <span style="width:14px"></span>
-        <button class="rowbtn cmb on" data-m="ossoff">OSSOFF</button><button class="rowbtn cmb" data-m="dem">DEM FIELD</button><button class="rowbtn cmb" data-m="gop">GOP FIELD</button><button class="rowbtn cmb" data-m="pres">PRESIDENT</button>
         <span style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:auto">hover for values · click a name below to hide it</span>
       </div>
     </div>
@@ -895,9 +893,10 @@ wire("#refreshBtn","click",function(){refresh().then(function(){toast("Prices up
  el.addEventListener("input",function(){var v=parseFloat(el.value);if(!isNaN(v)){settings[pair[1]]=v;store.set("ef4_set",settings);renderHome();renderOpt();}});});
 document.documentElement.dataset.theme=settings.theme;
 setInterval(function(){countdown--;if(countdown<=0)refresh();},1000);
-Array.prototype.forEach.call(document.querySelectorAll(".cmb"),function(b){b.onclick=function(){
- Array.prototype.forEach.call(document.querySelectorAll(".cmb"),function(x){x.classList.remove("on")});
- b.classList.add("on");chartMode=b.dataset.m;var hs=$("#chotspot");if(hs)hs._wired=false;drawChart();};});
+(function(){var MO=["ossoff","dem","gop","pres"],ML={ossoff:"The Ossoff markets",dem:"The Democratic field",gop:"The Republican field",pres:"President 2028"};
+function cyc(d){var i=(MO.indexOf(chartMode)+d+MO.length)%MO.length;chartMode=MO[i];
+ var cm=$("#cmode");if(cm)cm.textContent=ML[chartMode];var hs=$("#chotspot");if(hs)hs._wired=false;drawChart();}
+wire("#cprev","click",function(){cyc(-1)});wire("#cnext","click",function(){cyc(1)});})();
 Array.prototype.forEach.call(document.querySelectorAll(".crb"),function(b){b.onclick=function(){
  Array.prototype.forEach.call(document.querySelectorAll(".crb"),function(x){x.classList.remove("on")});b.classList.add("on");
  chartState.range=b.dataset.r;
