@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="Elite Four Capital Event Desk — live prediction-market prices, plain-English trade ideas, and a bet tracker."/>
+<meta name="description" content="Elite Four Capital Event Desk — live odds and plain-English trade ideas on Jon Ossoff 2028, with a bet tracker."/>
 <title>Event Desk — Elite Four Capital</title>
 <style>
   :root{--paper:#f4efe4;--paper2:#fbf8f1;--ink:#1c1a17;--ink2:#4a453d;--faint:#8a8172;--rule:#d9d0bd;--oxblood:#8f2d2d;--gold:#b8863b;--green:#2f6b4f;--greenbg:#e4efe6;--redbg:#f6e4e0;--chipbg:#eee5d2;--mono:'SFMono-Regular',ui-monospace,'Roboto Mono',Menlo,Consolas,monospace;--serif:Georgia,'Times New Roman',serif;--sans:'Helvetica Neue',Arial,system-ui,sans-serif}
@@ -117,7 +117,7 @@
       <div>
         <div class="kicker">Elite Four Capital</div>
         <h1>Event Desk</h1>
-        <div class="sub">Betting markets, in plain English · <span id="live">connecting…</span></div>
+        <div class="sub">The Jon Ossoff 2028 desk · betting markets in plain English · <span id="live">connecting…</span></div>
       </div>
       <div class="mtools">
         <button class="icon" id="themeBtn" title="Light / dark">◐</button>
@@ -145,7 +145,7 @@
   <!-- HOME -->
   <section class="on" id="s-home">
     <div class="call"><div class="lab">Today's best idea</div><h3 id="callTitle">Loading prices…</h3><p id="callBody"></p></div>
-    <h2 class="dek">Pick what you believe. We'll show the right bet.</h2>
+    <h2 class="dek">What happens to Jon Ossoff in 2028? Pick your call.</h2>
     <div class="picker" id="picker"></div>
     <div class="bar"><span>If I bet</span> $<input id="stake" class="num" type="number" value="200" step="50"></div>
     <div class="verdict" id="verdict"></div>
@@ -163,11 +163,11 @@
 
   <!-- IDEAS -->
   <section id="s-ideas">
-    <h2 class="dek">Every way to bet this</h2>
+    <h2 class="dek">Every way to bet Jon Ossoff 2028</h2>
     <p class="lead">Cheapest first. "You win when" is the only column that matters — pick the row that matches what you believe.</p>
     <table id="menu"><thead><tr><th>The bet</th><th></th><th>Costs</th><th>Pays</th><th>You win when…</th></tr></thead><tbody></tbody></table>
     <h2 class="dek">When the money comes</h2>
-    <p class="lead">The nomination bet is decided in spring 2028, not November — the price climbs to ~99¢ early. Plan to sell into that rise.</p>
+    <p class="lead">Ossoff's nomination bet is decided in spring 2028, not November — the price climbs to ~99¢ early. Plan to sell into that rise.</p>
     <div class="stops" id="stops"></div>
     <p class="plain"><b>Simple version:</b> buy low now → price rises as he wins primaries → sell near 99¢ at the convention. You never need to wait for the official payout. Warning: if he announces he's not running, the price crashes instantly.</p>
   </section>
@@ -353,7 +353,7 @@ function drawChart(){
  $("#chartnote").textContent="updated "+new Date(last*1000).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric"});
 }
 var VIEWS=[
- {k:"win",t:"He wins it all",s:"Nominee, then President"},
+ {k:"win",t:"Ossoff wins it all",s:"Nominee, then President"},
  {k:"lose",t:"Nominated, then loses",s:"Wins the primary, loses November"},
  {k:"none",t:"Never nominated",s:"Someone else gets picked"},
  {k:"unsure",t:"No idea → show me",s:"We'll suggest the smart play"}];
@@ -384,8 +384,8 @@ function renderHome(){
  var nY=nomYes(),pY=presYes();
  if(nY==null||pY==null){$("#callTitle").textContent="Loading prices…";$("#callBody").textContent="";}
  else{var cond=(pY/nY*100).toFixed(0);
-  $("#callTitle").textContent="Bet he's nominated — but doesn't win it all";
-  $("#callBody").innerHTML="If he's nominated, the market gives him a ~"+cond+"% shot at the White House. We think that's generous for a first-term senator — this bet profits if the market's wrong. Believe the opposite? Pick “He wins it all” below.";}
+  $("#callTitle").textContent="Bet Ossoff is nominated — but doesn't win it all";
+  $("#callBody").innerHTML="If Jon Ossoff is nominated, the market gives him a ~"+cond+"% shot at the White House. We think that's generous for a first-term Georgia senator — this bet profits if the market's wrong. Believe the opposite? Pick “He wins it all” below.";}
  $("#picker").innerHTML=VIEWS.map(function(v){return '<button class="chip '+(v.k===view?'on':'')+'" data-v="'+v.k+'"><div class="ct">'+v.t+'</div><div class="cs">'+v.s+'</div></button>'}).join("");
  Array.prototype.forEach.call(document.querySelectorAll('#picker .chip'),function(b){b.onclick=function(){view=b.dataset.v;renderHome();};});
  var stake=Math.max(0,+($("#stake").value)||0),T=trades(),rt=null;
@@ -399,9 +399,9 @@ function renderHome(){
  $("#conc").textContent="Gut check: that's "+pct.toFixed(1)+"% of your money. Your own limit for this theme: "+settings.cap+"%."+(pct>settings.cap?" — OVER IT.":"");
  var sen=md[SEN]?md[SEN].yes:null;
  $("#cards").innerHTML=[
-  ["Is he the 2028 nominee?",nY,md[NOM]],
-  ["Does he win the presidency?",pY,md[PRES]],
-  ["Do Dems keep his Senate seat?",sen,md[SEN]]
+  ["Is Ossoff the 2028 Dem nominee?",nY,md[NOM]],
+  ["Does Ossoff win the presidency?",pY,md[PRES]],
+  ["Do Dems keep Ossoff's GA Senate seat?",sen,md[SEN]]
  ].map(function(m){return '<div class="mk"><div class="q">'+m[0]+'</div><div class="big">'+(m[1]!=null?(m[1]*100).toFixed(0)+"%":"—")+'</div><div class="t">'+(m[1]!=null?("about 1 in "+Math.round(1/m[1])):"loading…")+'</div>'+spark(m[1],m[2]&&m[2].c24,m[2]&&m[2].c1mo)+'</div>'}).join("");}
 function renderMenu(){
  var T=trades().slice().sort(function(a,b){return a.cost-b.cost});
