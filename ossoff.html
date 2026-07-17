@@ -197,14 +197,14 @@
     <h2 class="dek">The last week, for real</h2>
     <p class="lead">Actual trading history from Polymarket — every 3 hours, straight from their books.</p>
     <div class="chartbox" id="chartbox" hidden>
-      <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center">
-        <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button>
+<svg id="chart" viewBox="0 0 720 190" style="width:100%;height:auto;display:block" aria-label="One week price history"></svg>
+      <div class="clbl" id="clbl" style="margin-top:10px;justify-content:center"></div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+        <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button><button class="rowbtn crb" data-r="1y">1Y</button>
         <span style="width:14px"></span>
         <button class="rowbtn cmb on" data-m="ossoff">OSSOFF</button><button class="rowbtn cmb" data-m="dem">DEM FIELD</button><button class="rowbtn cmb" data-m="gop">GOP FIELD</button><button class="rowbtn cmb" data-m="pres">PRESIDENT</button>
         <span style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:auto">hover for values · click a name below to hide it</span>
       </div>
-      <div class="clbl" id="clbl"></div>
-      <svg id="chart" viewBox="0 0 720 190" style="width:100%;height:auto;display:block" aria-label="One week price history"></svg>
     </div>
   </section>
 
@@ -477,7 +477,7 @@ function refresh(){
  });}
 
 var chartState={range:"3m",showA:true,showB:true};
-var RANGES={"1w":["1w","60"],"1m":["1m","180"],"3m":["max","720"]};
+var RANGES={"1w":["1w","60"],"1m":["1m","180"],"3m":["max","720"],"1y":["max","1440"]};
 var histC=store.get("ef4_histC",{})||{};
 var chartPts={a:[],b:[],t0:0,t1:0,mn:0,mx:0};
 function fetchHist(slug){var d=md[slug];if(!d||!d.tok)return Promise.resolve();
@@ -488,6 +488,10 @@ function fetchHist(slug){var d=md[slug];if(!d||!d.tok)return Promise.resolve();
 var chartMode="ossoff",chartShow={},FSER={};
 var MODES={dem:"democratic-presidential-nominee-2028",gop:"republican-presidential-nominee-2028",pres:"presidential-election-winner-2028"};
 var SCOLORS=["var(--oxblood)","#7d9fd4","#4a9e7f","#d0a54e"];
+var CANDCOL=[["harris","#e2572b"],["newsom","#4a9e7f"],["buttigieg","#7d9fd4"],["ocasio","#d0a54e"],["ossoff","#eef1f4"],["nominee","var(--oxblood)"],["presidency","#7d9fd4"],["democrat","#5b8fd6"],["republican","#d0564a"],["vance","#d0564a"],["trump","#a33227"]];
+function candColor(name,i){var n=(name||"").toLowerCase();
+ for(var k=0;k<CANDCOL.length;k++)if(n.indexOf(CANDCOL[k][0])>=0)return CANDCOL[k][1];
+ return SCOLORS[i%4];}
 function fetchHistTok(tok){var rg=chartState.range,iv=RANGES[rg][0],fd=RANGES[rg][1];
  return fetchTO("https://clob.polymarket.com/prices-history?market="+tok+"&interval="+iv+"&fidelity="+fd)
  .then(function(r){return r.json()}).then(function(j){return (j&&j.history&&j.history.length>3)?j.history:null;}).catch(function(){return null;});}
@@ -511,7 +515,7 @@ function drawChart(){
   var show=chartShow[chartMode]||(chartShow[chartMode]=raw.map(function(){return true}));
   while(show.length<raw.length)show.push(true);
   var box=$("#chartbox");if(!box)return;
-  var vis=raw.map(function(s,i){return {name:s.name,pts:show[i]?s.pts:[],color:SCOLORS[i%4],on:show[i]};});
+  var vis=raw.map(function(s,i){return {name:s.name,pts:show[i]?s.pts:[],color:candColor(s.name,i),on:show[i]};});
   var any=vis.some(function(s){return s.pts&&s.pts.length>3});
   if(!any&&chartMode==="ossoff"){box.hidden=true;return;}
   box.hidden=false;
@@ -541,7 +545,7 @@ function drawChart(){
    svg+='<text x="656" y="'+(y+shift+5).toFixed(1)+'" font-size="14" font-weight="bold" font-family="Georgia,serif" fill="'+s.color+'">'+(x.p*100).toFixed(1)+'¢</text>';});
   svg+='<g id="xh"></g><rect id="chotspot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
   $("#chart").innerHTML=svg;
-  var lb=$("#clbl");if(lb){lb.innerHTML=raw.map(function(s,i){return '<span data-i="'+i+'" class="'+(show[i]?"":"off")+'"><span class="sw" style="background:'+SCOLORS[i%4]+'"></span>'+s.name+'</span>';}).join("")+'<span id="chartnote" style="margin-left:auto"></span>';
+  var lb=$("#clbl");if(lb){lb.innerHTML=raw.map(function(s,i){return '<span data-i="'+i+'" class="'+(show[i]?"":"off")+'"><span class="sw" style="background:'+candColor(s.name,i)+'"></span>'+s.name+'</span>';}).join("")+'<span id="chartnote" style="margin-left:auto"></span>';
    Array.prototype.forEach.call(lb.querySelectorAll("span[data-i]"),function(sp){sp.onclick=function(){var i=+sp.dataset.i;show[i]=!show[i];drawChart();};});}
   var cn=$("#chartnote");if(cn)cn.textContent="updated "+new Date(t1*1000).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric"});
   wireHover();

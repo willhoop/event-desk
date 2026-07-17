@@ -258,7 +258,9 @@ function renderCards(){var top=ORDER.slice(0,6);
  $("#avgnote").textContent=used+" national polls, Jan–Jul 2026 · house-effect corrected · aggregator cross-check (RCP / 270toWin / Race to the WH, July 2026): Harris ~29, Newsom ~17, Buttigieg ~12.6, AOC ~10.";}
 var TSHOW=[true,true,true,true];
 function renderTrend(){var months=[];for(var m=0;m<7;m++){months.push(new Date(Date.UTC(2026,m,25)).getTime());}
- var top4=ORDER.slice(0,4),colors=["#e2572b","#4a9e7f","#7d9fd4","#d0a54e"];
+ var top4=ORDER.slice(0,4);
+ var CMAP={harris:"#e2572b",newsom:"#4a9e7f",buttigieg:"#7d9fd4",aoc:"#d0a54e",shapiro:"#c9cdd4",kelly:"#9aa79e"};
+ var colors=top4.map(function(k,i){return CMAP[k]||["#e2572b","#4a9e7f","#7d9fd4","#d0a54e"][i];});
  var series=top4.map(function(k){return months.map(function(t){var a=adjAvg(t);return a[k];});});
  var mx=0;series.forEach(function(s,i){if(!TSHOW[i])return;s.forEach(function(v){if(v!=null&&v>mx)mx=v;});});mx=Math.ceil(mx/5)*5+5||35;
  var L=50,R=830,T=16,B=280;
