@@ -129,6 +129,8 @@
   function px(a){try{return (JSON.parse(a[0].outcomePrices)[0]*100).toFixed(0)}catch(e){return null}}
   var n=px(rs[0]),p=px(rs[1]);
   if(n&&p)document.getElementById("ossoffPx").innerHTML="NOMINEE <b>"+n+"¢</b> · PRESIDENCY <b>"+p+"¢</b> · <span class='up'>live</span>";
+  var seg=["OSSOFF NOMINATION · POLYMARKET <b>"+(n||"—")+"¢</b>","OSSOFF PRESIDENCY · POLYMARKET <b>"+(p||"—")+"¢</b>","POLL AVERAGE · HARRIS <b>30%</b> NEWSOM <b>16%</b> BUTTIGIEG <b>12%</b>","ELECTORAL DESK · <b>20,000</b> SIMULATIONS PER CLICK","HOUSE CALL · THE WEDGE — NOMINATED BUT LOSES"];
+  var c="<span>"+seg.join("</span><span>")+"</span>";var tw=document.getElementById("tickwrap");if(tw)tw.innerHTML=c+c;
  }).catch(function(){document.getElementById("ossoffPx").textContent="prices load when you open the desk";});
 })();
 </script>

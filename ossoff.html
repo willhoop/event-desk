@@ -46,7 +46,7 @@
   .picker{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 6px}
   .chip{flex:1;min-width:150px;background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:12px 14px;text-align:left;color:var(--ink)}
   .chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-  [data-theme="ink"] .chip.on{background:#eef1f4;color:#16181c}
+  [data-theme="ink"] .chip.on{background:var(--chipbg);color:var(--ink);border-color:var(--oxblood);box-shadow:inset 0 0 0 1px var(--oxblood)}
   .chip .ct{font-family:var(--serif);font-size:15px;font-weight:700}
   .chip .cs{font-size:11.5px;opacity:.65;margin-top:2px}
   .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0;font-family:var(--mono);font-size:12px;color:var(--ink2);text-transform:uppercase}
@@ -63,7 +63,7 @@
   .mk .t{font-size:12px;color:var(--ink2)}
   .chartbox{background:var(--paper2);border:1px solid var(--rule);border-radius:3px;padding:14px 16px;margin-top:10px}
   .chartbox .clbl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);display:flex;gap:10px;flex-wrap:wrap}
-  .clbl span[data-i],.clbl>span:not(#chartnote){border:1px solid var(--rule);border-radius:14px;padding:5px 12px;cursor:pointer;user-select:none;transition:border-color .12s}
+  .clbl span[data-i],.clbl>span:not(#chartnote){border:1px solid var(--faint);border-radius:4px;padding:6px 12px;cursor:pointer;user-select:none;transition:border-color .12s;background:var(--paper)}
   .clbl span[data-i]:hover{border-color:var(--faint)}
   .clbl span.off{opacity:.45;border-style:dashed;text-decoration:line-through}
   .chartbox .clbl .sw{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:5px}
@@ -72,7 +72,7 @@
   .bigverdict.wait{background:var(--redbg);color:var(--oxblood);border:1px solid var(--oxblood)}
   .bigverdict small{font-family:var(--sans);font-size:13px;font-weight:400;opacity:.85;flex-basis:100%}
   table{width:100%;border-collapse:collapse;margin-top:6px}
-  th{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);text-align:right;padding:0 9px 9px;border-bottom:1.5px solid var(--ink);font-weight:400}
+  th{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);text-align:right;padding:0 9px 9px;border-bottom:1.5px solid var(--ink);font-weight:400}
   th:first-child{text-align:left}
   td{padding:13px 9px;border-bottom:1px solid var(--rule);text-align:right;font-variant-numeric:tabular-nums}
   td:first-child{text-align:left}
@@ -200,7 +200,12 @@
     <h2 class="dek">The last week, for real</h2>
     <p class="lead">Actual trading history from Polymarket — every 3 hours, straight from their books.</p>
     <div class="chartbox" id="chartbox" hidden>
-<svg id="chart" viewBox="0 0 720 190" style="width:100%;height:auto;display:block" aria-label="One week price history"></svg>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:2px 0 10px">
+        <button id="cprev" style="background:none;border:1px solid var(--rule);color:var(--ink);border-radius:4px;width:34px;height:30px;font-size:16px;cursor:pointer" title="previous market">‹</button>
+        <span id="cmode" style="font-family:var(--serif);font-size:19px;font-weight:700;min-width:240px;text-align:center">The Ossoff markets</span>
+        <button id="cnext" style="background:none;border:1px solid var(--rule);color:var(--ink);border-radius:4px;width:34px;height:30px;font-size:16px;cursor:pointer" title="next market">›</button>
+      </div>
+<svg id="chart" viewBox="0 0 720 190" style="width:100%;height:auto;display:block" aria-label="Price history"></svg>
       <div class="clbl" id="clbl" style="margin-top:10px;justify-content:center"></div>
       <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
         <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button><button class="rowbtn crb" data-r="1y">1Y</button>
@@ -224,7 +229,7 @@
     <div class="lead" style="font-size:12px;margin-top:6px">Try: <span id="quickadds"></span></div>
     <h2 class="dek">Same bet, two stores — who's cheaper?</h2>
     <div class="vrow" style="margin-bottom:4px"><span class="vn">Which bet are we pricing?</span><select id="o_market" style="max-width:340px"></select></div>
-    <p class="lead">Kalshi and Polymarket sell the same contracts at slightly different prices. After fees, the cheaper one wins — unless you'd pay extra for Kalshi's safety — set that premium right below.</p>
+    <p class="lead">After fees, the cheaper store wins. Pick the bet above; set your Kalshi-safety premium below.</p>
     <div class="vscompare">
       <div class="vcard" id="vc_poly">
         <h4>Polymarket <span class="winlab">cheaper — buy here</span></h4>
@@ -271,7 +276,7 @@
     </tbody></table>
     <div class="invtest" style="margin:0 0 20px">
       <div class="invitem"><b>The strategy in one line:</b> defend capital treatment. Losses then offset gains dollar-for-dollar, plus $3,000 a year against ordinary income, with unlimited carryforward.</div>
-      <div class="invitem"><b>What defends it:</b> complete records of every fill — that is what "download my bets" on the My bets tab is for — plus consistent treatment every year, and selling positions early (trading behavior) rather than always holding to resolution (wager behavior).</div>
+      <div class="invitem"><b>What defends it:</b> complete fill records (the download button on My bets), consistent treatment every year, and selling early sometimes — traders sell, gamblers hold to the end.</div>
       <div class="invitem"><b>Year-end move:</b> losers on the books in December are offsets — realizing them shelters the year's winners. Full reasoning and citations are in the tax paper below. Not tax advice; bring the records to a CPA.</div>
     </div>
     <p class="lead"><b>When do fees kill the bet?</b> A crossed trade is worth it only if you think the market is wrong by more than the fee — with margin. House rule: your estimated edge must be at least twice the fee. At 14¢ on Kalshi the fee is 6% of stake, so you need to believe the true odds are 12%+ better than the price. On 3¢ longshots that bar is ~14% — which is why longshots get resting limit orders (fee: zero) or no bet at all.</p>
@@ -347,6 +352,7 @@
         <span>I put</span> $<input id="p_size" class="snum bb" type="number" placeholder="100">
         <span>on</span> <select id="p_slug"></select>
         <select id="p_side"><option value="Yes">happening</option><option value="No">NOT happening</option></select>
+        <span>on</span> <select id="p_venue"><option value="P">Polymarket</option><option value="K">Kalshi</option></select>
         <span>at</span> <input id="p_entry" class="snum bb" type="number" placeholder="14"><span>¢</span>
       </div>
       <div class="row" style="margin-top:10px;gap:10px">
@@ -570,7 +576,7 @@ function drawChart(){
    svg+='<text x="656" y="'+(y+shift+5).toFixed(1)+'" font-size="14" font-weight="bold" font-family="Georgia,serif" fill="'+s.color+'">'+(x.p*100).toFixed(1)+'¢</text>';});
   svg+='<g id="xh"></g><rect id="chotspot" x="'+L+'" y="'+T+'" width="'+(R-L)+'" height="'+(B-T)+'" fill="transparent"/>';
   $("#chart").innerHTML=svg;
-  var lb=$("#clbl");if(lb){lb.innerHTML=raw.map(function(s,i){return '<span data-i="'+i+'" class="'+(show[i]?"":"off")+'"><span class="sw" style="background:'+candColor(s.name,i)+'"></span>'+s.name+'</span>';}).join("")+'<span id="chartnote" style="margin-left:auto"></span>';
+  var lb=$("#clbl");if(lb){lb.innerHTML=raw.map(function(s,i){return '<span data-i="'+i+'" class="'+(show[i]?"":"off")+'" title="click to show/hide">'+(show[i]?"✓ ":"✕ ")+'<span class="sw" style="background:'+candColor(s.name,i)+'"></span>'+s.name+'</span>';}).join("")+'<span id="chartnote" style="margin-left:auto"></span>';
    Array.prototype.forEach.call(lb.querySelectorAll("span[data-i]"),function(sp){sp.onclick=function(){var i=+sp.dataset.i;show[i]=!show[i];drawChart();};});}
   var cn=$("#chartnote");if(cn)cn.textContent="updated "+new Date(t1*1000).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric"});
   wireHover();
@@ -591,7 +597,7 @@ function wireHover(){
   cp.sers.forEach(function(s){if(!s.on||!s.pts||!s.pts.length)return;var p=near(s.pts,t);if(!p)return;
    dots+='<circle cx="'+xx+'" cy="'+Y2(p.p)+'" r="4.5" fill="'+s.color+'"/>';
    lines.push({t:s.name+" "+(p.p*100).toFixed(1)+"¢",c:s.color});});
-  var bx=Math.min(Math.max(xx+10,L),R-160),by=T+6;
+  var bx=(xx<(L+R)/2)?(R-158):(L+8),by=T+4;
   var tip='<rect x="'+bx+'" y="'+by+'" width="150" height="'+(16*lines.length+10)+'" rx="3" fill="var(--paper2)" stroke="var(--rule)"/>';
   lines.forEach(function(ln,i){var txt=typeof ln==="string"?ln:ln.t,col=typeof ln==="string"?"var(--faint)":ln.c;
    tip+='<text x="'+(bx+8)+'" y="'+(by+16+16*i)+'" font-size="12" font-family="Georgia,serif" fill="'+col+'">'+txt+'</text>';});
@@ -673,12 +679,15 @@ function labelFor(slug){var l=null;watch.forEach(function(w){if(w.slug===slug)l=
 function renderPos(){
  $("#p_slug").innerHTML=watch.map(function(w){return '<option value="'+esc(w.slug)+'">'+esc(w.label)+'</option>'}).join("");
  var tot=0,cost=0,rows="";
+ function kalFor(s){if(s===NOM)return kalOK?kalC["Jon Ossoff"]:SNAPK["Jon Ossoff"];if(s===PRES)return kal2OK?kalPres:SNAPP["Jon Ossoff"];
+  for(var ci=0;ci<CAND.length;ci++)if(CAND[ci].slug===s)return kalOK?kalC[CAND[ci].kal]:SNAPK[CAND[ci].kal];return null;}
  positions.forEach(function(q,i){var d=md[q.slug];var yes=d?d.yes:null;
+  if(q.venue==="K"){var kk=kalFor(q.slug);if(kk!=null)yes=kk;}
   var sell=yes==null?null:(q.side==="Yes"?yes:1-yes);
   var val=sell!=null?q.size/q.entry*sell:null,pl=val!=null?val-q.size:null,pp=(pl!=null&&q.size)?pl/q.size:null;
   if(val!=null){tot+=val;cost+=q.size;}
   var star=(sell!=null&&q.entry>0&&sell/q.entry>=1.1)?' <span class="badge" style="background:var(--greenbg);color:var(--green)" title="up 10%+ - worth considering cashing out">SELL?</span>':"";
-  rows+='<tr><td><div class="tname" style="font-size:14px">'+esc(labelFor(q.slug))+'</div><div class="tbet">'+(q.side==="Yes"?"betting it happens":"betting it does NOT happen")+' · '+new Date(q.at).toLocaleDateString()+'</div></td><td class="price">'+(q.entry*100).toFixed(1)+'¢</td><td class="price">'+money(q.size)+'</td><td class="price">'+(val!=null?money(val):"—")+'</td><td class="pl '+(pl>0?'g':'r')+'">'+(pl!=null?((pl>0?'+':'')+money(pl)+" ("+(pp>0?"+":"")+(pp*100).toFixed(0)+"%)"):"—")+star+'</td><td><button class="rowbtn" data-i="'+i+'">✕</button></td></tr>';});
+  rows+='<tr><td><div class="tname" style="font-size:14px">'+esc(labelFor(q.slug))+'</div><div class="tbet">'+(q.side==="Yes"?"betting it happens":"betting it does NOT happen")+' · '+(q.venue==="K"?"Kalshi":"Polymarket")+' · '+new Date(q.at).toLocaleDateString()+'</div></td><td class="price">'+(q.entry*100).toFixed(1)+'¢</td><td class="price">'+money(q.size)+'</td><td class="price">'+(val!=null?money(val):"—")+'</td><td class="pl '+(pl>0?'g':'r')+'">'+(pl!=null?((pl>0?'+':'')+money(pl)+" ("+(pp>0?"+":"")+(pp*100).toFixed(0)+"%)"):"—")+star+'</td><td><button class="rowbtn" data-i="'+i+'">✕</button></td></tr>';});
  $("#posT tbody").innerHTML=rows||'<tr><td colspan="6" class="empty">No bets saved yet. Fill in the sentence above and hit Save bet.</td></tr>';
  var book=$("#bookpl");
  if(cost){var np=(tot-cost)/cost;book.className=(tot-cost)>=0?"g":"r";book.textContent="· overall "+((tot-cost)>=0?"+":"")+money(tot-cost)+" ("+(np>=0?"+":"")+(np*100).toFixed(0)+"%)";}else book.textContent="";
@@ -716,6 +725,8 @@ function renderOpt(){
  var kname=null;for(var ci=0;ci<CAND.length;ci++)if(CAND[ci].slug===sel)kname=CAND[ci].kal;
  if(sel===NOM)kname="Jon Ossoff";
  var kvv=kname?(kalOK?kalC[kname]:SNAPK[kname]):null;
+ if(sel===PRES)kvv=kal2OK?kalPres:SNAPP["Jon Ossoff"];
+ if(kvv==null&&document.activeElement!==$("#o_kal"))$("#o_kal").value="";
  if(document.activeElement!==$("#o_poly")&&nY!=null)$("#o_poly").value=(nY*100).toFixed(1);
  if(document.activeElement!==$("#o_kal")){if(kvv!=null)$("#o_kal").value=(kvv*100).toFixed(1);}
  var pP=parseFloat($("#o_poly").value)/100,pK=parseFloat($("#o_kal").value)/100,pen=settings.pen/100;
@@ -763,7 +774,7 @@ function renderShop(){
   var mv=$("#cr_move"),rn=$("#cr_run");
   if(mv&&!mv.dataset.touched){mv.value=per>0.06?"10":(per>0.02?"3":"1");}
   if(rn&&!rn.dataset.touched){rn.value=per>0.06?"0.75":(per>0.02?"0.5":"0.25");}
-  var an=$("#cr_auto");if(an){var nowP=nomYes()||0.145;an.textContent="Pre-filled from the last month of prices: this market moves ~"+(per*100).toFixed(1)+"%/day — that is a percent of the price, not percentage points. At "+(nowP*100).toFixed(1)+"\u00a2 that means roughly \u00b1"+(nowP*per*100).toFixed(1)+"\u00a2 on a typical day. Change the answers if you know something new.";}
+  var an=$("#cr_auto");if(an){var nowP=nomYes()||0.145;an.textContent="Pre-filled from the last month: ~"+(per*100).toFixed(1)+"% of the price per day — about ±"+(nowP*per*100).toFixed(1)+"\u00a2 daily at "+(nowP*100).toFixed(1)+"\u00a2. Override if you know something new.";an.style.color="var(--faint)";}
   if(typeof crCalc==="function")crCalc();
  }catch(e){}
  $("#shopNote").textContent="Method: average absolute hourly move, bucketed into US-Eastern 3-hour windows, over ~30 days of this market ("+s.length+" hourly points). One market, one month — a lean, not a law.";
@@ -843,7 +854,7 @@ wire("#cr_move","change",function(){$("#cr_move").dataset.touched=1;crCalc();});
 wire("#addpos","click",function(){var e=+($("#p_entry").value),z=+($("#p_size").value);
  if(!z||z<=0){toast("How much money? Fill the first box.");return;}
  if(!e||e<=0||e>=100){toast("Price must be between 0 and 100 cents.");return;}
- positions.push({slug:$("#p_slug").value,side:$("#p_side").value,entry:e/100,size:z,at:Date.now()});
+ positions.push({slug:$("#p_slug").value,side:$("#p_side").value,venue:($("#p_venue")&&$("#p_venue").value)||"P",entry:e/100,size:z,at:Date.now()});
  store.set("ef4_pos",positions);$("#p_entry").value="";$("#p_size").value="";renderPos();toast("Saved ✓ — scroll down to see it live.");});
 wire("#fillpx","click",function(){var slug=$("#p_slug").value;
  function fill(d){$("#p_entry").value=(($("#p_side").value==="Yes"?d.yes:1-d.yes)*100).toFixed(1);toast("Filled with today's "+($("#p_side").value==="Yes"?"YES":"NO")+" price for this market.");}
