@@ -166,8 +166,8 @@
           <rect x="42" y="70" width="26" height="26" fill="var(--oxblood)" transform="rotate(45 55 83)"/>
         </svg></a>
         <div>
-        <div class="kicker">Elite Four Capital</div>
-        <h1>Event Desk</h1>
+        <a href="index.html" style="color:inherit;text-decoration:none" title="Back to the front page"><div class="kicker">Elite Four Capital</div>
+        <h1>Event Desk</h1></a>
         <div class="sub">The Jon Ossoff 2028 desk · betting markets in plain English · <a href="polls.html" style="color:var(--oxblood);text-decoration:none">POLLING DESK</a> · <span id="live">connecting…</span></div>
         </div>
       </div>
@@ -192,7 +192,10 @@
   <section id="s-home">
     <div class="sechead"><span class="n">01</span><span class="t">Home</span><span class="d">today's call, one number</span></div>
     <div class="call"><div class="lab">Today's best idea</div><h3 id="callTitle">Loading prices…</h3><p id="callBody"></p></div>
-    <h2 class="dek">What happens to Jon Ossoff in 2028? Pick your call.</h2>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:8px">
+      <div id="ossface" style="width:64px;height:64px;border-radius:50%;background:var(--chipbg);flex:none;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:22px">JO</div>
+      <h2 class="dek" style="margin:0">What happens to Jon Ossoff in 2028? Pick your call.</h2>
+    </div>
     <div class="picker" id="picker"></div>
     <div class="bar"><span>If I bet</span> $<input id="stake" class="num" type="number" value="100" step="50"></div>
     <div class="verdict" id="verdict"></div>
@@ -209,7 +212,7 @@
       <div class="clbl" id="clbl" style="margin-top:10px;justify-content:center"></div>
       <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
         <button class="rowbtn crb" data-r="1w">1W</button><button class="rowbtn crb" data-r="1m">1M</button><button class="rowbtn crb on" data-r="3m">3M</button><button class="rowbtn crb" data-r="1y">1Y</button>
-        <span style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:auto">hover for values · click a name below to hide it</span>
+        <span style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:auto">hover for values · the names below are the menu: click to add or remove a candidate</span>
       </div>
     </div>
   </section>
@@ -517,7 +520,7 @@ function fetchHist(slug){var d=md[slug];if(!d||!d.tok)return Promise.resolve();
 var chartMode="ossoff",chartShow={},FSER={};
 var MODES={dem:"democratic-presidential-nominee-2028",gop:"republican-presidential-nominee-2028",pres:"presidential-election-winner-2028"};
 var SCOLORS=["var(--oxblood)","#7d9fd4","#4a9e7f","#d0a54e"];
-var CANDCOL=[["harris","#e2572b"],["newsom","#4a9e7f"],["buttigieg","#7d9fd4"],["ocasio","#d0a54e"],["ossoff","#eef1f4"],["nominee","var(--oxblood)"],["presidency","#7d9fd4"],["democrat","#5b8fd6"],["republican","#d0564a"],["vance","#d0564a"],["trump","#a33227"]];
+var CANDCOL=[["harris","#b07fd6"],["newsom","#52b7c4"],["buttigieg","#7d9fd4"],["ocasio","#d0a54e"],["ossoff","#eef1f4"],["nominee","var(--oxblood)"],["presidency","#7d9fd4"],["democrat","#5b8fd6"],["republican","#d0564a"],["vance","#d0564a"],["trump","#a33227"]];
 function candColor(name,i){var n=(name||"").toLowerCase();
  for(var k=0;k<CANDCOL.length;k++)if(n.indexOf(CANDCOL[k][0])>=0)return CANDCOL[k][1];
  return SCOLORS[i%4];}
@@ -528,11 +531,15 @@ function fetchField(mode){var key=mode+"_"+chartState.range;
  if(FSER[key])return Promise.resolve(FSER[key]);
  return fetchTO("https://gamma-api.polymarket.com/events?slug="+MODES[mode]).then(function(r){return r.json()}).then(function(j){
   var ev=j&&j[0];if(!ev||!ev.markets)throw 0;
-  var ms=ev.markets.map(function(m){var px=null;
+  var best={};
+  ev.markets.forEach(function(m){var px=null;
     try{var op=typeof m.outcomePrices==="string"?JSON.parse(m.outcomePrices):m.outcomePrices;if(op&&op.length)px=parseFloat(op[0]);}catch(e){}
     var tok=null;try{var tk=typeof m.clobTokenIds==="string"?JSON.parse(m.clobTokenIds):m.clobTokenIds;if(tk&&tk.length)tok=tk[0];}catch(e){}
-    return {name:(m.groupItemTitle||m.question||"?").replace(/^Will /,"").replace(/ win.*$/,""),px:px||0,tok:tok};
-   }).filter(function(x){return x.tok}).sort(function(a,b){return b.px-a.px}).slice(0,4);
+    if(!tok||px==null)return;
+    var name=(m.groupItemTitle||m.question||"?").replace(/^Will /,"").replace(/ win.*$/,"");
+    var vol=parseFloat(m.volumeNum||m.volume||0)||0;
+    if(!best[name]||vol>best[name].vol)best[name]={name:name,px:px,tok:tok,vol:vol};});
+  var ms=Object.keys(best).map(function(k){return best[k]}).sort(function(a,b){return b.px-a.px}).slice(0,8);
   return Promise.all(ms.map(function(m){return fetchHistTok(m.tok)})).then(function(hists){
    var out=[];ms.forEach(function(m,i){if(hists[i])out.push({name:m.name,pts:hists[i]});});
    if(!out.length)throw 0;FSER[key]=out;return out;});});}
@@ -541,7 +548,7 @@ function seriesFor(){var rg=chartState.range,hc=histC[rg]||{};
  return fetchField(chartMode);}
 function drawChart(){
  seriesFor().then(function(raw){
-  var show=chartShow[chartMode]||(chartShow[chartMode]=raw.map(function(){return true}));
+  var show=chartShow[chartMode]||(chartShow[chartMode]=raw.map(function(x,i){return i<4}));
   while(show.length<raw.length)show.push(true);
   var box=$("#chartbox");if(!box)return;
   var vis=raw.map(function(s,i){return {name:s.name,pts:show[i]?s.pts:[],color:candColor(s.name,i),on:show[i]};});
@@ -905,6 +912,8 @@ Array.prototype.forEach.call(document.querySelectorAll(".crb"),function(b){b.onc
 };});
 
 renderAll();try{drawChart()}catch(e){}
+try{fetch("https://en.wikipedia.org/api/rest_v1/page/summary/Jon_Ossoff").then(function(r){return r.json()}).then(function(j){
+ if(j&&j.thumbnail&&j.thumbnail.source){var el=$("#ossface");if(el)el.innerHTML='<img src="'+j.thumbnail.source+'" alt="Jon Ossoff, official portrait via Wikipedia" style="width:100%;height:100%;object-fit:cover">';}}).catch(function(){});}catch(e){}
 refresh();
 </script>
 </body>

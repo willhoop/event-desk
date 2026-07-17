@@ -16,7 +16,7 @@
   h1{font-family:var(--serif);font-weight:700;font-size:52px;margin:10px 0 6px;line-height:1}
   .sub{font-family:var(--mono);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
   .intro{max-width:64ch;margin:26px auto 8px;text-align:center;color:var(--ink2);font-size:16.5px}
-  .sh{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);margin:44px 0 14px;display:flex;align-items:center;gap:14px}
+  .sh{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);margin:18px 0 0;display:flex;align-items:center;gap:14px}
   .sh:after{content:"";flex:1;height:1px;background:var(--rule)}
     .tick{overflow:hidden;border-bottom:1px solid var(--rule);padding:9px 0;font-family:var(--mono);font-size:12px;letter-spacing:.04em;white-space:nowrap}
   .tickwrap{display:inline-block;white-space:nowrap;animation:crawl 60s linear infinite}
@@ -25,7 +25,7 @@
   .tickwrap b{color:var(--ink)}
   @keyframes crawl{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @media(prefers-reduced-motion:reduce){.tickwrap{animation:none}}
-  .leadstory{display:grid;grid-template-columns:1.35fr 1fr;gap:30px;align-items:center;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--rule);padding:30px 0 26px}
+  .leadstory{display:grid;grid-template-columns:1.35fr 1fr;gap:30px;align-items:center;padding:16px 0 26px;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--rule)}
   .leadstory .lk{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
   .leadstory h2{font-family:var(--serif);font-size:44px;line-height:1.12;margin:10px 0 12px;font-weight:700}
   .leadstory p{font-size:17px;color:var(--ink2);max-width:70ch;margin:0 0 12px;line-height:1.55}
@@ -92,8 +92,8 @@
   <div class="secrow">
     <a class="secstory" href="polls.html">
       <svg viewBox="0 0 220 54" width="100%" style="display:block;margin-bottom:10px" aria-hidden="true">
-        <rect x="0" y="6" width="150" height="9" rx="2" fill="#e2572b"/><text x="156" y="14" font-size="9" fill="var(--faint)" font-family="monospace">HARRIS 30</text>
-        <rect x="0" y="20" width="82" height="9" rx="2" fill="#4a9e7f"/><text x="88" y="28" font-size="9" fill="var(--faint)" font-family="monospace">NEWSOM 16</text>
+        <rect x="0" y="6" width="150" height="9" rx="2" fill="#b07fd6"/><text x="156" y="14" font-size="9" fill="var(--faint)" font-family="monospace">HARRIS 30</text>
+        <rect x="0" y="20" width="82" height="9" rx="2" fill="#52b7c4"/><text x="88" y="28" font-size="9" fill="var(--faint)" font-family="monospace">NEWSOM 16</text>
         <rect x="0" y="34" width="61" height="9" rx="2" fill="#7d9fd4"/><text x="67" y="42" font-size="9" fill="var(--faint)" font-family="monospace">BUTTIGIEG 12</text>
       </svg>
       <span class="lk live">LIVE · POLLING DESK</span>
@@ -123,25 +123,8 @@
     </a>
   </div>
 
-  <div class="sh">What every desk includes</div>
-  <div class="what">
-    <div class="w"><h3>Live two-venue prices</h3><p>Polymarket live, Kalshi live-or-snapshot, always labeled.</p></div>
-    <div class="w"><h3>Every bet, plain English</h3><p>Costs, pays, and "you win when…" — pick the row that matches your view.</p></div>
-    <div class="w"><h3>Arbitrage scan</h3><p>Fee-adjusted locks across venues, checked on every refresh.</p></div>
-    <div class="w"><h3>Execution math</h3><p>Market vs limit orders, fees, interest, and venue choice — computed, not guessed.</p></div>
-  </div>
 
-      <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:16px">
-      <p style="font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0">Reading for this desk — updated with the site · PDFs here, raw DOCX/PPTX kept in the repo</p>
-      <style>.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
-.libcard{display:block;background:var(--paper2);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s}
-.libcard:hover{border-color:var(--oxblood)}
-.libcard .ft{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;background:var(--chipbg);color:var(--ink2);padding:2px 8px;border-radius:10px;text-transform:uppercase}
-.libcard h4{font-family:var(--serif);font-size:15.5px;margin:9px 0 4px;font-weight:700}
-.libcard p{font-size:12.5px;color:var(--faint);margin:0 0 10px;line-height:1.5}
-.libcard .dl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--oxblood);text-transform:uppercase}</style><div class="lib"><a class="libcard" href="EliteFour_Polling_WhitePaper.pdf" download><span class="ft">PDF · 94 KB</span><h4>Poll aggregation and pollster credibility</h4><p>Every weight in this page's engine — recency, samples, house effects, and how each pollster earns its score.</p><span class="dl">Download ↓</span></a><a class="libcard" href="EliteFour_Quant_WhitePaper.pdf" download><span class="ft">PDF · 115 KB</span><h4>The quant white paper</h4><p>The math behind this desk: the wedge, venue and fee models, arbitrage checks, and convergence timing.</p><span class="dl">Download ↓</span></a><a class="libcard" href="EliteFour_Tax_WhitePaper.pdf" download><span class="ft">PDF · 115 KB</span><h4>The tax strategy</h4><p>How prediction-market gains and losses are taxed, and the record-keeping that protects you.</p><span class="dl">Download ↓</span></a><a class="libcard" href="deck.pdf" download><span class="ft">PDF · 152 KB</span><h4>The board deck</h4><p>The whole thesis in twelve plain-English slides.</p><span class="dl">Download ↓</span></a></div>
-    </div>
-  <footer>Elite Four Capital · educational research, not investment advice · contracts can go to zero · prices from public Polymarket &amp; Kalshi APIs · Built to the <a href="styleguide.html" style="color:var(--oxblood);text-decoration:none">style guide</a></footer>
+      <footer>Elite Four Capital · educational research, not investment advice · contracts can go to zero · prices from public Polymarket &amp; Kalshi APIs · Built to the <a href="styleguide.html" style="color:var(--oxblood);text-decoration:none">style guide</a></footer>
 </div>
 <script>
 (function(){
@@ -150,7 +133,11 @@
  function px(mk){try{var op=typeof mk.outcomePrices==="string"?JSON.parse(mk.outcomePrices):mk.outcomePrices;return parseFloat(op[0])*100;}catch(e){return null;}}
  function nm(mk){return (mk.groupItemTitle||mk.question||"").replace(/^Will /,"").replace(/ win.*$/,"").toUpperCase();}
  function top(ev,n){if(!ev||!ev[0]||!ev[0].markets)return[];
-  return ev[0].markets.map(function(mk){return {n:nm(mk),p:px(mk)}}).filter(function(x){return x.p!=null&&x.p>0.4}).sort(function(a,b){return b.p-a.p}).slice(0,n);}
+  var best={};
+  ev[0].markets.forEach(function(mk){var p=px(mk),name=nm(mk);if(p==null||p<=0.4)return;
+   var vol=parseFloat(mk.volumeNum||mk.volume||0)||0;
+   if(!best[name]||vol>best[name].vol)best[name]={n:name,p:p,vol:vol};});
+  return Object.keys(best).map(function(k){return best[k]}).sort(function(a,b){return b.p-a.p}).slice(0,n);}
  Promise.allSettled([
   g(G+"will-jon-ossoff-win-the-2028-democratic-presidential-nomination-885"),
   g(G+"will-jon-ossoff-win-the-2028-us-presidential-election"),

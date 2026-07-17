@@ -62,8 +62,8 @@
       <rect x="42" y="70" width="26" height="26" fill="var(--ember)" transform="rotate(45 55 83)"/>
     </svg></a>
     <div>
-      <div class="kicker">Elite Four Capital</div>
-      <h1>Polling Desk</h1>
+      <a href="index.html" style="color:inherit;text-decoration:none" title="Back to the front page"><div class="kicker">Elite Four Capital</div>
+      <h1>Polling Desk</h1></a>
       <div class="sub">2028 Democratic nomination · a FiveThirtyEight-style average, wired to the betting desk · <a href="index.html">home</a> · <a href="ossoff.html">Ossoff desk</a> · <span id="stamp">—</span></div>
     </div>
   </div>
@@ -280,8 +280,8 @@ function renderTrend(){var months=[];var t0=Date.UTC(2026,0,25),t1=Date.now();
  for(var t=t0;t<=t1;t+=7*864e5)months.push(t);
  if(months[months.length-1]<t1-2*864e5)months.push(t1);
  var top4=ORDER.slice(0,4);
- var CMAP={harris:"#e2572b",newsom:"#4a9e7f",buttigieg:"#7d9fd4",aoc:"#d0a54e",shapiro:"#c9cdd4",kelly:"#9aa79e"};
- var colors=top4.map(function(k,i){return CMAP[k]||["#e2572b","#4a9e7f","#7d9fd4","#d0a54e"][i];});
+ var CMAP={harris:"#b07fd6",newsom:"#52b7c4",buttigieg:"#7d9fd4",aoc:"#d0a54e",shapiro:"#c9cdd4",kelly:"#9aa79e"};
+ var colors=top4.map(function(k,i){return CMAP[k]||["#b07fd6","#52b7c4","#7d9fd4","#d0a54e"][i];});
  var series=top4.map(function(k){return months.map(function(t){var a=adjAvg(t);return a[k];});});
  var mx=0,mnv=Infinity;series.forEach(function(s,i){if(!TSHOW[i])return;s.forEach(function(v){if(v==null)return;if(v>mx)mx=v;if(v<mnv)mnv=v;});});
  mx=Math.ceil(mx/5)*5+3||35;var lo=Math.max(0,Math.floor(mnv/5)*5-3);if(!isFinite(lo))lo=0;
@@ -347,7 +347,7 @@ function renderEdge(){var IMP=impliedPrices();
  var gap=(iv!=null&&mv!=null)?(mv-iv):null;
  var cls=gap==null?"":(gap>0?"up":"dn");
  var big=gap!=null&&Math.abs(gap)>=8;
- return '<tr><td><b>'+NAMES[k]+'</b></td><td class="r">'+(pv!=null?pv.toFixed(1)+"%":"—")+'</td><td class="r">'+(iv!=null?iv.toFixed(1)+"¢":"—")+'</td><td class="r">'+(mv!=null?mv.toFixed(1)+"¢"+(mktLive?"":"~"):"—")+'</td><td class="r '+cls+'" style="'+(big?"font-weight:700;font-size:15px":"")+'">'+(gap!=null?((gap>0?"+":"")+gap.toFixed(1)+"¢"):"—")+'</td><td>'+verdict(k,pv,mv)+'</td></tr>';}).join("");}
+ return '<tr><td style="display:flex;align-items:center;gap:10px"><span class="eav" data-k="'+k+'" style="width:30px;height:30px;border-radius:50%;background:var(--chipbg);flex:none;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-family:var(--serif)">'+NAMES[k].split(" ").map(function(w){return w[0]}).join("").slice(0,2)+'</span><b>'+NAMES[k]+'</b></td><td class="r">'+(pv!=null?pv.toFixed(1)+"%":"—")+'</td><td class="r">'+(iv!=null?iv.toFixed(1)+"¢":"—")+'</td><td class="r">'+(mv!=null?mv.toFixed(1)+"¢"+(mktLive?"":"~"):"—")+'</td><td class="r '+cls+'" style="'+(big?"font-weight:700;font-size:15px":"")+'">'+(gap!=null?((gap>0?"+":"")+gap.toFixed(1)+"¢"):"—")+'</td><td>'+verdict(k,pv,mv)+'</td></tr>';}).join("");}
 function fetchMkt(){var t=setTimeout(function(){},0);
  var to=new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"))},9000)});
  Promise.race([fetch("https://gamma-api.polymarket.com/events?slug=democratic-presidential-nominee-2028"),to])
@@ -371,7 +371,14 @@ function renderSboard(){var tb=$("#sboard");if(!tb)return;var rows=Object.keys(E
  tb.innerHTML=shown.map(function(p){var e=E4[p];
   return '<tr><td><b>'+p+'</b></td><td class="r">'+e.count+'</td><td class="r">'+e.nAvg.toLocaleString()+'</td><td class="r">'+Math.round(e.lv*100)+'%</td><td class="r">'+e.dev.toFixed(1)+' pts</td><td class="r">'+(e.part?(e.part>=1?"yes":"lean"):"—")+'</td><td class="r"><b>'+e.score.toFixed(2)+'</b></td></tr>';}).join("");}
 window.toggleSb=function(){sbAll=!sbAll;renderSboard();};
-renderCards();renderTrend();renderEdge();renderSboard();fetchMkt();
+window.PORTRAITS={};
+function fillFaces(){ORDER.forEach(function(k){
+ function put(src){Array.prototype.forEach.call(document.querySelectorAll('[data-k="'+k+'"]'),function(el){el.innerHTML='<img src="'+src+'" alt="'+NAMES[k]+', portrait via Wikipedia" style="width:100%;height:100%;object-fit:cover">';});
+  var av=document.getElementById("av_"+k);if(av)av.innerHTML='<img src="'+src+'" alt="'+NAMES[k]+'" style="width:100%;height:100%;object-fit:cover">';}
+ if(PORTRAITS[k]){put(PORTRAITS[k]);return;}
+ fetch("https://en.wikipedia.org/api/rest_v1/page/summary/"+NAMES[k].replace(/ /g,"_")).then(function(r){return r.json()}).then(function(j){
+  if(j&&j.thumbnail&&j.thumbnail.source){PORTRAITS[k]=j.thumbnail.source;put(PORTRAITS[k]);}}).catch(function(){});});}
+renderCards();renderTrend();renderEdge();renderSboard();fetchMkt();fillFaces();
 $("#stamp").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
 setInterval(fetchMkt,60000);
 </script>
