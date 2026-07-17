@@ -281,6 +281,7 @@
     <h2 class="dek">Every way to bet Jon Ossoff 2028</h2>
     <p class="lead">Cheapest first. "You win when" is the only column that matters — pick the row that matches what you believe.</p>
     <table id="menu"><thead><tr><th>The bet</th><th></th><th>Costs</th><th>Pays</th><th>You win when…</th></tr></thead><tbody></tbody></table>
+    <p class="note" id="menunote" style="font-family:var(--mono);font-size:11px;color:var(--faint);margin:6px 0 0"></p>
     <h2 class="dek">When the money comes</h2>
     <p class="lead">Ossoff's nomination bet is decided in spring 2028, not November — the price climbs to ~99¢ early. Plan to sell into that rise.</p>
     <div class="stops" id="stops"></div>
@@ -651,6 +652,7 @@ function renderOpt(){
  var pw=aP<aK;
  $("#vc_poly").classList.toggle("win",pw);$("#vc_kal").classList.toggle("win",!pw);
  $("#o_verdict").innerHTML=(pw?"Buy on <b>Polymarket</b> — cheaper true cost even after your risk discount.":"Buy on <b>Kalshi</b> — after fees, its interest on your "+months+"-month hold, and your risk discount, it wins right now.");
+ var mn=$("#menunote");if(mn)mn.textContent=(md[NOM]&&md[PRES])?"Wedge line: the cost shown is your money at risk per $1 pair; total cash outlay is about $1.07 per pair — the calculator above uses outlay.":"Prices still loading — numbers in this table are placeholders until the live feed answers.";
 }
 var monthHist=null;
 function fetchMonth(){var d=md[NOM];if(!d||!d.tok)return Promise.resolve();
@@ -677,8 +679,6 @@ function renderShop(){
  tb.querySelector("tbody").innerHTML=rows;
  var wkA=wkN?wk/wkN:0,weA=weN?we/weN:0;
  $("#shopV").innerHTML="Weekdays move ~<b>"+(wkA*100).toFixed(2)+"%/hr</b> vs weekends ~<b>"+(weA*100).toFixed(2)+"%/hr</b> — "+(weA<wkA?"weekends run calmer: fine for resting limit orders, slow for getting filled.":"weekends have been just as busy lately.");
- (function(){try{
-  var wk=wkN?(wk0/wkN):0;}catch(e){}})();
  try{
   var per=0;for(var j=1;j<s.length;j++){per+=Math.abs(s[j].p-s[j-1].p)/Math.max(0.01,s[j-1].p);}per=per/(s.length-1)*24;
   var mv=$("#cr_move"),rn=$("#cr_run");
@@ -797,7 +797,7 @@ wire("#addSlug","input",function(){
  },350);});
 wire("#refreshBtn","click",function(){refresh().then(function(){toast("Prices updated.")});});
 wire("#setBtn","click",function(){$("#drawer").classList.toggle("on");});
-wire("#themeBtn","click",function(){settings.theme=settings.theme==="paper"?"ink":"paper";document.documentElement.dataset.theme=settings.theme;store.set("ef4_set",settings);});
+
 [["#s_bank","bank"],["#s_cap","cap"],["#o_pen","pen"]].forEach(function(pair){var el=$(pair[0]);if(!el)return;
  el.value=settings[pair[1]];
  el.addEventListener("input",function(){var v=parseFloat(el.value);if(!isNaN(v)){settings[pair[1]]=v;store.set("ef4_set",settings);renderHome();renderOpt();}});});
