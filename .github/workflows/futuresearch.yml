@@ -1,0 +1,35 @@
+name: Refresh FutureSearch forecast
+on:
+  schedule:
+    - cron: "0 9 * * 1"   # weekly, Monday 09:00 UTC (each run bills the FutureSearch account)
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: refresh-futuresearch
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install FutureSearch SDK
+        run: pip install futuresearch pandas
+      - name: Build futuresearch.json
+        env:
+          FUTURESEARCH_API_KEY: ${{ secrets.FUTURESEARCH_API_KEY }}
+        run: python build-futuresearch.py
+      - name: Commit if changed
+        run: |
+          if [ -n "$(git status --porcelain futuresearch.json)" ]; then
+            git config user.name "futuresearch-bot"
+            git config user.email "actions@github.com"
+            git add futuresearch.json
+            git commit -m "Refresh futuresearch.json"
+            git push
+          else
+            echo "No changes to commit."
+          fi
