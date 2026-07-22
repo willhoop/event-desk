@@ -13,7 +13,30 @@ conclusion is never silently rewritten; what changed and why is stated.
 
 ---
 
-## [1.0.1] — 2026-07-22
+## [1.0.2] — 2026-07-22
+
+### Added
+- **The source tree is now in version control.** 82 files pushed to
+  `willhoop/event-desk` under `prediction-market/`, in 12 commits, one per folder. The
+  three living documents, the engine, the tests, and the data are all tracked. Before
+  this, only the built `index.html` was in the repository, so a lost folder lost the
+  source.
+
+### Note on the repository layout
+The project sits in `prediction-market/` inside the repository, not at the repository
+root. The reason is a filename collision: the repository root already holds the built
+`index.html`, which is the live site that Cloudflare Pages serves. The source tree also
+holds an `index.html` — the ten-line Vite shell. Pushing the source to the root would
+overwrite the live site.
+
+The repository root therefore keeps the deployment artefacts:
+`index.html` (built), `kalshi.json`, `polls.json`, and `.github/workflows/`.
+
+The proper fix is to set Cloudflare Pages to build from source: root directory
+`prediction-market`, build command `npm run build`, output directory `dist`. The data
+files must move to `prediction-market/public/` first, and the Actions must be updated to
+write them there. This is open work. A failed Pages build does not take the site down,
+because Pages keeps serving the last successful deployment.
 
 ### Changed
 - **The project moved into `prediction-market/`.** The workspace folder now holds one

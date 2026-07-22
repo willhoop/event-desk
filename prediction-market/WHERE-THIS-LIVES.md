@@ -1,47 +1,66 @@
 # Where this project lives
 
-**Version 1.0.1 · Last updated 2026-07-22**
+**Version 1.0.2 · Last updated 2026-07-22**
 
 *This document uses ASD-STE100 Simplified Technical English.*
-
-This folder holds a complete copy of the Prediction Market project. The copy was verified
-on 2026-07-22: 84 files, byte-identical to the source, 42 tests passed, the types checked,
-and the build succeeded from this folder alone.
 
 ## The three locations
 
 | Location | It holds | Status |
 |---|---|---|
-| `Projects/prediction-market/` | This folder. The full source and documentation. | A copy. |
-| `event-desk-app/prediction-market/` | The same source and documentation. | The working copy. |
-| `github.com/willhoop/event-desk` | Only the built `index.html` and the data files. | The deployed site. |
+| `github.com/willhoop/event-desk` → `prediction-market/` | The full source and documentation. 82 files. | **The record of truth.** |
+| `Projects/prediction-market/` | The same source and documentation. | The working copy. |
+| `event-desk-app/prediction-market/` | An older copy. | Delete this. |
 
-## Rule: pick one working copy
+The source is in version control since 2026-07-22. A lost folder no longer loses the work.
 
-Two identical folders will drift apart. Work in one folder only.
+## Rule: work in one folder
 
-Today the working copy is `event-desk-app/prediction-market/`. Each deployment came from
-that folder.
+Two identical folders drift apart. Work in `Projects/prediction-market/` only.
 
-Obey one of these two options:
-1. Keep working in `event-desk-app/prediction-market/`. Copy to this folder after a
-   change. Or,
-2. Move the work here. Delete the other folder.
+Delete `event-desk-app/prediction-market/`. It is a duplicate. It will disagree with this
+folder after the first change.
 
-Option 2 is better. One copy cannot drift.
+## Why the project is not at the repository root
 
-## The source is not in the repository yet
+The repository root holds the **built** `index.html`. That file is the live site.
+Cloudflare Pages serves it.
 
-The GitHub repository holds the built `index.html`, the data files, and the workflows. The
-repository does not hold `docs/`, `engine/`, `app/`, `tests/`, or `data/`.
+This source tree also holds an `index.html`. That file is the Vite shell, and it is ten
+lines long. Two different files cannot both be `index.html` at the root. Pushing the
+source to the root would replace the live site with the shell, and the site would go down.
 
-Therefore:
-- The three living documents are not under version control.
-- A second person cannot build the site from the repository.
-- A lost folder loses the source.
+Therefore the repository holds two things:
 
-**The fix.** Push the full source tree to the repository. The built `index.html` stays in
-the root, because Cloudflare Pages serves the root and expects the file there.
+| Path | It holds |
+|---|---|
+| repository root | `index.html` (built), `kalshi.json`, `polls.json`, `.github/workflows/` |
+| `prediction-market/` | The full source and documentation |
+
+## The proper fix (open work)
+
+Set Cloudflare Pages to build from the source. Then the built file does not need a commit.
+
+1. Move `kalshi.json` and `polls.json` to `prediction-market/public/`.
+2. Update each GitHub Action to write to that folder.
+3. In the Pages project, set:
+   - Root directory: `prediction-market`
+   - Build command: `npm run build`
+   - Output directory: `dist`
+4. Push. Check the deployment.
+
+A failed build does not take the site down. Cloudflare Pages continues to serve the last
+successful deployment.
+
+## How to deploy today
+
+1. Run `npm test`. Then run `npm run build`.
+2. Check the output: `grep -c 'bg-paper{' dist/index.html` must return `1`.
+3. Upload `dist/index.html` to the **repository root**. Name it `index.html`.
+4. Upload the changed source files to `prediction-market/`.
+5. Open the live site. Press Ctrl+Shift+R. Verify the change with your eyes.
+
+See [docs/how-to/deploy.md](docs/how-to/deploy.md).
 
 ## How to verify a copy
 
@@ -52,14 +71,6 @@ npm install
 npm test          # 42 tests
 npm run build     # writes dist/index.html
 ```
-
-Then check the build output:
-
-```
-grep -c 'bg-paper{' dist/index.html
-```
-
-The result must be `1`. A `0` means Tailwind did not run and the site has no styles.
 
 ## Start here
 
