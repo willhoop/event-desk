@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+body {
+  margin: 0;
+  background: #16181c;
+  color: #eef1f4;
+  font-family: "Helvetica Neue", Arial, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.serif { font-family: Georgia, "Times New Roman", serif; }
+.mono { font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace; }
+::-webkit-scrollbar { height: 8px; width: 8px; }
+::-webkit-scrollbar-thumb { background: #343941; border-radius: 4px; }
+
+@media (max-width: 640px) {
+  input, select, textarea, button { font-size: 16px; }
+  h1 { font-size: 40px !important; }
+}
