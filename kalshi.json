@@ -1,10 +1,10 @@
 {
- "updated": "2026-08-11T11:05:24.621Z",
+ "updated": "2026-08-11T11:54:15.403Z",
  "nomination": {
+  "Gavin Newsom": 0.17,
+  "Mark Kelly": 0.062,
   "Graham Platner": 0.001,
   "Zohran Mamdani": 0.003,
-  "Gavin Newsom": 0.18,
-  "Mark Kelly": 0.062,
   "Chris Murphy": 0.007,
   "Mitch Landrieu": 0.01,
   "John Fetterman": 0.002,
@@ -50,8 +50,8 @@
   "Michelle Obama": 0.012
  },
  "presidency": {
-  "J.D. Vance": 0.2,
   "Mark Kelly": 0.037,
+  "J.D. Vance": 0.2,
   "Nikki Haley": 0.002,
   "James Talarico": 0.01,
   "Greg Abbott": 0.004,
@@ -75,16 +75,16 @@
   "Thomas Massie": 0.01,
   "Josh Shapiro": 0.028,
   "Alexandria Ocasio-Cortez": 0.09,
-  "Jon Ossoff": 0.097,
+  "Jon Ossoff": 0.098,
   "Andy Beshear": 0.03,
   "Ron DeSantis": 0.039,
   "Tim Walz": 0.001,
   "Wes Moore": 0.013
  },
  "gopnom": {
-  "Tucker Carlson": 0.036,
   "John Thune": 0.002,
   "Rand Paul": 0.005,
+  "Tucker Carlson": 0.036,
   "Eric Trump": 0.002,
   "Jeff Bezos": 0.01,
   "Kristi Noem": 0.002,
