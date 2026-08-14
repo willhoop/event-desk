@@ -1,15 +1,15 @@
 {
- "updated": "2026-08-14T11:07:57.309Z",
+ "updated": "2026-08-14T11:56:35.668Z",
  "nomination": {
   "Ro Khanna": 0.021,
   "Mark Cuban": 0.007,
-  "Graham Platner": 0.001,
-  "Zohran Mamdani": 0.003,
   "Jon Ossoff": 0.14,
   "Kamala Harris": 0.095,
+  "Alexandria Ocasio-Cortez": 0.17,
+  "Graham Platner": 0.001,
+  "Zohran Mamdani": 0.003,
   "Jon Stewart": 0.01,
   "Elizabeth Warren": 0.002,
-  "Alexandria Ocasio-Cortez": 0.17,
   "Barack Obama": 0.003,
   "Mitch Landrieu": 0.01,
   "Jamie Dimon": 0.004,
@@ -50,9 +50,9 @@
   "Michelle Obama": 0.012
  },
  "presidency": {
-  "Ron DeSantis": 0.039,
   "Donald J. Trump": 0.03,
   "Alexandria Ocasio-Cortez": 0.096,
+  "Ron DeSantis": 0.039,
   "Marco Rubio": 0.15,
   "J.D. Vance": 0.19,
   "Mark Kelly": 0.032,
