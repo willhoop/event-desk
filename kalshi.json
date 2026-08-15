@@ -1,7 +1,9 @@
 {
- "updated": "2026-08-15T11:28:00.768Z",
+ "updated": "2026-08-15T11:49:28.718Z",
  "nomination": {
+  "Graham Platner": 0.001,
   "Mitch Landrieu": 0.01,
+  "Zohran Mamdani": 0.003,
   "Andrew Yang": 0.003,
   "Gretchen Whitmer": 0.009,
   "Amy Klobuchar": 0.002,
@@ -16,8 +18,6 @@
   "Alexandria Ocasio-Cortez": 0.18,
   "Raphael Warnock": 0.009,
   "Roy Cooper": 0.003,
-  "Zohran Mamdani": 0.003,
-  "Graham Platner": 0.001,
   "Jared Polis": 0.002,
   "Gavin Newsom": 0.16,
   "Elizabeth Warren": 0.002,
@@ -50,11 +50,11 @@
   "Michelle Obama": 0.011
  },
  "presidency": {
+  "Alexandria Ocasio-Cortez": 0.097,
   "Jamie Dimon": 0.005,
   "Stephen A. Smith": 0.003,
   "Jon Ossoff": 0.1,
   "Gavin Newsom": 0.11,
-  "Alexandria Ocasio-Cortez": 0.097,
   "J.D. Vance": 0.2,
   "Tulsi Gabbard": 0.008,
   "Greg Abbott": 0.004,
@@ -84,8 +84,8 @@
  "gopnom": {
   "J.D. Vance": 0.43,
   "Jeff Bezos": 0.01,
-  "Marco Rubio": 0.24,
   "Ted Cruz": 0.012,
+  "Marco Rubio": 0.24,
   "Ron DeSantis": 0.052,
   "Donald J. Trump": 0.025,
   "Ivanka Trump": 0.013,
