@@ -1,12 +1,11 @@
 {
- "updated": "2026-08-16T23:46:34.558Z",
+ "updated": "2026-08-17T00:01:08.151Z",
  "nomination": {
+  "Zohran Mamdani": 0.003,
   "Tim Walz": 0.002,
   "Roy Cooper": 0.003,
-  "Zohran Mamdani": 0.003,
   "Gina Raimondo": 0.002,
   "Jared Polis": 0.002,
-  "Raphael Warnock": 0.009,
   "Mark Cuban": 0.009,
   "Jamie Dimon": 0.004,
   "Hillary Clinton": 0.002,
@@ -19,6 +18,7 @@
   "Andrew Yang": 0.003,
   "Mitch Landrieu": 0.01,
   "Shawn Fain": 0.01,
+  "Raphael Warnock": 0.009,
   "Gretchen Whitmer": 0.009,
   "Ro Khanna": 0.021,
   "Barack Obama": 0.003,
@@ -50,11 +50,11 @@
   "Michelle Obama": 0.011
  },
  "presidency": {
+  "Alexandria Ocasio-Cortez": 0.096,
   "Glenn Youngkin": 0.004,
   "Greg Abbott": 0.004,
   "Nikki Haley": 0.002,
   "Mark Kelly": 0.034,
-  "Alexandria Ocasio-Cortez": 0.096,
   "Hunter Biden": 0.01,
   "James Talarico": 0.01,
   "Ron DeSantis": 0.04,
