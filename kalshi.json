@@ -1,18 +1,18 @@
 {
- "updated": "2026-08-22T10:32:06.076Z",
+ "updated": "2026-08-22T10:57:16.383Z",
  "nomination": {
-  "Zohran Mamdani": 0.002,
   "Pete Buttigieg": 0.049,
   "Mark Kelly": 0.053,
   "Josh Shapiro": 0.046,
   "John Fetterman": 0.002,
   "Michelle Obama": 0.011,
+  "Gavin Newsom": 0.15,
   "Dwayne Johnson": 0.002,
   "Bernie Sanders": 0.005,
   "Rahm Emanuel": 0.037,
   "Jon Ossoff": 0.17,
+  "Zohran Mamdani": 0.002,
   "Kamala Harris": 0.092,
-  "Gavin Newsom": 0.15,
   "Mark Cuban": 0.01,
   "Raphael Warnock": 0.009,
   "Amy Klobuchar": 0.002,
@@ -50,7 +50,7 @@
   "Tim Walz": 0.002
  },
  "presidency": {
-  "Mark Kelly": 0.034,
+  "Mark Kelly": 0.033,
   "Glenn Youngkin": 0.004,
   "Pete Buttigieg": 0.036,
   "J.D. Vance": 0.19,
