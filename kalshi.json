@@ -1,6 +1,7 @@
 {
- "updated": "2026-08-22T11:28:01.506Z",
+ "updated": "2026-08-22T11:50:19.634Z",
  "nomination": {
+  "Zohran Mamdani": 0.002,
   "Pete Buttigieg": 0.049,
   "Mark Kelly": 0.053,
   "Josh Shapiro": 0.046,
@@ -9,11 +10,10 @@
   "Dwayne Johnson": 0.002,
   "Bernie Sanders": 0.005,
   "Rahm Emanuel": 0.037,
-  "Zohran Mamdani": 0.002,
+  "Gavin Newsom": 0.15,
   "Kamala Harris": 0.092,
   "Mark Cuban": 0.01,
   "Jon Ossoff": 0.17,
-  "Gavin Newsom": 0.15,
   "Raphael Warnock": 0.009,
   "Amy Klobuchar": 0.002,
   "Chris Murphy": 0.007,
@@ -51,9 +51,9 @@
  },
  "presidency": {
   "Mark Kelly": 0.033,
+  "Gretchen Whitmer": 0.011,
   "Glenn Youngkin": 0.004,
   "Pete Buttigieg": 0.036,
-  "Gretchen Whitmer": 0.011,
   "J.D. Vance": 0.19,
   "Ro Khanna": 0.01,
   "Rahm Emanuel": 0.02,
@@ -82,6 +82,7 @@
   "Tulsi Gabbard": 0.008
  },
  "gopnom": {
+  "Donald J. Trump": 0.023,
   "Marco Rubio": 0.23,
   "Greg Abbott": 0.008,
   "Byron Donalds": 0.005,
@@ -93,7 +94,6 @@
   "Spencer Pratt": 0.01,
   "Ted Cruz": 0.012,
   "Kristi Noem": 0.001,
-  "Donald J. Trump": 0.025,
   "Erika Kirk": 0.005,
   "Lara Trump": 0.01,
   "Mike Pence": 0.003,
