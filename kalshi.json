@@ -1,16 +1,16 @@
 {
- "updated": "2026-08-24T14:01:46.386Z",
+ "updated": "2026-08-24T14:57:29.023Z",
  "nomination": {
+  "Kamala Harris": 0.093,
   "Jared Polis": 0.002,
-  "Zohran Mamdani": 0.002,
+  "Mark Kelly": 0.05,
+  "Tim Walz": 0.001,
+  "Alexandria Ocasio-Cortez": 0.19,
   "Amy Klobuchar": 0.002,
   "Wes Moore": 0.026,
-  "Gavin Newsom": 0.14,
   "Jon Ossoff": 0.18,
-  "Tim Walz": 0.001,
-  "Kamala Harris": 0.094,
-  "Alexandria Ocasio-Cortez": 0.19,
-  "Mark Kelly": 0.05,
+  "Gavin Newsom": 0.14,
+  "Zohran Mamdani": 0.002,
   "Graham Platner": 0.001,
   "Beto O'Rourke": 0.001,
   "LeBron James": 0.001,
@@ -50,17 +50,18 @@
   "Raphael Warnock": 0.008
  },
  "presidency": {
-  "Nikki Haley": 0.002,
-  "Marco Rubio": 0.12,
-  "Hunter Biden": 0.01,
-  "J.D. Vance": 0.19,
   "Ro Khanna": 0.01,
+  "Nikki Haley": 0.002,
+  "Hunter Biden": 0.01,
+  "Marco Rubio": 0.12,
+  "Pete Buttigieg": 0.035,
   "Thomas Massie": 0.01,
-  "Pete Buttigieg": 0.034,
   "Stephen A. Smith": 0.003,
   "Alexandria Ocasio-Cortez": 0.13,
   "Mark Kelly": 0.036,
   "Ron DeSantis": 0.037,
+  "J.D. Vance": 0.19,
+  "Gavin Newsom": 0.086,
   "Vivek Ramaswamy": 0.003,
   "Donald J. Trump Jr.": 0.012,
   "Wes Moore": 0.024,
@@ -78,7 +79,6 @@
   "J.B. Pritzker": 0.013,
   "Kamala Harris": 0.046,
   "Greg Abbott": 0.004,
-  "Gavin Newsom": 0.086,
   "Donald J. Trump": 0.031
  },
  "gopnom": {
@@ -91,6 +91,7 @@
   "Tulsi Gabbard": 0.004,
   "Rand Paul": 0.005,
   "Greg Abbott": 0.007,
+  "Tucker Carlson": 0.036,
   "Elise Stefanik": 0.003,
   "Elon Musk": 0.003,
   "Brian Kemp": 0.007,
@@ -104,7 +105,6 @@
   "Vivek Ramaswamy": 0.005,
   "Ted Cruz": 0.012,
   "Glenn Youngkin": 0.011,
-  "Tucker Carlson": 0.035,
   "Lara Trump": 0.01,
   "Donald J. Trump Jr.": 0.039,
   "Steve Bannon": 0.005,
@@ -119,6 +119,6 @@
   "Sarah Huckabee Sanders": 0.006,
   "Eric Trump": 0.003,
   "Josh Hawley": 0.009,
-  "Ron DeSantis": 0.051
+  "Ron DeSantis": 0.052
  }
 }
