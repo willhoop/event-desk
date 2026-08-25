@@ -1,10 +1,10 @@
 {
- "updated": "2026-08-25T11:32:51.959Z",
+ "updated": "2026-08-25T12:00:58.321Z",
  "nomination": {
+  "Alexandria Ocasio-Cortez": 0.2,
   "Jon Stewart": 0.008,
   "Zohran Mamdani": 0.002,
   "LeBron James": 0.001,
-  "Alexandria Ocasio-Cortez": 0.2,
   "Mark Cuban": 0.007,
   "Elizabeth Warren": 0.002,
   "Gavin Newsom": 0.14,
@@ -50,12 +50,12 @@
   "Raphael Warnock": 0.008
  },
  "presidency": {
+  "Alexandria Ocasio-Cortez": 0.13,
   "Ro Khanna": 0.01,
   "Marco Rubio": 0.12,
-  "Pete Buttigieg": 0.033,
   "Gretchen Whitmer": 0.013,
   "Hunter Biden": 0.01,
-  "Alexandria Ocasio-Cortez": 0.13,
+  "Pete Buttigieg": 0.033,
   "Stephen A. Smith": 0.003,
   "Thomas Massie": 0.01,
   "Mark Kelly": 0.037,
@@ -82,10 +82,11 @@
   "Donald J. Trump": 0.032
  },
  "gopnom": {
-  "Donald J. Trump Jr.": 0.037,
   "Elise Stefanik": 0.003,
+  "Donald J. Trump Jr.": 0.037,
   "Tulsi Gabbard": 0.004,
   "Marjorie Taylor Greene": 0.008,
+  "Steve Bannon": 0.004,
   "Donald J. Trump": 0.024,
   "Tucker Carlson": 0.036,
   "Nikki Haley": 0.006,
@@ -105,19 +106,18 @@
   "Candace Owens": 0.01,
   "Thomas Massie": 0.009,
   "Lara Trump": 0.01,
-  "Steve Bannon": 0.004,
   "Katie Britt": 0.004,
   "Mike Pence": 0.008,
   "Matt Gaetz": 0.002,
   "Nicki Minaj": 0.002,
   "John Thune": 0.002,
-  "Byron Donalds": 0.006,
+  "Byron Donalds": 0.005,
   "Robert F. Kennedy Jr.": 0.004,
   "Pete Hegseth": 0.007,
   "Erika Kirk": 0.002,
   "Sarah Huckabee Sanders": 0.006,
   "J.D. Vance": 0.44,
-  "Eric Trump": 0.008,
+  "Eric Trump": 0.007,
   "Marco Rubio": 0.23,
   "Ron DeSantis": 0.05
  }
